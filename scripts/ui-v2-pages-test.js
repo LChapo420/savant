@@ -71,6 +71,7 @@ const visibleControls = (skipBack) => { document.querySelectorAll('details').for
       { name: 'calendar', url: '/calendar', ready: '.cal-bar, .notice', dressed: '.u2-fold' },
       { name: 'add a subject', url: '/onboarding', ready: '#tracks .track-card', dressed: '.u2-fold' },
       { name: 'review, a plan', url: `/review?enrollment=${en}`, ready: '.review-top', dressed: '.u2-page-guide', stub: stubs.review },
+      { name: 'leaderboard and stats', url: '/stats', ready: '.u2-stats', dressed: '.u2-soon' }, // the phone's tab (js/ui2/stats.js), a page of its own
     ];
     const open = async (p, blockPages, size) => {
       const ctx = await browser.newContext({ storageState: storage, viewport: size });
@@ -133,6 +134,7 @@ const visibleControls = (skipBack) => { document.querySelectorAll('details').for
     await dp.reload();
     await dp.waitForSelector('#u2-done', { timeout: 25000 });
     check('minutes met: done for today, the next step put away', await dp.isVisible('#u2-keep-going') && !(await dp.isVisible('#u2-start')));
+    check('done for today on a phone keeps the subjects under it', await dp.isVisible('#u2-subjects'));
     await dp.click('#u2-keep-going');
     await dp.waitForSelector('#u2-start');
     check('Keep going: the same next step as before', await dp.getAttribute('#u2-start', 'href') === startHref);

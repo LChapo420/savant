@@ -168,6 +168,8 @@ app.get('/api/ui2/waiting', (req, res, next) => {
   return res.json({ subjects: ob.waitingFor(req.user, { hidden: ob.hiddenSubjects(req) }), how: (mine && mine.how) || null });
 });
 app.get('/api/ui2/today',(req, res, next) => (require('./services/ui-v2').enabled() ? require('./services/ui-v2-today').reply(req, res) : next()));
+// The phone's "Leaderboard and stats" tab: the last seven days' minutes (services/ui-v2-stats.js). Off, an unknown endpoint.
+app.get('/api/ui2/stats', (req, res, next) => (require('./services/ui-v2').enabled() ? require('./services/ui-v2-stats').reply(req, res) : next()));
 app.use('/api/auth/password-reset', passwordReset.router);
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/speed', require('./routes/speed-placement'));

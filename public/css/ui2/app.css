@@ -332,6 +332,113 @@ html[data-ui2] .session-player .check-bar .btn { min-height: 56px; border-radius
 /* "Go to home" on the upload page when a learner comes from the onboarding. */
 html[data-ui2] #u2-after-upload { position: sticky; bottom: 0; z-index: 10; margin: 18px 0 0; padding: 14px 16px 20px; background: var(--page); }
 
+/* ── the phone: Home as option A, the bottom bar, the Menu as a list (design-refs/home-clean, the owner's pick). Under 768 px only; tablet and desktop are as they were. ── */
+html[data-ui2] .u2-tabs, html[data-ui2] .u2-tb-view, html[data-ui2] .u2-streak { display: none; }
+/* Labels and bordered lists: the phone's Menu and the stats page (js/ui2/stats.js). Nothing on a tablet or desktop page uses them. */
+html[data-ui2] .u2-label { margin: 24px 0 12px; font: 700 15px/20px var(--font); color: var(--ink-2); }
+html[data-ui2] .u2-list { display: block; overflow: hidden; background: var(--page); border: 1.5px solid var(--line); border-radius: 18px; }
+html[data-ui2] .u2-li { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 52px; margin: 0; padding: 0 12px 0 14px; background: none; border: 0; color: var(--ink); font: 700 16px/1.2 var(--font); text-align: left; text-decoration: none; cursor: pointer; }
+html[data-ui2] div.u2-li { cursor: default; }
+html[data-ui2] .u2-list > .u2-li + .u2-li { border-top: 1px solid var(--line); }
+html[data-ui2] .u2-li > .u2-ic:first-child { width: 20px; height: 20px; color: var(--ink-2); }
+html[data-ui2] .u2-li-t { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+html[data-ui2] .u2-li.u2-prof { min-height: 64px; border: 1.5px solid var(--line); }
+html[data-ui2] .u2-av { width: 42px; height: 42px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--act-tint); color: var(--act-text); font-size: 18px; font-weight: 700; }
+html[data-ui2] .u2-swatches { display: flex; gap: 6px; flex: none; }
+html[data-ui2] .u2-sw { width: 32px; height: 32px; padding: 0; border: 0; border-radius: 50%; background: none; display: grid; place-items: center; cursor: pointer; }
+html[data-ui2] .u2-sw i { display: block; width: 22px; height: 22px; border-radius: 50%; }
+html[data-ui2] .u2-sw[aria-checked="true"] i { box-shadow: 0 0 0 2px var(--page), 0 0 0 3.5px var(--act); }
+html[data-ui2] .u2-seg { display: inline-flex; flex: none; padding: 3px; border-radius: 99px; background: var(--well); }
+html[data-ui2] .u2-seg button { min-height: 32px; padding: 0 9px; border: 0; border-radius: 99px; background: none; color: var(--ink-2); font: 700 13.5px/1 var(--font); cursor: pointer; }
+html[data-ui2] .u2-seg button[aria-checked="true"] { background: var(--page); color: var(--ink); box-shadow: 0 0 0 1px var(--line); }
+@media (min-width: 768px) {
+  html[data-ui2] .u2-ph { display: none !important; }
+}
+@media (max-width: 767px) {
+  html[data-ui2] [data-dt] { display: none !important; }
+  /* The bar: four destinations, the one you are on in Savant blue. Fixed, above the home indicator; away in a sitting and while the chat is open. */
+  html[data-ui2].u2-tabbed:not(.u2-in-sitting):not([data-tdock]) .u2-tabs { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); position: fixed; z-index: 40; left: 0; right: 0; bottom: 0; padding: 6px 8px calc(6px + env(safe-area-inset-bottom)); background: var(--page); border-top: 1px solid var(--line); }
+  html[data-ui2].u2-tabbed:not(.u2-in-sitting):not([data-tdock]) body { padding-bottom: calc(66px + env(safe-area-inset-bottom)); }
+  html[data-ui2] .u2-tabs a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-width: 0; min-height: 52px; color: var(--ink-3); text-decoration: none; font: 700 12.5px/1 var(--font); letter-spacing: .01em; -webkit-tap-highlight-color: transparent; }
+  html[data-ui2] .u2-tab-ic { width: 56px; height: 30px; border-radius: 99px; display: grid; place-items: center; }
+  html[data-ui2] .u2-tab-ic .u2-ic { width: 24px; height: 24px; }
+  html[data-ui2] .u2-tabs a.on { color: var(--act-text); }
+  html[data-ui2] .u2-tabs a.on .u2-tab-ic { background: var(--act-tint); }
+  html[data-ui2] .u2-tabs a.on .u2-ic { stroke-width: 2.1; }
+  html[data-ui2].u2-tabbed:not(.u2-in-sitting):not([data-tdock]) #u2-after-upload { bottom: calc(66px + env(safe-area-inset-bottom)); }
+  /* The top bar: on Home the wordmark and the streak; in the Menu or Past, its name. No menu button (the bar has it) and no round clock. */
+  html[data-ui2] #u2-menu, html[data-ui2] #u2-back.u2-tab-root { display: none; }
+  html[data-ui2][data-u2-view="past"] #u2-menu { display: grid; }
+  html[data-ui2] .u2-tb-wm { position: static; transform: none; margin-left: 8px; }
+  html[data-ui2][data-u2-view="everything"] .u2-tb-wm, html[data-ui2][data-u2-view="past"] .u2-tb-wm { display: none; }
+  html[data-ui2][data-u2-view="everything"] .u2-tb-view, html[data-ui2][data-u2-view="past"] .u2-tb-view { display: block; }
+  html[data-ui2][data-u2-view="everything"] .u2-tb-view { margin-left: 8px; font-size: 28px; line-height: 34px; }
+  html[data-ui2][data-u2-view="home"] .u2-streak { display: inline-flex; align-items: center; gap: 4px; height: 34px; margin-left: auto; padding: 0 10px 0 8px; font: 700 16px/1 var(--font); color: var(--ink); }
+  html[data-ui2] .u2-streak .u2-ic { width: 20px; height: 20px; color: var(--flame); stroke-width: 2; }
+  html[data-ui2] .study-strip.study-strip-idle { display: none; }
+  html[data-ui2]:not(.u2-study-idle) #u2-t-timer { display: none; }
+  /* In the Menu the small giraffe sits top right: tap to chat, hold to call. */
+  html[data-ui2] #u2-all-guide { display: none; }
+  html[data-ui2][data-u2-view="everything"] .site-header .tdock-g { position: relative; width: auto; height: auto; overflow: visible; visibility: visible; margin-left: auto; }
+
+  /* Home, option A: one card style (a 1.5 px line, a 4 px raised edge), one grid, a 4-8-12-16-24 spacing. */
+  html[data-ui2] .u2-home-body.u2-ha { padding: 4px 20px 0; gap: 24px; }
+  html[data-ui2] .u2-ha .u2-h-sec { gap: 0; }
+  html[data-ui2] .u2-card { display: block; margin: 0 0 4px; padding: 16px 16px 12px; background: var(--page); border: 1.5px solid var(--line); border-radius: 22px; box-shadow: 0 4px 0 var(--opt-edge); }
+  html[data-ui2] .u2-hero .u2-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 32px; margin: 0 0 8px; color: var(--ink-2); font-size: 15px; line-height: 20px; }
+  html[data-ui2] .u2-hero .u2-meta > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  html[data-ui2] .u2-hero .u2-chip-t { flex: none; height: 32px; padding: 0 10px; font-size: 14.5px; }
+  html[data-ui2] .u2-hero .u2-t1 { margin: 0 0 16px; font-size: 30px; }
+  html[data-ui2] .u2-hero .u2-t1:focus { outline: none; }
+  html[data-ui2] .u2-hero .u2-detail { margin: -8px 0 16px; }
+  html[data-ui2] .u2-hero .u2-btn { margin: 0 0 6px; }
+  html[data-ui2] .u2-ha .u2-squares { max-width: none; margin: 0; gap: 16px 12px; }
+  html[data-ui2] .u2-ha .u2-square { flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 0; padding: 16px; text-align: left; }
+  html[data-ui2] .u2-ha .u2-square .symbol, html[data-ui2] .u2-ha .u2-f-top .symbol { --size: 26px; }
+  html[data-ui2] .u2-sq-t { display: block; width: 100%; min-width: 0; }
+  html[data-ui2] .u2-ha .u2-sq-t b { display: block; max-width: 100%; font-size: 17.5px; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  html[data-ui2] .u2-ha .u2-sq-t small { display: block; margin-top: 2px; font-size: 14.5px; line-height: 1.3; font-weight: 400; color: var(--ink-2); }
+  html[data-ui2] .u2-ha .u2-square.u2-cur { border-color: var(--act); box-shadow: 0 4px 0 var(--act-edge); }
+  html[data-ui2] .u2-ha .u2-square.u2-cur:active { box-shadow: none; }
+  html[data-ui2] .u2-wide { grid-column: 1 / -1; }
+  html[data-ui2] .u2-ha .u2-wait .u2-o-t b { font-size: 17.5px; }
+  html[data-ui2] .u2-wait-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+  html[data-ui2] .u2-btn2.u2-sm { min-height: 44px; margin: 0; padding: 4px; font-size: 14px; line-height: 1.15; letter-spacing: -.005em; }
+  /* A subject drawn as a word (English's Aa) reads at the icons' size. */
+  html[data-ui2] .u2-ha .symbol:not(:has(svg)), html[data-ui2] .u2-stats .symbol:not(:has(svg)) { font: 700 17px/1 var(--font); display: inline-grid; place-items: center; }
+  html[data-ui2] .u2-ha .u2-wait-acts { margin-top: 16px; gap: 10px; }
+  html[data-ui2] .u2-ha .u2-wait-acts .u2-btn2 { margin: 0 0 4px; }
+  html[data-ui2] .u2-ha .u2-wait-title { margin: 0 0 4px; font-size: 30px; }
+  html[data-ui2] .u2-ha .u2-wait-title + .u2-detail { margin: 0 0 16px; }
+  html[data-ui2] .u2-ha .u2-wait-lead + .u2-squares { margin-top: 16px; }
+  html[data-ui2] .u2-done-card { padding: 24px 16px 12px; text-align: center; }
+  html[data-ui2] .u2-ck { width: 48px; height: 48px; margin: 0 auto 12px; border-radius: 50%; display: grid; place-items: center; background: var(--right); color: var(--on-mark); }
+  html[data-ui2] .u2-ck .u2-ic { width: 26px; height: 26px; stroke-width: 3; }
+  html[data-ui2] .u2-done-card .u2-t1 { margin: 0 0 8px; font-size: 30px; }
+  html[data-ui2] .u2-done-card .u2-t1:focus { outline: none; }
+  html[data-ui2] .u2-done-card .u2-detail { margin: 0 auto 16px; }
+  html[data-ui2] .u2-done-card .u2-btn2 { margin: 0 0 4px; }
+  html[data-ui2] .u2-ha #u2-material .u2-rows { gap: 12px; }
+  html[data-ui2] .u2-ha .u2-s-row { min-height: 60px; }
+  html[data-ui2] .u2-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 24px; margin: -8px 0 0; }
+  html[data-ui2] .u2-links .u2-next { position: relative; padding: 10px 0; color: var(--act-text); font: 700 15px/20px var(--font); text-decoration: none; }
+  html[data-ui2] .u2-links > * + *::before { content: "·"; position: absolute; left: -15px; color: var(--ink-3); font-weight: 400; }
+
+  /* The Menu: profile, Learn, Settings, each one bordered list. */
+  html[data-ui2] #u2-all .u2-all-body { display: flex; flex-direction: column; padding: 8px 20px 0; }
+  html[data-ui2] #u2-all section { margin: 0; }
+  html[data-ui2] #u2-me { order: 0; }
+  html[data-ui2] #u2-all-else { order: 1; }
+  html[data-ui2] #u2-all-subjects { order: 2; display: none; margin-top: 12px !important; }
+  html[data-ui2] #u2-all.u2-subj-open #u2-all-subjects { display: grid; }
+  html[data-ui2] #u2-all-plan { display: none !important; }
+  html[data-ui2] #u2-settings { order: 3; }
+  html[data-ui2] #u2-all .u2-grid { grid-template-columns: minmax(0, 1fr); gap: 0; overflow: hidden; border: 1.5px solid var(--line); border-radius: 18px; }
+  html[data-ui2] #u2-all .u2-grid .u2-opt { min-height: 52px; padding: 0 12px 0 14px; border: 0; border-radius: 0; box-shadow: none; transform: none; }
+  html[data-ui2] #u2-all .u2-grid .u2-opt + .u2-opt { border-top: 1px solid var(--line); }
+  html[data-ui2] #u2-all .u2-grid .u2-opt[aria-expanded="true"] { box-shadow: none; }
+}
+
 /* ── tablet and desktop (design-refs/ui-v4-mockups/sheet-large.png): one centred column, 640 then 960 px; buttons 260 to 360 px, never full width; options in a grid by width. ── */
 @media (min-width: 768px) {
   html[data-ui2] .u2-btn, html[data-ui2] .u2-btn2, html[data-ui2] .btn-primary.btn-block, html[data-ui2] .btn-primary.btn-lg { width: 100%; max-width: 360px; min-width: 260px; margin-left: auto; margin-right: auto; }

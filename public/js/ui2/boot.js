@@ -6,6 +6,11 @@
  */
 (function () {
   const root = document.documentElement;
+  // The Menu's colour choice (css/ui2/accent.css), kept on this device. Savant blue is the default and needs no attribute.
+  try {
+    const accent = localStorage.getItem('savant.u2.accent');
+    if (accent === 'plum' || accent === 'ink') root.dataset.accent = accent;
+  } catch { /* private mode: Savant blue */ }
   function pin() {
     if (root.dataset.style !== 'chunky') root.dataset.style = 'chunky';
     const color = root.dataset.mode === 'dark' ? '#14161a' : '#ffffff';

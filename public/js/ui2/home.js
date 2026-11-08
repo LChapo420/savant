@@ -9,7 +9,15 @@
  *   Everything  /dashboard#everything: the real subject cards, planner, recent sessions, offers and the rest, moved into one menu. Moved, not copied, so their listeners keep working.
  *               Other pages link here rather than keep a second copy of any of it.
  *
- * What it writes: PUT /api/plan/minutes from the minutes picker, the same call as today's. Nothing else.
+ * On a phone (under 768 px; the owner's pick, design-refs/home-clean, option A "Lesson first"), Home is drawn one way, redrawn if the width crosses: the giraffe and its line, one card
+ * with the next lesson and the one 3D button (the minutes as a quiet chip on it), then "Your subjects" as square tiles two to a row, the lead one outlined, never listed twice. A subject
+ * from the onboarding with no start yet is a wide card in that grid with Take the placement and Pick my grade on it. Unfinished uploads, then one line of quiet links (Add a subject,
+ * Today's plan, Past). The study timer's "Start session" is the Menu's quiet "Time a session" row. No progress bars on tiles. Done for today keeps the subjects under it. Upload your own, the stats and the menu are the bottom bar's (js/ui2/shell.js).
+ * The menu there is Everything (/dashboard#menu or #everything), as a list: profile first, then Learn, then Settings: colours (css/ui2/accent.css), the chat at the top or the bottom
+ * (js/tutor-dock.js's own setting), theme, sign out. Tablet and desktop are as they were.
+ *
+ * What it writes: PUT /api/plan/minutes from the minutes picker, the same call as today's. From the phone's Settings: the chat side (PUT /api/tutor/dock/side, as the chat's own
+ * buttons do), the theme (js/style-boot.js and POST /api/prefs, as the profile does) and the colour (this device only). Nothing else.
  */
 (function () {
   if (!window.App || !App.ui2) return;
@@ -163,6 +171,68 @@
     </div>`;
   const materialRow = (m) => `<a class="u2-opt u2-s-row" href="${materialHref(m)}" data-material="${m.id}">${ic('note')}<span class="u2-o-t"><b>${esc(m.title)}</b><small>${esc(materialWords(m))}</small></span>${m.total ? mini(Math.round((m.mastered / m.total) * 100)) : ''}${ic('chev-r', 'u2-mute')}</a>`;
 
+  // ── the phone's Home (option A) ──────────────────────────────────────────
+  const PHONE = App.ui2.phone || window.matchMedia('(max-width: 767px)');
+  const minutesChip = () => `<button type="button" class="u2-chip-t" id="u2-minutes" aria-haspopup="dialog" aria-label="${plan.minutes} minutes today. Change">${ic('clock')}${plan.minutes} min${ic('chev-d')}</button>`;
+  const phoneSquare = (e, cur) => `<a class="u2-opt u2-square${cur ? ' u2-cur' : ''}" href="${esc(hrefOf(e))}" data-enrollment="${e.id}">${App.symbol(e.track)}<span class="u2-sq-t"><b>${esc(e.track.name)}</b><small>${esc(levelWords(e))}${cur ? '<span class="u2-vh">, up next</span>' : ''}</small></span></a>`;
+  /** A subject waiting for a start, its two ways in on it: the lead one as the page's card (the 3D pill), the others as wide cards in the grid. Either makes the enrollment the usual way. */
+  const phoneWait = (w, isLead) => `<div class="u2-card u2-wait${isLead ? ' u2-wait-lead' : ' u2-wide'}" data-waiting="${esc(w.track.id)}">
+      <div class="u2-f-top">${App.symbol(w.track)}<span class="u2-o-t"><b>${esc(w.track.name)}</b><small>${isLead ? 'Not started yet' : 'Pick how to start'}</small></span></div>
+      <div class="${isLead ? 'u2-wait-acts' : 'u2-wait-two'}">
+        <a class="${isLead ? 'u2-btn' : 'u2-btn2 u2-sm'}" href="${esc(w.placement_href)}" data-start="placement">Take the placement</a>
+        <a class="${isLead ? 'u2-btn2' : 'u2-btn2 u2-sm'}" href="${esc(w.pick_href)}" data-start="pick">Pick my grade</a>
+      </div>
+    </div>`;
+  const phoneMaterialRow = (m) => `<a class="u2-opt u2-s-row" href="${materialHref(m)}" data-material="${m.id}">${ic('note')}<span class="u2-o-t"><b>${esc(m.title)}</b><small>${esc(materialWords(m))}</small></span>${ic('chev-r', 'u2-mute')}</a>`;
+  const card = (meta, title, body) => `<div class="u2-card u2-hero">${meta ? `<div class="u2-meta">${meta}</div>` : ''}<h1 class="u2-t1" tabindex="-1" id="u2-title">${esc(title)}</h1>${body}</div>`;
+
+  function phoneHome(host, { focus, subjects, unfinished, leadId, canPlan, hasPast, finished }) {
+    const waits = waiting.filter((w) => !subjects.some((e) => e.track && e.track.id === w.track.id)); // a subject is listed once
+    const lead = subjects.find((e) => e.id === leadId) || null;
+    const waitFirst = !subjects.length && waits.length > 0;
+    const leadMaterial = !waitFirst && !subjects.length && unfinished.length && mats.can_upload ? unfinished[0] : null;
+    const listed = unfinished.filter((m) => m !== leadMaterial);
+    let hero = '';
+    if (waitFirst) {
+      hero = `<h1 class="u2-t1 u2-wait-title" tabindex="-1" id="u2-title">Choose where to start</h1>
+        <p class="u2-m u2-detail">A short placement finds your level, or pick it yourself.</p>
+        ${phoneWait(waits[0], true)}`;
+    } else if (focus && focus.href && (subjects.length || !unfinished.length)) {
+      const meta = `<span>${esc(lead ? `${lead.track.name} · ${levelWords(lead)}` : capital(focus.eyebrow || 'Up next'))}</span>${canPlan ? minutesChip() : ''}`;
+      hero = card(meta, focus.title, `${focus.detail ? `<p class="u2-m u2-detail">${esc(focus.detail)}</p>` : ''}<a class="${focus.strong ? 'u2-btn' : 'u2-btn2'}" id="u2-start" href="${esc(focus.href)}">${esc(focus.label)}</a>`);
+    } else if (leadMaterial) {
+      hero = card(`<span>Your upload · ${esc(materialWords(leadMaterial))}</span>`, leadMaterial.title, `<a class="u2-btn" id="u2-start" href="${materialHref(leadMaterial)}">${leadMaterial.total ? 'Continue' : 'Make a learning path'}</a>`);
+    } else if (!subjects.length && how === 'own' && mats.can_upload) {
+      hero = card('<span>Your own material</span>', 'Add your notes', '<p class="u2-m u2-detail">Notes, books or videos. Savant turns them into lessons.</p><a class="u2-btn" id="u2-upload" href="/my-material">Upload your own</a>');
+    } else if (!subjects.length) {
+      hero = card('', 'Pick your first subject', '<a class="u2-btn" id="u2-start" href="/onboarding">Choose subjects</a>');
+    }
+    // One grid: every subject once (the lead outlined), then the subjects still waiting, wide.
+    const rest = waitFirst ? waits.slice(1) : waits;
+    const many = waitFirst ? rest.length > 0 : subjects.length + rest.length > 1;
+    const grid = many ? `${waitFirst ? '' : '<h2 class="u2-label">Your subjects</h2>'}<div class="u2-squares" id="u2-subjects">${waitFirst ? '' : subjects.map((e) => phoneSquare(e, !!lead && e === lead)).join('')}${rest.map((w) => phoneWait(w, false)).join('')}</div>` : '';
+    const links = [];
+    if (!waitFirst && subjects.length <= 1 && (subjects.length || mats.materials.length)) links.push('<a class="u2-next" id="u2-add-subject" href="/onboarding">Add a subject</a>');
+    if (canPlan && (plan.blocks || []).length) links.push('<button type="button" class="u2-next" id="u2-peek" aria-haspopup="dialog">Today\'s plan</button>');
+    if (hasPast) links.push('<a class="u2-next" id="u2-past-link" href="#past">Past</a>');
+    const done = finished ? `<section class="u2-h-sec" id="u2-done" aria-label="Done for today"><div class="u2-card u2-hero u2-done-card">
+        <span class="u2-ck" aria-hidden="true">${ic('check')}</span>
+        <h1 class="u2-t1" tabindex="-1" id="u2-title">See you tomorrow</h1>
+        <p class="u2-m u2-detail">${today.spent} of your ${plan.minutes} minutes.${focus && focus.title ? ` Next: ${esc(focus.title)}.` : ''}</p>
+        <button type="button" class="u2-btn2" id="u2-keep-going">Keep going</button></div></section>` : '';
+    host.innerHTML = `
+      <div class="u2-home-body u2-ha">
+        ${done}
+        <section class="u2-h-sec" id="u2-continue" aria-label="Continue">
+          ${finished ? '' : hero}
+          ${grid}
+        </section>
+        ${listed.length ? `<section class="u2-h-sec" id="u2-material" aria-label="Your uploads"><h2 class="u2-label">Your uploads</h2><div class="u2-rows">${listed.map(phoneMaterialRow).join('')}</div></section>` : ''}
+        ${links.length ? `<p class="u2-links">${links.join('')}</p>` : ''}
+      </div>`;
+    return { waitFirst };
+  }
+
   function guideInto(slot, words, id) {
     const btn = document.createElement('button');
     btn.type = 'button';
@@ -185,6 +255,9 @@
     const req = ++focusReq;
     const focus = await focusOf();
     if (req !== focusReq) return;
+    // The empty page's other first steps live in here once moved; keep them through a redraw.
+    const keep = host.querySelector('.empty-state');
+    if (keep) { keep.hidden = true; root.appendChild(keep); }
     const subjects = active();
     const unfinished = mats.materials.filter((m) => !m.complete);
     const hasPast = !!(mats.materials.some((m) => m.complete) || ((progress && progress.recent) || []).length || ((progress && progress.enrollments) || []).some((e) => e.status === 'graduated'));
@@ -223,6 +296,12 @@
     const leadMaterial = !waitFirst && !subjects.length && unfinished.length && mats.can_upload ? unfinished[0] : null;
     const listed = unfinished.filter((m) => m !== leadMaterial);
     const canPlan = !!(plan && subjects.length);
+    if (PHONE.matches) {
+      const finishedNow = doneForToday(canPlan);
+      const shown = phoneHome(host, { focus, subjects, unfinished, leadId, canPlan, hasPast, finished: finishedNow });
+      afterDraw(host, finishedNow, shown.waitFirst, focus);
+      return;
+    }
     host.innerHTML = `
       <div class="u2-home-body">
         <section class="u2-h-sec" id="u2-continue" aria-label="Continue">
@@ -252,13 +331,8 @@
       const go = host.querySelector('#u2-continue');
       go.hidden = true;
       go.insertAdjacentHTML('beforebegin', `<section class="u2-h-sec" id="u2-done" aria-label="Done for today"><div class="u2-feature"><h1 class="u2-t1" tabindex="-1" id="u2-title">Done for today</h1><p class="u2-m u2-detail" style="margin:0 auto">${today.spent} of your ${plan.minutes} minutes.</p><button type="button" class="u2-btn2" id="u2-keep-going">Keep going</button></div></section>`);
-      host.querySelector('#u2-keep-going').addEventListener('click', async () => {
-        try { sessionStorage.setItem(`u2-keep-${today.date}`, '1'); } catch { /* it just asks again next load */ }
-        keptGoing = true;
-        await drawHome();
-      });
     }
-    guideInto(host, finished ? 'Done for today.' : waitFirst ? 'Where should we start?' : (how === 'own' || how === 'both') && !mats.materials.length ? "Add your notes when you're ready." : focus || mats.materials.length ? 'Ready when you are.' : 'Let\'s get you started.', 'u2-giraffe');
+    afterDraw(host, finished, waitFirst, focus);
     host.querySelectorAll('[data-wait-tile]').forEach((b) => b.addEventListener('click', () => {
       const w = waiting.find((x) => x.track.id === b.dataset.waitTile);
       const slot = host.querySelector('#u2-wait-open');
@@ -266,9 +340,21 @@
       host.querySelectorAll('[data-wait-tile]').forEach((x) => { x.classList.toggle('on', x === b); x.setAttribute('aria-expanded', String(x === b)); });
       slot.innerHTML = waitCard(w);
     }));
+  }
+  /** What both layouts do once drawn: Keep going, the giraffe and its words, and the empty page's other first steps. */
+  function afterDraw(host, finished, waitFirst, focus) {
+    const keepGoing = host.querySelector('#u2-keep-going');
+    if (keepGoing) {
+      keepGoing.addEventListener('click', async () => {
+        try { sessionStorage.setItem(`u2-keep-${today.date}`, '1'); } catch { /* it just asks again next load */ }
+        keptGoing = true;
+        await drawHome();
+      });
+    }
+    guideInto(host, finished ? 'Done for today.' : waitFirst ? 'Where should we start?' : (how === 'own' || how === 'both') && !mats.materials.length ? "Add your notes when you're ready." : focus || mats.materials.length ? 'Ready when you are.' : 'Let\'s get you started.', 'u2-giraffe');
     // The empty page's other first steps (the style quiz, the survey) stay on the page, under the sections. Not while subjects wait: its "Choose subjects" would ask again.
     const empty = root.querySelector('.empty-state');
-    if (empty && !waitFirst) host.querySelector('.u2-home-body').appendChild(empty);
+    if (empty && !waitFirst) { empty.hidden = false; host.querySelector('.u2-home-body').appendChild(empty); }
   }
 
   // ── Past ─────────────────────────────────────────────────────────────────
@@ -372,7 +458,8 @@
     const minutes = ev.target.closest('#u2-minutes');
     if (minutes) { const d = openSheet('Minutes you have today', picker(), minutes); d.dataset.kind = 'minutes'; return; }
     const peek = ev.target.closest('#u2-peek');
-    if (peek) { const d = openSheet('Today\'s plan', stepsBody(), peek); d.dataset.kind = 'steps'; }
+    if (peek) { const d = openSheet('Today\'s plan', stepsBody(), peek); d.dataset.kind = 'steps'; return; }
+    if (ev.target.closest('#u2-t-timer') && !App.ui2.startStudy()) App.toast('The study timer is not available here.', 'error');
   });
 
   // ── Everything ───────────────────────────────────────────────────────────
@@ -390,30 +477,45 @@
     const reviewHref = leadHref('review') || (user.retention ? '/calendar' : null);
     const dark = document.documentElement.dataset.mode === 'dark';
     const recent = !!(progress && progress.recent && progress.recent.length);
+    const name = String(user.display_name || user.username || 'You');
+    const timer = !!user.retention; // js/study.js's strip comes with it (js/app.js); the row shows only while that strip is idle
     all.innerHTML = `
       <h1 class="u2-vh" tabindex="-1" id="u2-all-title">Everything</h1>
       <div class="u2-guide" id="u2-all-guide"><span id="u2-all-g"></span><div class="u2-tailwrap"><div class="u2-bubble">Where to next?</div></div></div>
       <div class="u2-all-body">
+        <section class="u2-ph" id="u2-me"><h2 class="u2-vh">You</h2><a class="u2-list u2-li u2-prof" href="/profile"><span class="u2-av" aria-hidden="true">${esc(name.trim().charAt(0).toUpperCase() || 'Y')}</span><span class="u2-o-t"><b>${esc(name)}</b><small>Profile and account</small></span>${ic('chev-r', 'u2-mute')}</a></section>
         <section id="u2-all-subjects"><h2 class="u2-vh">Your subjects</h2><div id="u2-subject-slot"></div><a class="u2-opt u2-all-add" href="/onboarding">${ic('plus')}<b>Add a subject</b></a></section>
         <section id="u2-all-plan" ${plan ? '' : 'hidden'}><h2 class="u2-time-h">Time today</h2><div id="u2-all-picker"></div></section>
         <section id="u2-all-else">
           <h2 class="u2-vh">Everything else</h2>
+          <h2 class="u2-label u2-ph" aria-hidden="true">Learn</h2>
           <div class="u2-grid">
+            <button type="button" class="u2-opt u2-ph" id="u2-t-subjects" aria-expanded="false" aria-controls="u2-all-subjects">${ic('book')}<b>Subjects</b></button>
             ${reviewHref ? tile(reviewHref, 'loop', 'Review', due.length ? `<span class="u2-count" aria-label="${plural(due.length, 'skill')} due">${due.length}</span>` : '') : ''}
             ${mats.can_upload ? tile('/my-material', 'note', 'My material', '', 'id="u2-row-material"') : ''}
             ${tile('/dashboard#past', 'history', 'Past', '', 'id="u2-row-past"')}
             ${tileBtn('u2-t-calendar', 'calendar', 'Calendar', opens('u2-panel-calendar'))}
             ${recent ? tileBtn('u2-t-recent', 'history', 'Sessions', opens('u2-panel-recent')) : ''}
-            ${tile('/profile', 'user', 'Profile')}
+            ${tile('/profile', 'user', 'Profile', '', 'data-dt')}
             ${home ? tileBtn('u2-t-extras', 'chat', 'Tutor', opens('u2-panel-extras')) : ''}
             ${user.can_browse ? tile('/curriculum', 'book', 'Curriculum') : ''}
             ${user.is_admin ? tile('/game-lab', 'target', 'Game lab') + tile('/admin', 'settings', 'Admin') : ''}
-            <button type="button" class="u2-opt" id="u2-theme">${ic(dark ? 'sun' : 'moon')}<b>${dark ? 'Light theme' : 'Dark theme'}</b></button>
-            <button type="button" class="u2-opt" id="u2-signout">${ic('out')}<b>Sign out</b></button>
+            ${timer ? `<button type="button" class="u2-opt u2-ph" id="u2-t-timer">${ic('clock')}<b>Time a session</b></button>` : ''}
+            <button type="button" class="u2-opt" id="u2-theme" data-dt>${ic(dark ? 'sun' : 'moon')}<b>${dark ? 'Light theme' : 'Dark theme'}</b></button>
+            <button type="button" class="u2-opt" id="u2-signout" data-dt>${ic('out')}<b>Sign out</b></button>
           </div>
           <div class="u2-panel" id="u2-panel-calendar" hidden></div>
           ${recent ? '<div class="u2-panel" id="u2-panel-recent" hidden></div>' : ''}
           ${home ? '<div class="u2-panel" id="u2-panel-extras" hidden></div>' : ''}
+        </section>
+        <section class="u2-ph" id="u2-settings">
+          <h2 class="u2-label">Settings</h2>
+          <div class="u2-list">
+            <div class="u2-li">${ic('swatch')}<b class="u2-li-t" id="u2-l-colour">Colours</b><span class="u2-swatches" role="radiogroup" aria-labelledby="u2-l-colour">${ACCENTS.map(([k, label]) => `<button type="button" role="radio" class="u2-sw" data-accent-set="${k}" aria-label="${label}" aria-checked="false"><i></i></button>`).join('')}</span></div>
+            <div class="u2-li">${ic('chat')}<b class="u2-li-t" id="u2-l-chat">Chat</b><span class="u2-seg" role="radiogroup" aria-labelledby="u2-l-chat"><button type="button" role="radio" data-side-set="top" aria-checked="false">Top</button><button type="button" role="radio" data-side-set="bottom" aria-checked="false">Bottom</button></span></div>
+            <div class="u2-li">${ic('moon')}<b class="u2-li-t" id="u2-l-theme">Theme</b><span class="u2-seg" role="radiogroup" aria-labelledby="u2-l-theme"><button type="button" role="radio" data-theme-set="light" aria-checked="false">Light</button><button type="button" role="radio" data-theme-set="dark" aria-checked="false">Dark</button><button type="button" role="radio" data-theme-set="auto" aria-checked="false">Auto</button></span></div>
+            <button type="button" class="u2-li" id="u2-set-signout">${ic('out')}<b class="u2-li-t">Sign out</b></button>
+          </div>
         </section>
       </div>`;
     root.appendChild(all);
@@ -463,6 +565,7 @@
 
     // What the old header did, in the one list.
     document.getElementById('u2-signout').addEventListener('click', () => { const b = document.getElementById('logout'); if (b) b.click(); });
+    phoneSettings(all);
     const theme = document.getElementById('u2-theme');
     if (!document.getElementById('theme-toggle')) theme.hidden = true;
     theme.addEventListener('click', () => {
@@ -482,9 +585,59 @@
     }).catch(() => {});
   }
 
+  // ── the phone's Menu: Subjects opens the real cards; Settings ────────────
+  const ACCENTS = [['blue', 'Savant blue'], ['ink', 'Ink'], ['plum', 'Plum']];
+  const stored = (key) => { try { return localStorage.getItem(key); } catch { return null; } };
+  function markSettings(all) {
+    const accent = document.documentElement.dataset.accent || 'blue';
+    const side = stored('savant.tutor.side') === 'top' ? 'top' : 'bottom';
+    const theme = stored('polymath.theme');
+    const pick = (attr, now) => all.querySelectorAll(`[${attr}]`).forEach((b) => b.setAttribute('aria-checked', String(b.getAttribute(attr) === now)));
+    pick('data-accent-set', accent);
+    pick('data-side-set', side);
+    pick('data-theme-set', theme === 'light' || theme === 'dark' ? theme : 'auto');
+  }
+  function phoneSettings(all) {
+    const subjectsBtn = all.querySelector('#u2-t-subjects');
+    subjectsBtn.addEventListener('click', () => {
+      const open = all.classList.toggle('u2-subj-open');
+      subjectsBtn.setAttribute('aria-expanded', String(open));
+    });
+    all.querySelector('#u2-set-signout').addEventListener('click', () => { const b = document.getElementById('logout'); if (b) b.click(); });
+    all.querySelector('#u2-settings').addEventListener('click', async (ev) => {
+      const accent = ev.target.closest('[data-accent-set]');
+      const side = ev.target.closest('[data-side-set]');
+      const theme = ev.target.closest('[data-theme-set]');
+      if (accent) {
+        const k = accent.dataset.accentSet;
+        if (k === 'blue') delete document.documentElement.dataset.accent; else document.documentElement.dataset.accent = k;
+        try { if (k === 'blue') localStorage.removeItem('savant.u2.accent'); else localStorage.setItem('savant.u2.accent', k); } catch { /* this page only */ }
+        App.announce(`${accent.getAttribute('aria-label')} on`);
+      } else if (side) {
+        const k = side.dataset.sideSet;
+        // The chat's own button when it is open, so it moves now; otherwise its stored choice, local and on the account, as that button saves it.
+        const own = document.querySelector(`.tdock-panel .s-${k}`);
+        if (own) own.click();
+        else {
+          try { localStorage.setItem('savant.tutor.side', k); } catch { /* the account keeps it */ }
+          App.api.request('PUT', '/api/tutor/dock/side', { side: k }).catch(() => {});
+        }
+        App.announce(`Chat at the ${k}`);
+      } else if (theme && window.SavantStyle) {
+        const k = theme.dataset.themeSet;
+        window.SavantStyle.setTheme(k === 'auto' ? null : k);
+        markSettings(all);
+        try { await App.api.post('/api/prefs', { style: 'auto' }); } catch { /* kept on this device */ }
+        App.announce(k === 'auto' ? 'Theme follows your device' : `${capital(k)} theme`);
+      } else return;
+      markSettings(all);
+    });
+    markSettings(all);
+  }
+
   // ── which view ───────────────────────────────────────────────────────────
   function applyView(moveFocus) {
-    const view = location.hash === '#everything' ? 'everything' : location.hash === '#past' ? 'past' : 'home';
+    const view = /^#(everything|menu)$/.test(location.hash) ? 'everything' : location.hash === '#past' ? 'past' : 'home';
     if (view === 'past' && document.documentElement.classList.contains('u2-ready')) buildPast();
     document.documentElement.dataset.u2View = view;
     const menu = document.getElementById('u2-menu');
@@ -493,7 +646,9 @@
       menu.setAttribute('aria-label', view === 'home' ? 'Open everything' : view === 'past' ? 'Close past' : 'Close everything');
       menu.setAttribute('href', view === 'home' ? '/dashboard#everything' : '/dashboard');
     }
-    document.title = view === 'everything' ? 'Everything | Savant' : view === 'past' ? 'Past | Savant' : 'Home | Savant';
+    const named = document.getElementById('u2-tb-view');
+    if (named) named.textContent = view === 'everything' ? 'Menu' : view === 'past' ? 'Past' : '';
+    document.title = view === 'everything' ? `${PHONE.matches ? 'Menu' : 'Everything'} | Savant` : view === 'past' ? 'Past | Savant' : 'Home | Savant';
     if (moveFocus) {
       window.scrollTo(0, 0);
       const target = document.getElementById(view === 'everything' ? 'u2-all-title' : view === 'past' ? 'u2-past-title' : 'u2-title');
@@ -508,7 +663,7 @@
         if (location.hash === '#past') {
           ev.preventDefault();
           location.hash = '';
-        } else if (location.hash === '#everything') {
+        } else if (/^#(everything|menu)$/.test(location.hash)) {
           ev.preventDefault();
           if (cameFromHome) history.back();
           else location.hash = '';
@@ -551,6 +706,8 @@
     document.documentElement.classList.add('u2-ready');
     applyView(false);
   }
+  const crossed = () => { if (built && document.getElementById('u2-home')) { drawHome(); applyView(false); } };
+  if (PHONE.addEventListener) PHONE.addEventListener('change', crossed);
   const check = () => { if (root.querySelector('.home, .empty-state')) build(); };
   if (window.MutationObserver) new MutationObserver(check).observe(root, { childList: true });
 }());
