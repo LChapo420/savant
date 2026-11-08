@@ -64,6 +64,8 @@ const adaptation = require('./adaptation');
 const mastery = require('./mastery');
 const objItems = require('./objective-items');
 const retentionGoal = require('./retention-goal');
+const adaptiveCal = require('./enforcer-adaptive-app'); // ENFORCER_ADAPTIVE=on only (docs/ENFORCER-ADAPTIVE.md); off changes nothing here
+const adaptiveCore = require('./enforcer-adaptive');
 
 const DAY = 24 * 3600 * 1000;
 const FINAL = new Set(['done', 'declined', 'skipped', 'stopped', 'expired', 'empty', 'merged']);
@@ -521,6 +523,9 @@ function defaultTier(enf) {
   if (!enf.base && (wrong >= p.full_wrong_objectives || meanH < p.full_mean_p_h)) want = 'full';
   const lastThree = db.forUser('enforcers', enf.user_id).filter((e) => e.id !== enf.id && e.tier && e.tier !== 'none').slice(-3);
   if ((enf.scope === 'session' && (enf.base_active_ms || 0) < p.quick_below_ms) || (lastThree.length === 3 && lastThree.every((e) => e.tier === 'quick'))) want = 'quick';
+  // Adaptive timing sized this one by the need it found (its cover's tier).
+  const sized = (enf.covers || []).map((c) => c.tier).find((t) => t && opts.includes(t));
+  if (sized && (enf.covers || []).some((c) => c.adaptive)) return sized;
   if (opts.includes(want)) return want;
   return opts[opts.length - 1];
 }
@@ -912,7 +917,7 @@ function onSessionEnded(userId, row, { scope = 'session', auto = false, now = Da
       }
       // A scheduled day: its end-of-day enforcer is part of the scheduled one (the widest absorbs the rest).
       const at = dayOf(userId, now);
-      if (at && at.today === day && (schedule.typesOn(at.t).some((type) => !rowFor(userId, type, at.t)) || goalToday(userId, at, now))) {
+      if (at && at.today === day && (adaptiveCore.on() || schedule.typesOn(at.t).some((type) => !rowFor(userId, type, at.t)) || goalToday(userId, at, now))) {
         const combined = scheduledOffer(userId, now, { includeToday: true });
         if (combined && combined.status !== 'running') return combined;
       }
@@ -999,6 +1004,9 @@ function calendarKept(gv, type) {
   return [...gv.byTrackGrade.values()].some((x) => retentionGoal.keptTypes(x.eff).includes(type));
 }
 
+/** The calendar types some subject's goal keeps (all of them without a goal view). */
+function keptTypesOf(gv) { return schedule.TYPES.filter((t) => calendarKept(gv, t)); }
+
 /**
  * The scheduled enforcers due now: for each type, its latest occurrence on or
  * before today, when no row speaks for it and its window holds work. Several
@@ -1025,11 +1033,17 @@ function scheduledOffer(userId, now, { includeToday = false } = {}) {
     }
     due.push(cover);
   };
-  for (const type of schedule.TYPES) {
-    const d = upTo >= 1 ? schedule.latest(type, upTo) : null;
-    if (!d || rowFor(userId, type, d)) continue;
-    const w = schedule.windowFor(type, d);
-    consider({ type, day: d, date: schedule.addDays(at.anchor, d), from_date: schedule.addDays(at.anchor, w.from), to_date: schedule.addDays(at.anchor, w.to) });
+  if (adaptiveCore.on()) {
+    // Adaptive timing: one enforcer, when the studied material needs it (services/enforcer-adaptive.js).
+    const ac = adaptiveCal.cover(module.exports, userId, at, now, { includeToday, kept: keptTypesOf(gv) });
+    if (ac) consider(ac);
+  } else {
+    for (const type of schedule.TYPES) {
+      const d = upTo >= 1 ? schedule.latest(type, upTo) : null;
+      if (!d || rowFor(userId, type, d)) continue;
+      const w = schedule.windowFor(type, d);
+      consider({ type, day: d, date: schedule.addDays(at.anchor, d), from_date: schedule.addDays(at.anchor, w.from), to_date: schedule.addDays(at.anchor, w.to) });
+    }
   }
   // A test date's own reviews (the day-of one is offered that morning, the others as the calendar's are).
   if (gv) {
@@ -1354,16 +1368,30 @@ function calendar(userId, { month = null, now = Date.now() } = {}) {
   for (const r of windowItems(userId, { from_date: lookFrom, to_date: last }, tz)) worked.add(schedule.localDate(r.t, tz));
   const anyWork = (from, to) => { for (let d = from; d <= to; d = schedule.addDays(d, 1)) if (worked.has(d)) return true; return false; };
   const STATUS = { done: 'done', declined: 'none', skipped: 'skipped', stopped: 'stopped', expired: 'missed', empty: 'empty', running: 'due', choosing: 'due', merged: 'merged' };
+  // Adaptive timing (ENFORCER_ADAPTIVE=on): decided days from the rows, today's from its decision, later ones as "about" dates.
+  let adaptiveDays = null;
+  if (adaptiveCore.on() && real) {
+    const at = { anchor: real, tz, today, t };
+    const kept = keptTypesOf(gv);
+    adaptiveDays = new Map();
+    for (const [d, c] of adaptiveCal.pastCovers(userId)) adaptiveDays.set(d, { type: c.type, window: { from_date: c.from_date, to_date: c.to_date } });
+    if (!adaptiveDays.has(t)) {
+      const c = adaptiveCal.cover(module.exports, userId, at, now, { includeToday: true, kept });
+      if (c) adaptiveDays.set(t, { type: c.type, window: { from_date: c.from_date, to_date: c.to_date } });
+    }
+    for (const f of adaptiveCal.forecastDays(module.exports, userId, at, now, kept, 3)) if (!adaptiveDays.has(f.day)) adaptiveDays.set(f.day, { type: f.type, about: true, window: f.window });
+  }
   const days = [];
   for (let date = first; date <= last; date = schedule.addDays(date, 1)) {
     const idx = schedule.dayIndex(anchor, date);
-    const types = idx >= 1 ? schedule.typesOn(idx) : [];
+    const ad = adaptiveDays ? adaptiveDays.get(idx) || null : null;
+    const types = adaptiveDays ? (ad ? [ad.type] : []) : (idx >= 1 ? schedule.typesOn(idx) : []);
     const type = types[0] || null;
     let ev = null;
     if (type) {
-      const w = schedule.combinedWindow(idx);
-      const win = { from_date: schedule.addDays(anchor, w.from), to_date: schedule.addDays(anchor, w.to) };
-      let row = rows.filter((e) => Array.isArray(e.covers) && e.covers.some((c) => c.type === type && c.day === idx && !c.goal)).sort((a, b) => b.id - a.id);
+      const w = ad ? null : schedule.combinedWindow(idx);
+      const win = ad ? ad.window : { from_date: schedule.addDays(anchor, w.from), to_date: schedule.addDays(anchor, w.to) };
+      let row = rows.filter((e) => Array.isArray(e.covers) && e.covers.some((c) => c.type === type && c.day === idx && !c.goal && (!adaptiveDays || c.adaptive))).sort((a, b) => b.id - a.id);
       row = row.find((e) => e.status !== 'merged') || row[0] || null;
       let status;
       if (row) status = STATUS[row.status] || row.status;
@@ -1373,12 +1401,12 @@ function calendar(userId, { month = null, now = Date.now() } = {}) {
       else status = anyWork(win.from_date, win.to_date) ? 'missed' : 'empty';
       if (status === 'merged') status = idx < t ? 'missed' : 'due';
       // Every subject's goal has dropped this one: nothing is coming that day.
-      if (!row && !calendarKept(gv, type)) status = 'goal';
+      if (!row && !ad && !calendarKept(gv, type)) status = 'goal';
       ev = {
         type, label: schedule.LABEL[type], status,
         // The narrower ones it absorbs on this day; it is also this day's end-of-day enforcer.
         absorbs: types.slice(1).map((x) => ({ type: x, label: schedule.LABEL[x] })),
-        with_day: true, tier: row ? row.tier || null : null, window: win,
+        with_day: true, tier: row ? row.tier || null : null, window: win, about: !!(ad && ad.about),
         done_on: row && row.finished_at ? schedule.localDate(Date.parse(row.finished_at), tz) : null,
         enforcer_id: row ? row.id : null,
       };
@@ -1388,7 +1416,12 @@ function calendar(userId, { month = null, now = Date.now() } = {}) {
     days.push({ date, day: idx, today: date === today, past: date < today, scheduled: ev, ends });
   }
   const upcoming = [];
-  for (let d = Math.max(1, t + 1); upcoming.length < 8 && d < t + 80; d++) {
+  if (adaptiveDays) {
+    for (const [d, a] of [...adaptiveDays].sort((x, y) => x[0] - y[0])) {
+      if (d > t && a.about) upcoming.push({ type: a.type, label: schedule.LABEL[a.type], absorbs: [], about: true, date: schedule.addDays(anchor, d), window: a.window });
+    }
+  }
+  for (let d = Math.max(1, t + 1); !adaptiveDays && upcoming.length < 8 && d < t + 80; d++) {
     const types = schedule.typesOn(d);
     if (!types.length || !calendarKept(gv, types[0])) continue;
     const w = schedule.combinedWindow(d);
@@ -1397,7 +1430,7 @@ function calendar(userId, { month = null, now = Date.now() } = {}) {
   // A test date's own reviews, from today on.
   const goalReviews = gv ? retentionGoal.goalCovers(gv.goals, anchor, 1e9).filter((c) => c.date >= today).sort((a, b) => a.day - b.day).slice(0, 12)
     .map((c) => ({ date: c.date, kind: c.kind, enrollment_id: c.enrollment_id, window: { from_date: c.from_date, to_date: c.to_date } })) : [];
-  return { tz, today, anchor: real, preview: !real, month: ym, first, last, days, upcoming, goal_reviews: goalReviews };
+  return { tz, today, anchor: real, preview: !real, adaptive: !!adaptiveDays, month: ym, first, last, days, upcoming, goal_reviews: goalReviews };
 }
 
 /** Today's scheduled enforcer (taken at End day session), or null: {type, label, absorbs, done}. */
@@ -1405,9 +1438,15 @@ function scheduledToday(userId, now = Date.now()) {
   const at = dayOf(userId, now);
   if (!at || at.t < 1) return null;
   const gv = goalView(userId, at.anchor, now);
-  const types = schedule.typesOn(at.t).filter((x) => calendarKept(gv, x));
+  let types = schedule.typesOn(at.t).filter((x) => calendarKept(gv, x));
+  if (adaptiveCore.on()) {
+    const mine = adaptiveCal.pastCovers(userId).get(at.t);
+    const c = mine || adaptiveCal.cover(module.exports, userId, at, now, { includeToday: true, kept: keptTypesOf(gv) });
+    types = c ? [c.type] : [];
+  }
   if (!types.length) return null;
-  const row = rowFor(userId, types[0], at.t);
+  // An adaptive day is spoken for only by an adaptive row (a fixed-calendar row from before the switch is not it).
+  const row = adaptiveCore.on() ? (db.forUser('enforcers', userId).find((e) => (e.covers || []).some((c) => c.adaptive && c.day === at.t)) || null) : rowFor(userId, types[0], at.t);
   return { type: types[0], label: schedule.LABEL[types[0]], absorbs: types.slice(1).map((x) => ({ type: x, label: schedule.LABEL[x] })), done: !!(row && FINAL.has(row.status)), enforcer_id: row ? row.id : null };
 }
 
@@ -1422,6 +1461,10 @@ function reachStart(userId, now = Date.now()) {
   const anchor = study.anchorOf(userId) || today;
   const t = schedule.dayIndex(anchor, today);
   let from = Math.max(0, t);
+  if (adaptiveCore.on()) {
+    const days = adaptiveCal.decidedDays(userId);
+    return schedule.addDays(anchor, Math.min(from, days.length ? days[days.length - 1] + 1 : 0));
+  }
   for (const type of schedule.TYPES) {
     let x = schedule.next(type, Math.max(1, t));
     const r = x === t ? rowFor(userId, type, x) : null;

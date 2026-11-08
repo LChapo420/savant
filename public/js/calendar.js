@@ -40,7 +40,8 @@ App.mount(async () => {
   function sentence(day) {
     const parts = [];
     const ev = day.scheduled;
-    if (ev) parts.push(`${ev.label} enforcer${(ev.absorbs || []).length ? ` with the ${ev.absorbs.map((a) => a.label.toLowerCase()).join(' and ')} and the end of day, as one` : ', with the end of day'}, ${STATUS[ev.status] || ev.status}${ev.tier && ev.status === 'done' ? ` (${TIER[ev.tier] || ev.tier})` : ''}${ev.done_on && ev.done_on !== day.date ? `, done on ${fmt(ev.done_on, { day: 'numeric', month: 'long' })}` : ''}. Covers ${fmt(ev.window.from_date, { day: 'numeric', month: 'short' })} to ${fmt(ev.window.to_date, { day: 'numeric', month: 'short' })}.`);
+    if (ev && ev.about) parts.push(`About this day: a ${ev.label.toLowerCase()} enforcer is expected, from what you have studied so far. It moves as you study.`);
+    else if (ev) parts.push(`${ev.label} enforcer${(ev.absorbs || []).length ? ` with the ${ev.absorbs.map((a) => a.label.toLowerCase()).join(' and ')} and the end of day, as one` : ', with the end of day'}, ${STATUS[ev.status] || ev.status}${ev.tier && ev.status === 'done' ? ` (${TIER[ev.tier] || ev.tier})` : ''}${ev.done_on && ev.done_on !== day.date ? `, done on ${fmt(ev.done_on, { day: 'numeric', month: 'long' })}` : ''}. Covers ${fmt(ev.window.from_date, { day: 'numeric', month: 'short' })} to ${fmt(ev.window.to_date, { day: 'numeric', month: 'short' })}.`);
     for (const e of day.ends) parts.push(`${e.label} enforcer, ${e.status === 'due' ? 'waiting' : STATUS[e.status] || e.status}.`);
     return parts.join(' ');
   }
@@ -52,7 +53,7 @@ App.mount(async () => {
     return `
       <td class="cal-day${day.today ? ' is-today' : ''}${day.past ? ' is-past' : ''}"${day.today ? ' aria-current="date"' : ''}>
         <span class="cal-n num" aria-hidden="true">${n}</span>
-        ${ev ? `<span class="cal-ev is-${esc(ev.status)}" aria-hidden="true" title="${esc(`${[ev.label, ...(ev.absorbs || []).map((a) => a.label.toLowerCase())].join(' + ')}: ${STATUS[ev.status] || ev.status}`)}"><span class="cal-tag"><span class="cal-short">${SHORT[ev.type]}${(ev.absorbs || []).map((a) => `+${SHORT[a.type]}`).join('')}</span><span class="cal-long">${esc([ev.label, ...(ev.absorbs || []).map((a) => a.label.toLowerCase())].join(' + '))}</span></span>${mark(ev.status)}</span>` : ''}
+        ${ev ? `<span class="cal-ev is-${esc(ev.status)}" aria-hidden="true" title="${esc(`${[ev.label, ...(ev.absorbs || []).map((a) => a.label.toLowerCase())].join(' + ')}: ${STATUS[ev.status] || ev.status}`)}"><span class="cal-tag"><span class="cal-short">${ev.about ? '~' : ''}${SHORT[ev.type]}${(ev.absorbs || []).map((a) => `+${SHORT[a.type]}`).join('')}</span><span class="cal-long">${ev.about ? 'About: ' : ''}${esc([ev.label, ...(ev.absorbs || []).map((a) => a.label.toLowerCase())].join(' + '))}</span></span>${mark(ev.status)}</span>` : ''}
         ${day.ends.length ? `<span class="cal-ends" aria-hidden="true" title="End-of-session enforcers">${day.ends.map((e) => `<i class="${e.status === 'done' ? 'is-done' : ''}"></i>`).join('')}</span>` : ''}
         <span class="visually-hidden">${esc(fmt(day.date, { weekday: 'long', day: 'numeric', month: 'long' }))}${day.today ? ', today' : ''}. ${esc(sentence(day) || 'No enforcer.')}</span>
       </td>`;
@@ -79,6 +80,15 @@ App.mount(async () => {
   }
 
   function legend() {
+    if (data.adaptive) {
+      return `
+      <dl class="cal-legend">
+        <div><dt><span class="cal-tag">S</span></dt><dd>An enforcer comes when what you have studied needs it, sized to that need (S, W, B or M is how many days it covers). The days ahead marked ~ are a forecast and move as you study</dd></div>
+        <div><dt>${window.mark('tick')}</dt><dd>Done</dd></div>
+        <div><dt>${window.mark('slash', 'mark-plain')}</dt><dd>Missed</dd></div>
+        <div><dt><span class="cal-ends"><i class="is-done"></i></span></dt><dd>An end-of-session or end-of-day enforcer</dd></div>
+      </dl>`;
+    }
     return `
       <dl class="cal-legend">
         <div><dt><span class="cal-tag">S</span></dt><dd>Semi-weekly: every 3 then 4 days from your first day, covers the days since the last one</dd></div>
@@ -103,9 +113,9 @@ App.mount(async () => {
             <li class="review-row">
               <span>
                 <span class="review-title">${esc([u.label, ...(u.absorbs || []).map((a) => a.label.toLowerCase())].join(' + '))}</span>
-                <span class="review-why">Covers ${esc(fmt(u.window.from_date, { day: 'numeric', month: 'short' }))} to ${esc(fmt(u.window.to_date, { day: 'numeric', month: 'short' }))}.</span>
+                <span class="review-why">${u.about ? 'Expected from what you have studied. ' : ''}Covers ${esc(fmt(u.window.from_date, { day: 'numeric', month: 'short' }))} to ${esc(fmt(u.window.to_date, { day: 'numeric', month: 'short' }))}.</span>
               </span>
-              <span class="review-kind num">${esc(fmt(u.date, { weekday: 'short', day: 'numeric', month: 'short' }))}</span>
+              <span class="review-kind num">${u.about ? 'about ' : ''}${esc(fmt(u.date, { weekday: 'short', day: 'numeric', month: 'short' }))}</span>
             </li>`).join('')}
         </ol>
       </section>`;
