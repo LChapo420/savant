@@ -232,7 +232,8 @@ async function main() {
     // Owner, 7 Nov (branch ob-trim): the beta's hidden subjects and the onboarding ending at the subjects are server decisions (catalog, ob2 routes); Home's two buttons need
     // two opt-in hooks, ?mode=quick on the placement and ?why=signed_out on sign-in. Each changes nothing without its parameter. Every other existing file still must not change.
     const OB_TRIM = new Set(['routes/catalog.js', 'routes/onboarding-v2.js', 'public/js/subject-placement.js', 'public/js/auth.js',
-      'public/js/dashboard.js', 'public/js/calendar.js']); // calendar.js: adaptive enforcer days with "about" dates, only with ENFORCER_ADAPTIVE=on (owner, 8 Nov); off it renders as before. dashboard.js: the owner's Spanish links (id 6689) removed, 7 Nov ("my learning Spanish thing, that's over")
+      'public/js/dashboard.js', 'public/js/calendar.js',
+      'public/js/study.js', 'routes/retention.js']); // study.js: exposes act/activeNow and a study:draw event for the session bar; retention.js: draws the enforcer's first questions ahead on a heartbeat (owner, 8 Nov, docs/SESSION-BAR.md); neither changes a server rule // calendar.js: adaptive enforcer days with "about" dates, only with ENFORCER_ADAPTIVE=on (owner, 8 Nov); off it renders as before. dashboard.js: the owner's Spanish links (id 6689) removed, 7 Nov ("my learning Spanish thing, that's over")
     const changed = out ? out.split(/\r?\n/).filter((l) => !l.startsWith('A')).map((l) => l.split(/\s+/).pop()).filter((f) => !giraffe.has(f) && !OB_TRIM.has(f) && !f.startsWith('public/js/ui2/') && !f.startsWith('public/css/ui2/')) : []; // the flag's own files may change as the work goes on
     assert.deepStrictEqual(changed, []);
     for (const f of ['public/start.html', 'public/js/start.js', 'public/js/start-tutor.js', 'public/css/screens/start.css']) assert(!out.includes(f), `${f} is untouched`);

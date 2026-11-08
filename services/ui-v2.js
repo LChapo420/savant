@@ -47,7 +47,7 @@ function inject(html, page) {
   let out = html
     .replace(/<html\b/, `<html data-ui2="on"${nav}`)
     .replace('</head>', `  <link rel="stylesheet" href="/css/ui2/tokens.css">\n  <link rel="stylesheet" href="/css/ui2/look.css">\n  <link rel="stylesheet" href="/css/ui2/app.css">\n  <link rel="stylesheet" href="/css/ui2/pages.css">\n  <link rel="stylesheet" href="/css/ui2/accent.css">\n  ${SIGNED_OUT}\n  <script src="/js/ui2/boot.js"></script>\n</head>`)
-    .replace('<script src="/js/app.js"></script>', '<script src="/js/app.js"></script>\n  <script src="/js/start-tutor.js"></script>\n  <script src="/js/ui2/look.js"></script>\n  <script src="/js/ui2/shell.js"></script>\n  <script src="/js/ui2/pages.js"></script>');
+    .replace('<script src="/js/app.js"></script>', '<script src="/js/app.js"></script>\n  <script src="/js/start-tutor.js"></script>\n  <script src="/js/ui2/look.js"></script>\n  <script src="/js/ui2/shell.js"></script>\n  <script src="/js/ui2/session-bar.js"></script>\n  <script src="/js/ui2/pages.js"></script>');
   if (page === 'dashboard') out = out.replace('<script src="/js/dashboard.js"></script>', '<script src="/js/ui2/home.js"></script>\n  <script src="/js/dashboard.js"></script>');
   return out;
 }
