@@ -24,6 +24,7 @@ const fs = require('fs');
 const path = require('path');
 const model = require('../onboarding/model');
 const { INDEX, SELF_REPORT_WORTH } = require('./ceilings');
+const decisions = require('./decisions');
 
 const DEFAULT_MINGAIN = 0.6; // points of total posterior sd per minute; chosen on the calibration seed, not the held-out one (docs/SCORECARD-REAL.md)
 const BEHAVIOUR_V = { performance: 0.85, habit: 0.75, memory: 0.6, contrast: 0.5, reasoning: 0.5, scale: 0.2, preference: 0.2, benefit: 0.25, hidden: 0.15 };
@@ -72,6 +73,8 @@ function selectionFor(state, reads) {
     const P = here.P + Pb;
     const zHat = P > 0 ? ((zCard === null ? 0 : Pb * zCard) + here.P * here.dataZ) / (1 + P) : 0;
     importance[id] = 1 + 0.5 * Math.max(0, Math.abs(zHat) - 1);
+    // SCORECARD_DECISION_VOI=1: also weigh by how likely the content decision made from this number is to be wrong (services/scorecard/decisions.js)
+    if (decisions.enabled()) importance[id] *= decisions.decisionImportance(id, 50 + model.POP_SD * zHat, model.POP_SD / Math.sqrt(1 + P));
   }
   return { sel, importance, behaviour, conflicts: cut };
 }
