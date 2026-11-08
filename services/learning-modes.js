@@ -47,6 +47,9 @@ const MODES = Object.freeze({
 /** Fastest with the two parts of its design that are not built in the app yet: one question covering two parts, and three-option questions (docs/FOUR-X.md). Simulated as a separate row only. */
 const FASTEST_FULL_DESIGN = Object.freeze({ firstQs: 'pair', pairReviews: true, shortFormat: true });
 
+/** A test on a known date: on the eve, any part predicted below this gets one last question (the normal student's cram is hard to beat otherwise). Added after the first held-out look, which showed dated tests losing 11 points; verified on a fresh held-out pair. */
+const DATED_EVE_FLOOR = 0.9;
+
 const DEFAULT = 'balanced';
 const LIST = Object.freeze(['fastest', 'balanced', 'highest']);
 
@@ -158,4 +161,4 @@ function lessonView(lesson, questions, modeId, correctTextOf = (q) => q.answer) 
   };
 }
 
-module.exports = { oneLine, lessonView, FASTEST_FULL_DESIGN, on, MODES, LIST, DEFAULT, get, normalize, planFor, recall, gapDays, nextReview, floorFor, omissionCheck, leftOutNote, DECAY, FACTOR, clamp };
+module.exports = { DATED_EVE_FLOOR, oneLine, lessonView, FASTEST_FULL_DESIGN, on, MODES, LIST, DEFAULT, get, normalize, planFor, recall, gapDays, nextReview, floorFor, omissionCheck, leftOutNote, DECAY, FACTOR, clamp };

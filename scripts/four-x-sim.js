@@ -37,7 +37,7 @@ const CORE_WORDS = num('core-words', 35);     // ASSUMED: the essentials of a po
 const FMT_MULT = num('fmt-mult', 36 / 41);     // Schneid et al. 2014: three options vs four or five
 const SHORT_WRONG_S = num('short-wrong-s', 12); // ASSUMED: one-line why after a wrong answer
 const OVERRIDE = args.override ? JSON.parse(args.override) : {};
-const WORDS_MULT = DENSITY === 'textbook' ? 3 : 1;
+const WORDS_MULT = num('words-mult', DENSITY === 'textbook' ? 3 : 1);
 const LEAN_MULT = DENSITY === 'textbook' ? 1.5 : 1; // ASSUMED: a less dense source needs a somewhat longer lean page
 
 const MODES = {};
@@ -267,8 +267,8 @@ function savant(L, P, doc, rep, modeId, H, dated) {
     const n = M.nextReview(estS(p) || 0.2, m, H - t, DECAY);
     p.due = n.done ? null : t + n.dueInDays;
   }
-  // a dated test: one look on the eve for parts below the floor
-  if (dated) { for (const p of w.pts) { const t = H - 1; if ((Rat(p, t + 1) || 0) < M.floorFor(m, H)) { const a = askM(p, t, 'plain'); addQ('review', a.right, QR_S); reviews += 1; } } }
+  // a dated test: one look on the eve for any part not already strong (the normal student rereads everything on the eve)
+  if (dated) { for (const p of w.pts) { const t = H - 1; if ((Rat(p, t + 1) || 0) < M.DATED_EVE_FLOOR) { const a = askM(p, t, 'plain'); addQ('review', a.right, QR_S); reviews += 1; } } }
   return { min: w.minutes.read + w.minutes.practice + w.minutes.review, read: w.minutes.read, practice: w.minutes.practice, review: w.minutes.review, reviews: reviews / doc.skills, skipped: known.size / doc.skills, ...examAt(w, H) };
 }
 
