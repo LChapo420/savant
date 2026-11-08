@@ -26,7 +26,8 @@ const ok = async (name, fn) => { await fn(); passed++; console.log(`  ok  ${name
 
 // What the page sees: the mark's letters and bars against its own viewBox, and the box on the screen.
 const whole = () => {
-  const svg = document.querySelector('.u2-wm');
+  // The visible one: since sidebar B the desktop sidebar's mark comes first in the page and is hidden on a phone.
+  const svg = [...document.querySelectorAll('.u2-wm')].find((e) => e.getBoundingClientRect().width > 0);
   const vb = svg.viewBox.baseVal;
   const parts = [...svg.children].map((e) => e.getBBox());
   const box = svg.getBoundingClientRect();
