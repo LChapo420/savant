@@ -207,3 +207,7 @@ H, a framed card on a faint subject pattern, "for now": "we might end up switchi
 
 - Basketball, chess and piano aren't fully built, so they're hidden from beta onboarding.
 - Onboarding ends after picking subjects (and uploading, if chosen). Home then offers each new subject "Take the placement" or "Pick my grade", instead of doing those inside onboarding.
+
+## Mobile bottom bar (owner, 7 Nov 2026)
+
+Like Duolingo, left to right: Home, Upload your own, Leaderboard and stats, Menu (profile, every other page, settings). Leaderboards come later; the tab shows real stats until then. Home must be cleaner. Mockup: design-refs/home-clean/sheet.png.
