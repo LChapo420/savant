@@ -49,7 +49,7 @@ function privateBeta(req) {
  * BETA_HIDDEN_SUBJECTS is the one place to change it (comma-separated ids; empty shows everything). Nothing is deleted: the subjects, their pages and any
  * enrollment someone already has stay as they are, and interests (basketball as a hobby) are a different list.
  */
-const HIDDEN_IN_BETA = 'basketball,chess,piano,spanish';
+const HIDDEN_IN_BETA = 'basketball,chess,piano';
 function hiddenSubjects(req) {
   if (!privateBeta(req)) return new Set();
   const raw = process.env.BETA_HIDDEN_SUBJECTS === undefined ? HIDDEN_IN_BETA : process.env.BETA_HIDDEN_SUBJECTS;
