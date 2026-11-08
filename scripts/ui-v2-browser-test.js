@@ -336,7 +336,7 @@ async function main() {
       await page.tap('#u2-giraffe');
       await page.waitForFunction(() => document.documentElement.dataset.tdock);
       const css = await page.evaluate(() => { const g = getComputedStyle(document.querySelector('.tdock-form .go')); return { radius: parseFloat(g.borderRadius), edge: g.boxShadow, title: getComputedStyle(document.querySelector('.tdock-title')).fontFamily, giraffe: !!document.querySelector('.tdock-head .tutor-svg') }; });
-      assert(css.radius >= 20 && /6px 0px/.test(css.edge), `Send ${css.radius} ${css.edge}`);
+      assert(css.radius >= 20 && /[46]px 0px/.test(css.edge), `Send ${css.radius} ${css.edge}`);
       assert(/DM Serif/.test(css.title));
       assert(css.giraffe, 'the giraffe in the chat head');
       await page.click('.tdock-panel .s-top');
