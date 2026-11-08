@@ -8,6 +8,7 @@
  * On a phone (under 768 px) the four destinations are a fixed bar at the bottom, safe-area aware: Home, Upload your own, Leaderboard and stats, Menu (/dashboard#menu, which is
  * Everything dressed as a list). It takes the place of the menu button. Home's top bar is the wordmark and the streak; the idle "Start session" leaves the bar (the Menu
  * has a quiet "Time a session" row that presses it), so no round clock competes with the lesson. The bar steps away in a sitting (a question, a lesson, a placement) and while the chat is open.
+ * On a tablet or desktop the menu is design B of design-refs/home-clean/side-menu.png, the calm sidebar, or A, the compact rail, by one setting (UI_V2_DESK_NAV, see DESK_NAV below).
  * and on a question it puts the guide under the player's top bar: the original giraffe, cropped at the shoulders on a phone, with the question in its speech bubble. When the answer comes, the
  * words of js/player.js's .verdict show in that bubble, tinted, and the giraffe reacts; the box itself stays where the player put it and keeps the buttons. Nothing of the player's is moved:
  * the bubble holds copies and the originals stay in place for screen readers, focus and every listener.
@@ -126,6 +127,7 @@
       wrap.insertBefore(s, wrap.querySelector('.header-actions'));
     }
     drawTabs(user);
+    drawDeskNav(user);
     const backBtn = left.querySelector('#u2-back');
     if (backBtn) backBtn.addEventListener('click', goBack);
     App.ui2.user = user;
@@ -139,6 +141,78 @@
     ['stats', '/stats', 'bars', 'Stats', 'Leaderboard and stats'],
     ['menu', '/dashboard#menu', 'menu', 'Menu', 'Menu'],
   ];
+
+  // ── The desktop menu (design-refs/home-clean/side-menu.png) ──────────────
+  /**
+   * The tablet and desktop menu's destinations (owner, 7 Nov: more than the phone's four), grouped. Each item is [key, href, icon, name, short name]; a group named null is the
+   * foot (Profile, Settings). Which menu draws them is one setting, UI_V2_DESK_NAV (services/ui-v2.js), set on <html> as data-u2-nav before anything paints:
+   *   sidebar  B, the calm sidebar (the owner's pick, 7 Nov): the wordmark, three quiet labels, every name in full, the page you are on in Savant blue, Profile and Settings at the foot
+   *   rail     A, the compact rail: an icon with its short name, the groups split by hairlines (the owner may switch to it later)
+   *   bar      the older top bar, whose menu button opens Everything: a way back, nothing drawn
+   * Both menus are the same <nav id="u2-dnav">, drawn on every page but a sitting; css/ui2/app.css shows it from 768 px and keeps its room (--u2-dnav-w). It replaces the top bar's
+   * menu button and wordmark; the giraffe (tap to chat, hold to call) stays in the page's top area, never in the menu. Home needs no change: its two columns follow its own width.
+   */
+  const DESK_NAV = [
+    ['Learn', [['home', '/dashboard', 'home', 'Home', 'Home'], ['subjects', '/dashboard#everything', 'book', 'Subjects', 'Subjects'], ['review', '/calendar', 'loop', 'Review', 'Review']]],
+    ['Your material', [['upload', '/my-material', 'tray', 'Upload your own', 'Upload'], ['material', '/my-material', 'note', 'My material', 'Material'], ['past', '/dashboard#past', 'history', 'Past', 'Past']]],
+    ['Progress', [['calendar', '/calendar', 'calendar', 'Calendar', 'Calendar'], ['stats', '/stats', 'bars', 'Leaderboard and stats', 'Stats']]],
+    [null, [['profile', '/profile', 'user', 'Profile', 'Profile'], ['settings', '/dashboard#menu', 'settings', 'Settings', 'Settings']]],
+  ];
+  const DESK_NAV_NOW = ['sidebar', 'rail', 'bar'].includes(document.documentElement.dataset.u2Nav) ? document.documentElement.dataset.u2Nav : 'bar';
+  /** The menu's own pages: no back button beside it on a tablet or desktop, the menu is the way around. */
+  const NAV_ROOT = /^\/(dashboard|my-material|stats|profile|calendar)$/.test(PATH);
+  /** Which item is the page you are on. */
+  function deskNow() {
+    if (HOME) return { '#everything': 'subjects', '#menu': 'settings', '#past': 'past' }[location.hash] || 'home';
+    if (/^\/(path|curriculum)$/.test(PATH)) return 'subjects';
+    if (PATH === '/review') return 'review';
+    if (PATH === '/my-material') return 'upload';
+    if (/^\/my-material-/.test(PATH)) return 'material';
+    return { '/calendar': 'calendar', '/stats': 'stats', '/profile': 'profile' }[PATH] || '';
+  }
+  function markDesk() {
+    const now = deskNow();
+    document.querySelectorAll('#u2-dnav a[data-nav]').forEach((a) => {
+      const on = a.dataset.nav === now;
+      a.classList.toggle('on', on);
+      if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+  }
+  function drawDeskNav(user) {
+    if (DESK_NAV_NOW === 'bar' || FLOW.test(PATH) || document.getElementById('u2-dnav')) return;
+    const rail = DESK_NAV_NOW === 'rail';
+    // No Upload where uploading is shut, as on the phone's bar.
+    const shut = !!(user && user.consent && ['pending', 'active', 'revoked', 'guest'].includes(user.consent.state));
+    const initial = App.escapeHtml(String((user && (user.name || user.email)) || '').trim().charAt(0).toUpperCase());
+    const item = ([key, href, icon, name, short]) => {
+      const face = key === 'profile' && initial ? `<span class="u2-dn-av" aria-hidden="true">${initial}</span>` : `<span class="u2-dn-ic">${ic(icon)}</span>`;
+      const label = rail && short !== name ? ` aria-label="${name}" title="${name}"` : '';
+      return `<a href="${href}" data-nav="${key}" id="u2-dn-${key}"${label}>${face}<span class="u2-dn-l"${label ? ' aria-hidden="true"' : ''}>${rail ? short : name}</span></a>`;
+    };
+    const groups = DESK_NAV.map(([title, items]) => {
+      const list = items.filter(([key]) => !(shut && key === 'upload')).map(item).join('');
+      return title ? `<div class="u2-dn-g">${rail ? '' : `<p class="u2-dn-h">${title}</p>`}${list}</div>` : `<div class="u2-dn-g u2-dn-foot">${list}</div>`;
+    }).join('');
+    const nav = document.createElement('nav');
+    nav.id = 'u2-dnav';
+    nav.className = `u2-dnav u2-dnav-${DESK_NAV_NOW}`;
+    nav.setAttribute('aria-label', 'Main');
+    // The rail shows the wordmark's bars alone, as in A.
+    nav.innerHTML = `<a class="u2-dn-wm" href="/dashboard" aria-label="Savant, home">${rail ? Look.wordmark(26).replace(/viewBox="[^"]*"/, 'viewBox="147 163 185 194"').replace(/style="[^"]*"/, 'style="height:26px;width:25px"') : Look.wordmark(26)}</a>${groups}`;
+    // On Home itself, Home changes the view without a reload, as the phone's bar does; the other items there are hash links, which Home's own hashchange follows.
+    nav.addEventListener('click', (ev) => {
+      const a = ev.target.closest('a[data-nav="home"], a.u2-dn-wm');
+      if (!a || !HOME) return;
+      ev.preventDefault();
+      if (location.hash) location.hash = '';
+      window.scrollTo(0, 0);
+    });
+    document.body.insertBefore(nav, document.body.firstChild);
+    document.documentElement.classList.add('u2-dnav-on');
+    if (NAV_ROOT) document.documentElement.classList.add('u2-nav-root');
+    markDesk();
+    window.addEventListener('hashchange', markDesk);
+  }
   function tabNow() {
     if (HOME) return /^#(everything|menu)$/.test(location.hash) ? 'menu' : 'home';
     if (/^\/my-material/.test(PATH)) return 'upload';
@@ -375,7 +449,7 @@
     if (b) b.click();
     return !!b;
   }
-  App.ui2 = { ic, gets, look: Look, home: HOME, user: null, onBar: null, phone: PHONE, startStudy };
+  App.ui2 = { ic, gets, look: Look, home: HOME, user: null, onBar: null, phone: PHONE, startStudy, deskNav: { now: DESK_NAV_NOW, items: DESK_NAV } };
 
   const realHeader = App.header;
   App.header = function header(user, active) {

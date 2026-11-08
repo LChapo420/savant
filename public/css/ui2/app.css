@@ -381,49 +381,6 @@ html[data-ui2] .u2-seg button[aria-checked="true"] { background: var(--page); co
   html[data-ui2] #u2-all-guide { display: none; }
   html[data-ui2][data-u2-view="everything"] .site-header .tdock-g { position: relative; width: auto; height: auto; overflow: visible; visibility: visible; margin-left: auto; }
 
-  /* Home, option A: one card style (a 1.5 px line, a 4 px raised edge), one grid, a 4-8-12-16-24 spacing. */
-  html[data-ui2] .u2-home-body.u2-ha { padding: 4px 20px 0; gap: 24px; }
-  html[data-ui2] .u2-ha .u2-h-sec { gap: 0; }
-  html[data-ui2] .u2-card { display: block; margin: 0 0 4px; padding: 16px 16px 12px; background: var(--page); border: 1.5px solid var(--line); border-radius: 22px; box-shadow: 0 4px 0 var(--opt-edge); }
-  html[data-ui2] .u2-hero .u2-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 32px; margin: 0 0 8px; color: var(--ink-2); font-size: 15px; line-height: 20px; }
-  html[data-ui2] .u2-hero .u2-meta > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  html[data-ui2] .u2-hero .u2-chip-t { flex: none; height: 32px; padding: 0 10px; font-size: 14.5px; }
-  html[data-ui2] .u2-hero .u2-t1 { margin: 0 0 16px; font-size: 30px; }
-  html[data-ui2] .u2-hero .u2-t1:focus { outline: none; }
-  html[data-ui2] .u2-hero .u2-detail { margin: -8px 0 16px; }
-  html[data-ui2] .u2-hero .u2-btn { margin: 0 0 6px; }
-  html[data-ui2] .u2-ha .u2-squares { max-width: none; margin: 0; gap: 16px 12px; }
-  html[data-ui2] .u2-ha .u2-square { flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 0; padding: 16px; text-align: left; }
-  html[data-ui2] .u2-ha .u2-square .symbol, html[data-ui2] .u2-ha .u2-f-top .symbol { --size: 26px; }
-  html[data-ui2] .u2-sq-t { display: block; width: 100%; min-width: 0; }
-  html[data-ui2] .u2-ha .u2-sq-t b { display: block; max-width: 100%; font-size: 17.5px; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  html[data-ui2] .u2-ha .u2-sq-t small { display: block; margin-top: 2px; font-size: 14.5px; line-height: 1.3; font-weight: 400; color: var(--ink-2); }
-  html[data-ui2] .u2-ha .u2-square.u2-cur { border-color: var(--act); box-shadow: 0 4px 0 var(--act-edge); }
-  html[data-ui2] .u2-ha .u2-square.u2-cur:active { box-shadow: none; }
-  html[data-ui2] .u2-wide { grid-column: 1 / -1; }
-  html[data-ui2] .u2-ha .u2-wait .u2-o-t b { font-size: 17.5px; }
-  html[data-ui2] .u2-wait-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
-  html[data-ui2] .u2-btn2.u2-sm { min-height: 44px; margin: 0; padding: 4px; font-size: 14px; line-height: 1.15; letter-spacing: -.005em; }
-  /* A subject drawn as a word (English's Aa) reads at the icons' size. */
-  html[data-ui2] .u2-ha .symbol:not(:has(svg)), html[data-ui2] .u2-stats .symbol:not(:has(svg)) { font: 700 17px/1 var(--font); display: inline-grid; place-items: center; }
-  html[data-ui2] .u2-ha .u2-wait-acts { margin-top: 16px; gap: 10px; }
-  html[data-ui2] .u2-ha .u2-wait-acts .u2-btn2 { margin: 0 0 4px; }
-  html[data-ui2] .u2-ha .u2-wait-title { margin: 0 0 4px; font-size: 30px; }
-  html[data-ui2] .u2-ha .u2-wait-title + .u2-detail { margin: 0 0 16px; }
-  html[data-ui2] .u2-ha .u2-wait-lead + .u2-squares { margin-top: 16px; }
-  html[data-ui2] .u2-done-card { padding: 24px 16px 12px; text-align: center; }
-  html[data-ui2] .u2-ck { width: 48px; height: 48px; margin: 0 auto 12px; border-radius: 50%; display: grid; place-items: center; background: var(--right); color: var(--on-mark); }
-  html[data-ui2] .u2-ck .u2-ic { width: 26px; height: 26px; stroke-width: 3; }
-  html[data-ui2] .u2-done-card .u2-t1 { margin: 0 0 8px; font-size: 30px; }
-  html[data-ui2] .u2-done-card .u2-t1:focus { outline: none; }
-  html[data-ui2] .u2-done-card .u2-detail { margin: 0 auto 16px; }
-  html[data-ui2] .u2-done-card .u2-btn2 { margin: 0 0 4px; }
-  html[data-ui2] .u2-ha #u2-material .u2-rows { gap: 12px; }
-  html[data-ui2] .u2-ha .u2-s-row { min-height: 60px; }
-  html[data-ui2] .u2-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 24px; margin: -8px 0 0; }
-  html[data-ui2] .u2-links .u2-next { position: relative; padding: 10px 0; color: var(--act-text); font: 700 15px/20px var(--font); text-decoration: none; }
-  html[data-ui2] .u2-links > * + *::before { content: "·"; position: absolute; left: -15px; color: var(--ink-3); font-weight: 400; }
-
   /* The Menu: profile, Learn, Settings, each one bordered list. */
   html[data-ui2] #u2-all .u2-all-body { display: flex; flex-direction: column; padding: 8px 20px 0; }
   html[data-ui2] #u2-all section { margin: 0; }
@@ -438,6 +395,49 @@ html[data-ui2] .u2-seg button[aria-checked="true"] { background: var(--page); co
   html[data-ui2] #u2-all .u2-grid .u2-opt + .u2-opt { border-top: 1px solid var(--line); }
   html[data-ui2] #u2-all .u2-grid .u2-opt[aria-expanded="true"] { box-shadow: none; }
 }
+
+/* Home, option A (the phone) and D1 (tablet and desktop: the same parts, widened): one card style (a 1.5 px line, a 4 px raised edge), one grid, a 4-8-12-16-24 spacing. */
+html[data-ui2] .u2-home-body.u2-ha { padding: 4px 20px 0; gap: 24px; }
+html[data-ui2] .u2-ha .u2-h-sec { gap: 0; }
+html[data-ui2] .u2-card { display: block; margin: 0 0 4px; padding: 16px 16px 12px; background: var(--page); border: 1.5px solid var(--line); border-radius: 22px; box-shadow: 0 4px 0 var(--opt-edge); }
+html[data-ui2] .u2-hero .u2-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 32px; margin: 0 0 8px; color: var(--ink-2); font-size: 15px; line-height: 20px; }
+html[data-ui2] .u2-hero .u2-meta > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+html[data-ui2] .u2-hero .u2-chip-t { flex: none; height: 32px; padding: 0 10px; font-size: 14.5px; }
+html[data-ui2] .u2-hero .u2-t1 { margin: 0 0 16px; font-size: 30px; }
+html[data-ui2] .u2-hero .u2-t1:focus { outline: none; }
+html[data-ui2] .u2-hero .u2-detail { margin: -8px 0 16px; }
+html[data-ui2] .u2-hero .u2-btn { margin: 0 0 6px; }
+html[data-ui2] .u2-ha .u2-squares { max-width: none; margin: 0; gap: 16px 12px; }
+html[data-ui2] .u2-ha .u2-square { flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 0; padding: 16px; text-align: left; }
+html[data-ui2] .u2-ha .u2-square .symbol, html[data-ui2] .u2-ha .u2-f-top .symbol { --size: 26px; }
+html[data-ui2] .u2-sq-t { display: block; width: 100%; min-width: 0; }
+html[data-ui2] .u2-ha .u2-sq-t b { display: block; max-width: 100%; font-size: 17.5px; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+html[data-ui2] .u2-ha .u2-sq-t small { display: block; margin-top: 2px; font-size: 14.5px; line-height: 1.3; font-weight: 400; color: var(--ink-2); }
+html[data-ui2] .u2-ha .u2-square.u2-cur { border-color: var(--act); box-shadow: 0 4px 0 var(--act-edge); }
+html[data-ui2] .u2-ha .u2-square.u2-cur:active { box-shadow: none; }
+html[data-ui2] .u2-wide { grid-column: 1 / -1; }
+html[data-ui2] .u2-ha .u2-wait .u2-o-t b { font-size: 17.5px; }
+html[data-ui2] .u2-wait-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+html[data-ui2] .u2-btn2.u2-sm { min-height: 44px; margin: 0; padding: 4px; font-size: 14px; line-height: 1.15; letter-spacing: -.005em; }
+/* A subject drawn as a word (English's Aa) reads at the icons' size. */
+html[data-ui2] .u2-ha .symbol:not(:has(svg)), html[data-ui2] .u2-stats .symbol:not(:has(svg)) { font: 700 17px/1 var(--font); display: inline-grid; place-items: center; }
+html[data-ui2] .u2-ha .u2-wait-acts { margin-top: 16px; gap: 10px; }
+html[data-ui2] .u2-ha .u2-wait-acts .u2-btn2 { margin: 0 0 4px; }
+html[data-ui2] .u2-ha .u2-wait-title { margin: 0 0 4px; font-size: 30px; }
+html[data-ui2] .u2-ha .u2-wait-title + .u2-detail { margin: 0 0 16px; }
+html[data-ui2] .u2-ha .u2-wait-lead + .u2-squares { margin-top: 16px; }
+html[data-ui2] .u2-done-card { padding: 24px 16px 12px; text-align: center; }
+html[data-ui2] .u2-ck { width: 48px; height: 48px; margin: 0 auto 12px; border-radius: 50%; display: grid; place-items: center; background: var(--right); color: var(--on-mark); }
+html[data-ui2] .u2-ck .u2-ic { width: 26px; height: 26px; stroke-width: 3; }
+html[data-ui2] .u2-done-card .u2-t1 { margin: 0 0 8px; font-size: 30px; }
+html[data-ui2] .u2-done-card .u2-t1:focus { outline: none; }
+html[data-ui2] .u2-done-card .u2-detail { margin: 0 auto 16px; }
+html[data-ui2] .u2-done-card .u2-btn2 { margin: 0 0 4px; }
+html[data-ui2] .u2-ha #u2-material .u2-rows { gap: 12px; }
+html[data-ui2] .u2-ha .u2-s-row { min-height: 60px; }
+html[data-ui2] .u2-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 24px; margin: -8px 0 0; }
+html[data-ui2] .u2-links .u2-next { position: relative; padding: 10px 0; color: var(--act-text); font: 700 15px/20px var(--font); text-decoration: none; }
+html[data-ui2] .u2-links > * + *::before { content: "·"; position: absolute; left: -15px; color: var(--ink-3); font-weight: 400; }
 
 /* ── tablet and desktop (design-refs/ui-v4-mockups/sheet-large.png): one centred column, 640 then 960 px; buttons 260 to 360 px, never full width; options in a grid by width. ── */
 @media (min-width: 768px) {
@@ -470,12 +470,9 @@ html[data-ui2] .u2-seg button[aria-checked="true"] { background: var(--page); co
 @media (min-width: 1025px) {
   html[data-ui2] main.page:has(.player) .wrap { max-width: 960px; }
   html[data-ui2] .player, html[data-ui2] .session-player { max-width: none; }
-  /* Home: a centred grid. */
-  html[data-ui2] #u2-home > .u2-guide, html[data-ui2] #u2-past > .u2-guide { max-width: 960px; }
-  html[data-ui2] #u2-home .u2-home-body, html[data-ui2] #u2-past .u2-home-body { max-width: 960px; }
-  html[data-ui2] #u2-home .u2-home-body { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 28px; align-items: start; }
-  html[data-ui2] #u2-home .u2-home-body > #u2-past-link, html[data-ui2] #u2-home .u2-home-body > .empty-state { grid-column: 1 / -1; }
-  html[data-ui2] #u2-home .u2-home-body > #u2-continue:only-of-type { grid-column: 1 / -1; }
+  /* Past: a centred grid. */
+  html[data-ui2] #u2-past > .u2-guide { max-width: 960px; }
+  html[data-ui2] #u2-past .u2-home-body { max-width: 960px; }
   html[data-ui2] #u2-past [data-past-group] .u2-rows { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   /* Everything: a quiet rail beside what you were doing, closed until asked. */
   html[data-ui2][data-u2-view="everything"] #u2-home { display: block; margin-left: 340px; width: auto; }
@@ -491,6 +488,118 @@ html[data-ui2] .u2-seg button[aria-checked="true"] { background: var(--page); co
   html[data-ui2] .choices.choices-short:has(> :nth-child(4):last-child) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   html[data-ui2] .choices:not(.choices-short) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   html[data-ui2] .u2-dialog { margin: auto; width: 480px; max-width: calc(100vw - 32px); border-radius: 22px; }
+}
+
+/* ── Home on a tablet or desktop: D1 (design-refs/home-clean/desktop.png, polished in side-menu.png). The two columns follow the home's own width, not the window's,
+   so a desktop menu (js/ui2/shell.js DESK_NAVS) can take its share without touching this. Under 880 px of home width (a tablet): one column, the side column last. ── */
+@media (min-width: 768px) {
+  html[data-ui2] #u2-home { container: u2home / inline-size; }
+  html[data-ui2] #u2-home > .u2-guide { max-width: 1064px; margin: 16px auto 0; padding: 0 40px; gap: 10px; align-items: flex-end; }
+  html[data-ui2] #u2-home > .u2-guide .tutor, html[data-ui2] #u2-home > .u2-guide .tutor-svg { width: 90px; height: 94px; }
+  html[data-ui2] #u2-home > .u2-guide .u2-tailwrap { margin-bottom: 8px; }
+  html[data-ui2] #u2-home .u2-home-body.u2-hd { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; max-width: 1064px; margin: 0 auto; padding: 4px 40px 32px; }
+  html[data-ui2] .u2-hd-main { display: grid; gap: 24px; align-content: start; min-width: 0; }
+  html[data-ui2] .u2-hd .u2-hero { padding: 22px 24px 20px; }
+  html[data-ui2] .u2-hd .u2-hero .u2-t1 { margin: 0 0 8px; font-size: 40px; }
+  html[data-ui2] .u2-hd .u2-hero .u2-detail { margin: 0 0 20px; }
+  html[data-ui2] .u2-hd .u2-h-act { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 28px; margin-top: 20px; }
+  html[data-ui2] .u2-hd .u2-detail + .u2-h-act { margin-top: 0; }
+  html[data-ui2] .u2-hd .u2-h-act .u2-btn, html[data-ui2] .u2-hd .u2-h-act .u2-btn2 { width: 280px; min-width: 0; max-width: 100%; margin: 0 0 6px; }
+  html[data-ui2] .u2-hd .u2-next { padding: 10px 0; background: none; border: 0; color: var(--act-text); font: 700 15px/20px var(--font); text-decoration: none; cursor: pointer; }
+  html[data-ui2] .u2-sec { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+  html[data-ui2] .u2-hd .u2-sec .u2-next { padding: 0; font-size: 14.5px; }
+  html[data-ui2] .u2-sec-r { display: flex; gap: 20px; }
+  html[data-ui2] .u2-hd .u2-squares { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  html[data-ui2] .u2-hd .u2-square { aspect-ratio: 5 / 4; }
+  html[data-ui2] .u2-hd .u2-wait-sq { border-style: dashed; box-shadow: none; background: var(--page); color: var(--ink); font: inherit; cursor: pointer; }
+  html[data-ui2] .u2-hd .u2-wait-sq[aria-expanded="true"] { border-style: solid; border-color: var(--act); }
+  html[data-ui2] .u2-hd #u2-wait-open { max-width: none; margin: 16px 0 0; }
+  /* One 24 px step between sections: the body's gap, not a label's margin on top of it. */
+  html[data-ui2] .u2-hd-main > .u2-h-sec > .u2-label:first-child, html[data-ui2] .u2-hd-main > .u2-h-sec > .u2-sec:first-child .u2-label { margin-top: 0; }
+  html[data-ui2] .u2-hd .u2-links { justify-content: flex-start; }
+  html[data-ui2] .u2-hd .u2-done-card .u2-btn2 { margin: 0 auto 4px; }
+  html[data-ui2] .u2-hd .u2-wait-two .u2-btn2 { min-width: 0; max-width: none; }
+  /* The quiet side column: the grey well, no line, no raised edge, no buttons. */
+  html[data-ui2] .u2-side { align-self: start; padding: 20px 20px 18px; background: var(--well); border-radius: 22px; }
+  html[data-ui2] .u2-side-h { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  html[data-ui2] .u2-side-h .u2-t3 { margin: 0; font: 700 17px/24px var(--font); color: var(--ink); }
+  html[data-ui2] .u2-side-none { margin: 8px 0 0; }
+  html[data-ui2] .u2-side-streak { display: inline-flex; align-items: center; gap: 4px; font: 700 16px/1 var(--font); }
+  html[data-ui2] .u2-side-streak .u2-ic { width: 18px; height: 18px; color: var(--flame); stroke-width: 2; }
+  html[data-ui2] .u2-side-time { display: flex; align-items: baseline; gap: 6px; margin: 8px 0 10px; color: var(--ink-2); font-size: 15px; }
+  html[data-ui2] .u2-side-n { font: 400 30px/1.1 var(--serif); color: var(--ink); }
+  html[data-ui2] .u2-side-time span { margin-left: auto; font-size: 14px; color: var(--ink-3); }
+  html[data-ui2] .u2-side-bar { height: 8px; border-radius: 99px; background: var(--well-2); overflow: hidden; }
+  html[data-ui2] .u2-side-bar i { display: block; height: 100%; border-radius: 99px; background: var(--act); }
+  html[data-ui2] .u2-side-steps { list-style: none; margin: 12px 0 0; padding: 0; }
+  html[data-ui2] .u2-side-steps li { display: flex; align-items: center; gap: 12px; min-height: 40px; padding: 0 10px; border-radius: 12px; }
+  html[data-ui2] .u2-side-steps li i { flex: none; width: 10px; height: 10px; border: 2px solid var(--opt-edge); border-radius: 50%; }
+  html[data-ui2] .u2-side-steps li b { flex: 1; min-width: 0; font-size: 15.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  html[data-ui2] .u2-side-steps li.now { background: var(--page); }
+  html[data-ui2] .u2-side-steps li.now i { border-color: var(--act); background: var(--act); }
+  html[data-ui2] .u2-side-steps li.now b { color: var(--act-text); }
+  html[data-ui2] .u2-side-steps li.brk b { font-weight: 400; color: var(--ink-2); }
+  html[data-ui2] .u2-side-steps li em { font-style: normal; font-size: 14px; color: var(--ink-2); white-space: nowrap; }
+  html[data-ui2] .u2-side .u2-side-more { margin-left: 10px; padding: 8px 0 0; font-size: 14.5px; }
+  html[data-ui2] .u2-side-rule { height: 1px; margin: 14px 0 16px; background: var(--line); }
+  html[data-ui2] .u2-side-dim { font-size: 14px; color: var(--ink-3); }
+  html[data-ui2] .u2-side-week { height: 70px; margin-top: 12px; }
+  html[data-ui2] .u2-side-week[hidden] { display: none; }
+  html[data-ui2] .u2-side-link { display: flex; align-items: center; gap: 8px; margin-top: 16px; color: var(--act-text); font: 700 15px/20px var(--font); text-decoration: none; }
+  html[data-ui2] .u2-side-link .u2-ic { width: 18px; height: 18px; }
+}
+@container u2home (min-width: 880px) {
+  html[data-ui2] #u2-home .u2-home-body.u2-hd-two { grid-template-columns: minmax(0, 1fr) 312px; column-gap: 40px; align-items: start; }
+  html[data-ui2] #u2-home .u2-hd-two > .empty-state { grid-column: 1 / -1; }
+}
+
+/* ── the tablet and desktop menu (design-refs/home-clean/side-menu.png): B, the calm sidebar (the owner's pick), or A, the compact rail, by UI_V2_DESK_NAV (services/ui-v2.js).
+   data-u2-nav is on <html> from the server, so the room is kept from the first paint; js/ui2/shell.js draws #u2-dnav into it. Not on a phone, not in a sitting. ── */
+html[data-ui2] .u2-dnav { display: none; }
+@media (min-width: 768px) {
+  html[data-ui2][data-u2-nav="sidebar"] { --u2-dnav-w: 252px; }
+  html[data-ui2][data-u2-nav="rail"] { --u2-dnav-w: 88px; }
+  html[data-ui2][data-u2-nav="sidebar"]:not(.u2-in-sitting) body, html[data-ui2][data-u2-nav="rail"]:not(.u2-in-sitting) body { padding-left: var(--u2-dnav-w); }
+  /* Before the menu is drawn, its grey well is already there, so nothing moves when it arrives. */
+  html[data-ui2][data-u2-nav="sidebar"]:not(.u2-dnav-on):not(.u2-in-sitting) body::before, html[data-ui2][data-u2-nav="rail"]:not(.u2-dnav-on):not(.u2-in-sitting) body::before { content: ""; position: fixed; z-index: 35; top: 0; bottom: 0; left: 0; width: var(--u2-dnav-w); background: var(--well); }
+  html[data-ui2].u2-dnav-on:not(.u2-in-sitting) .u2-dnav { display: flex; flex-direction: column; position: fixed; z-index: 35; top: 0; bottom: 0; left: 0; width: var(--u2-dnav-w); overflow-y: auto; background: var(--well); }
+  html[data-ui2] .u2-dnav a { color: var(--ink); text-decoration: none; }
+  html[data-ui2] .u2-dnav a:focus-visible { outline: 2px solid var(--act); outline-offset: 2px; }
+  html[data-ui2] .u2-dn-wm { display: flex; align-items: center; color: var(--ink); }
+  html[data-ui2] .u2-dn-wm .u2-wm { fill: currentColor; display: block; }
+  html[data-ui2] .u2-dn-ic { display: grid; place-items: center; flex: none; }
+  html[data-ui2] .u2-dn-ic .u2-ic { width: 20px; height: 20px; color: var(--ink-2); }
+  html[data-ui2] .u2-dn-av { display: grid; place-items: center; flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--act-tint); color: var(--act-text); font-size: 12px; font-weight: 700; }
+  html[data-ui2] .u2-dnav a.on, html[data-ui2] .u2-dnav a.on .u2-ic { color: var(--act-text); }
+  html[data-ui2] .u2-dn-foot { margin-top: auto; }
+  /* the top bar: the menu has the wordmark and the way around, so no menu button, no wordmark, and no back button on the menu's own pages; the giraffe stays */
+  html[data-ui2].u2-dnav-on:not(.u2-in-sitting) #u2-menu, html[data-ui2].u2-dnav-on:not(.u2-in-sitting) .u2-tb-wm, html[data-ui2].u2-dnav-on.u2-nav-root:not(.u2-in-sitting) #u2-back { display: none; }
+  html[data-ui2].u2-dnav-on.u2-bar .site-header .wrap { padding-left: 24px; }
+
+  /* B: the grey well, three quiet labels, every name in full; the page you are on a raised white tile in Savant blue; Profile and Settings under a hairline. */
+  html[data-ui2] .u2-dnav-sidebar { padding: 22px 12px 16px; }
+  html[data-ui2] .u2-dnav-sidebar .u2-dn-wm { padding: 0 10px 18px; }
+  html[data-ui2] .u2-dnav-sidebar .u2-dn-h { margin: 14px 10px 6px; font-size: 11px; line-height: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+  html[data-ui2] .u2-dnav-sidebar .u2-dn-g a { display: flex; align-items: center; gap: 12px; min-height: 40px; margin: 0 0 2px; padding: 0 10px; border: 1px solid transparent; border-radius: 10px; font-size: 15px; font-weight: 600; line-height: 20px; }
+  html[data-ui2] .u2-dnav-sidebar .u2-dn-g a:hover { background: var(--well-2); }
+  html[data-ui2] .u2-dnav-sidebar .u2-dn-g a.on { background: var(--card); border-color: var(--line); box-shadow: 0 2px 0 var(--line); font-weight: 700; }
+  html[data-ui2] .u2-dnav-sidebar .u2-dn-foot { padding-top: 12px; border-top: 1px solid var(--line); }
+
+  /* A: an icon with its short name under it, the groups split by hairlines. */
+  html[data-ui2] .u2-dnav-rail { align-items: center; padding: 20px 6px 14px; }
+  html[data-ui2] .u2-dnav-rail .u2-dn-wm { padding: 0 0 14px; }
+  html[data-ui2] .u2-dnav-rail .u2-dn-g { display: flex; flex-direction: column; align-items: stretch; width: 100%; }
+  html[data-ui2] .u2-dnav-rail .u2-dn-g + .u2-dn-g { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
+  html[data-ui2] .u2-dnav-rail .u2-dn-g.u2-dn-foot { margin-top: auto; }
+  html[data-ui2] .u2-dnav-rail .u2-dn-g a { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 0; font-size: 12px; font-weight: 600; line-height: 15px; }
+  html[data-ui2] .u2-dnav-rail .u2-dn-ic { width: 40px; height: 28px; border-radius: 99px; }
+  html[data-ui2] .u2-dnav-rail .u2-dn-g a:hover .u2-dn-ic { background: var(--well-2); }
+  html[data-ui2] .u2-dnav-rail .u2-dn-g a.on .u2-dn-ic { background: var(--act-tint); }
+  html[data-ui2] .u2-dnav-rail .u2-dn-g a.on { font-weight: 700; }
+}
+@media (min-width: 1025px) {
+  /* Everything opens beside the menu, not over it. */
+  html[data-ui2].u2-dnav-on:not(.u2-in-sitting) #u2-all { left: var(--u2-dnav-w); }
 }
 
 /* ── reduced motion ───────────────────────────────────────────────────── */
