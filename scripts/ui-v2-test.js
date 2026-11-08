@@ -190,12 +190,32 @@ async function main() {
   ok('inject adds the flag, the two stylesheets and the shell; Home also gets home.js before dashboard.js', () => {
     const page = '<!DOCTYPE html>\n<html lang="en">\n<head>\n</head>\n<body><script src="/js/app.js"></script><script src="/js/dashboard.js"></script></body>\n</html>';
     const out = ui.inject(page, 'dashboard');
-    assert(out.includes('<html data-ui2="on" lang="en">'));
+    assert(out.includes('<html data-ui2="on" data-u2-nav="sidebar" lang="en">') || out.includes(`<html data-ui2="on" data-u2-nav="${ui.deskNav()}" lang="en">`));
     assert(out.includes('/css/ui2/tokens.css') && out.includes('/css/ui2/app.css'));
     assert(out.indexOf('/js/app.js') < out.indexOf('/js/ui2/shell.js')); assert(out.indexOf('/js/ui2/shell.js') < out.indexOf('/js/ui2/pages.js') && out.includes('/css/ui2/pages.css'));
     assert(out.indexOf('/js/ui2/shell.js') < out.indexOf('/js/ui2/home.js'));
     assert(out.indexOf('/js/ui2/home.js') < out.indexOf('/js/dashboard.js'));
     assert(!ui.inject(page, 'profile').includes('/js/ui2/home.js'));
+  });
+  ok('the desktop menu is one setting: UI_V2_DESK_NAV sidebar (B, the default) or rail (A), on <html> for every page but a sitting', () => {
+    const page = '<html lang="en"><head></head><body><script src="/js/app.js"></script></body></html>';
+    const was = process.env.UI_V2_DESK_NAV;
+    try {
+      delete process.env.UI_V2_DESK_NAV;
+      assert.strictEqual(ui.deskNav(), 'sidebar');
+      assert(ui.inject(page, 'profile').includes('<html data-ui2="on" data-u2-nav="sidebar" lang="en">'));
+      process.env.UI_V2_DESK_NAV = 'Rail';
+      assert(ui.inject(page, 'stats').includes('data-u2-nav="rail"'));
+      process.env.UI_V2_DESK_NAV = 'nonsense';
+      assert.strictEqual(ui.deskNav(), 'sidebar');
+      for (const p of ['session', 'placement', 'onboarding', 'base-lesson']) assert(!ui.inject(page, p).includes('data-u2-nav'), `${p} is a sitting: no menu`);
+      assert(!ui.inject(page, 'not-found').includes('data-u2-nav'));
+      for (const p of ui.FLOW_PAGES) assert(ui.PAGES.has(p), `${p} is a listed page`);
+      const shell = fs.readFileSync(path.join(ROOT, 'public/js/ui2/shell.js'), 'utf8');
+      const at = shell.indexOf('const FLOW = /^\\/(') + 'const FLOW = /^\\/('.length;
+      const flow = [null, shell.slice(at, shell.indexOf(')$/', at))];
+      assert(at > 20 && flow[1].includes('session'), 'shell.js FLOW found');
+    } finally { if (was === undefined) delete process.env.UI_V2_DESK_NAV; else process.env.UI_V2_DESK_NAV = was; }
   });
   ok('every listed page exists; public, admin and sealed pages are not listed', () => {
     for (const p of ui.PAGES) assert(fs.existsSync(path.join(ROOT, 'public', `${p}.html`)), p);

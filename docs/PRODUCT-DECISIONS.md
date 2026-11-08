@@ -211,3 +211,7 @@ H, a framed card on a faint subject pattern, "for now": "we might end up switchi
 ## Mobile bottom bar (owner, 7 Nov 2026)
 
 Like Duolingo, left to right: Home, Upload your own, Leaderboard and stats, Menu (profile, every other page, settings). Leaderboards come later; the tab shows real stats until then. Home must be cleaner. Mockup: design-refs/home-clean/sheet.png.
+
+## Desktop side menu (owner, 7 Nov 2026)
+
+"I like the simplicity of A but I like how it shows the logo in B so lets go with B but we might switch to something like A in the future, please build quick so we can get the entire design of the whole site finished way before launch day". Built: B, the calm sidebar, on tablet and desktop; A, the compact rail, is one setting away (`UI_V2_DESK_NAV=rail`). Mockup: design-refs/home-clean/side-menu.png.

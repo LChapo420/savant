@@ -546,15 +546,30 @@ async function main() {
       await q.ctx.close();
     });
 
-    await t('Desktop (D1): the one card and the subjects beside a quiet side column of today, the current top bar kept until a menu is picked; tablet: one column, the side column under it; the menu a rail on desktop, a full page on a tablet', async () => {
+    const TEN = ['Home', 'Subjects', 'Review', 'Upload your own', 'My material', 'Past', 'Calendar', 'Leaderboard and stats', 'Profile', 'Settings'];
+    await t('Desktop (D1) with the calm sidebar (B, side-menu.png): the wordmark, the ten in their groups, Home in Savant blue, Profile and Settings at the foot, no menu button; the card and subjects beside a quiet side column; tablet: one column; Everything opens beside the sidebar on desktop, a full page on a tablet', async () => {
       const { ctx, page, errors } = await open(ada, DESK, '/dashboard');
       await page.waitForSelector('#u2-side');
-      assert(await page.isVisible('#u2-menu'));
-      assert(await page.isVisible('.u2-tb-wm'));
+      await page.waitForSelector('#u2-dnav');
+      assert.strictEqual(await page.getAttribute('html', 'data-u2-nav'), 'sidebar', 'B unless UI_V2_DESK_NAV says otherwise');
+      assert(!await page.isVisible('#u2-menu'), 'no menu button: the sidebar is the menu');
+      assert(!await page.isVisible('.u2-tb-wm'), 'the wordmark is in the sidebar, not the bar');
+      assert(await page.isVisible('#u2-dnav .u2-dn-wm .u2-wm'), 'the outlined wordmark at the top');
       assert(!await page.isVisible('#u2-tabs'), 'no bottom bar on a desktop');
-      assert.strictEqual(await page.getAttribute('html', 'data-u2-nav'), 'bar', 'the current desktop menu until the owner picks one');
       const names = await page.evaluate(() => App.ui2.deskNav.items.flatMap((g) => g[1].map((i) => i[3])));
-      assert.deepStrictEqual(names, ['Home', 'Subjects', 'Review', 'Upload your own', 'My material', 'Past', 'Calendar', 'Leaderboard and stats', 'Profile', 'Settings'], 'the desktop menu list, ready to swap in');
+      assert.deepStrictEqual(names, TEN, 'the desktop menu list');
+      assert.deepStrictEqual(await page.$$eval('#u2-dnav a[data-nav] .u2-dn-l', (xs) => xs.map((x) => x.innerText.trim())), TEN, 'all ten drawn, names in full');
+      assert.deepStrictEqual(await page.$$eval('#u2-dnav .u2-dn-h', (xs) => xs.map((x) => x.textContent)), ['Learn', 'Your material', 'Progress'], 'three quiet labels');
+      assert.deepStrictEqual(await page.$$eval('#u2-dnav .u2-dn-foot a', (xs) => xs.map((x) => x.dataset.nav)), ['profile', 'settings'], 'Profile and Settings at the foot');
+      assert.strictEqual(await page.getAttribute('#u2-dn-home', 'aria-current'), 'page');
+      const blue = await page.evaluate(() => [getComputedStyle(document.getElementById('u2-dn-home')).color, getComputedStyle(document.getElementById('u2-dn-subjects')).color]);
+      assert(blue[0] !== blue[1], `the page you are on in Savant blue ${blue}`);
+      const nav = await page.locator('#u2-dnav').boundingBox();
+      assert(nav.x === 0 && Math.abs(nav.width - 252) < 1 && nav.height >= 799, `sidebar ${JSON.stringify(nav)}`);
+      const foot = await page.locator('#u2-dn-settings').boundingBox();
+      assert(foot.y + foot.height <= 800 && foot.y > 600, `Settings at the foot ${foot.y}`);
+      const guide = await page.locator('#u2-home > .u2-guide').boundingBox();
+      assert(guide.x >= 252, 'the giraffe in the page, beside the sidebar');
       const plan = await page.evaluate(() => fetch('/api/plan/today').then((r) => r.json()));
       const first = plan.blocks.find((x) => x.kind !== 'break' && x.href);
       assert.strictEqual(await page.getAttribute('#u2-start', 'href'), first.href, "the card is the plan's first step");
@@ -572,18 +587,43 @@ async function main() {
       assert(new RegExp(`of ${plan.minutes} minutes`).test(await page.innerText('#u2-side .u2-side-time')));
       const tiles = await page.$$eval('#u2-subjects .u2-square', (xs) => xs.map((x) => { const r = x.getBoundingClientRect(); return { y: Math.round(r.top), w: r.width, h: r.height }; }));
       assert(tiles.length >= 2 && tiles.every((x) => x.y === tiles[0].y && Math.abs(x.w / x.h - 1.25) < 0.03), `tiles in one row, 5:4: ${JSON.stringify(tiles)}`);
-      assert(await page.isVisible('#u2-upload'), 'Upload your own stays on Home while the current menu has none');
+      assert(hero.x >= 252 + 24, 'the card clear of the sidebar');
+      assert(await page.isVisible('#u2-upload'), 'Your uploads stays on Home');
       assert(await noOverflow(page));
       assert.deepStrictEqual(errors, []);
-      await page.click('#u2-menu');
+      await page.click('#u2-dn-subjects');
       await page.waitForFunction(() => document.documentElement.dataset.u2View === 'everything');
       await delay(100);
       const rail = await page.locator('#u2-all').boundingBox();
-      assert(rail.x === 0 && rail.width <= 360, `rail ${rail.x} ${rail.width}`);
+      assert(Math.abs(rail.x - 252) < 1 && rail.width <= 360, `Everything beside the sidebar ${rail.x} ${rail.width}`);
+      assert.strictEqual(await page.getAttribute('#u2-dn-subjects', 'aria-current'), 'page');
       assert(await page.isVisible('#u2-start'), 'the page stays beside it');
+      await page.click('#u2-dn-home');
+      await page.waitForFunction(() => document.documentElement.dataset.u2View === 'home');
+      assert.strictEqual(await page.getAttribute('#u2-dn-home', 'aria-current'), 'page');
       await ctx.close();
+      // Every page the sidebar reaches, and pages under them: nothing under the sidebar, no sideways scroll, the page you are on marked; the menu's own pages have no back button.
+      for (const [url, on] of [['/stats', 'stats'], ['/my-material', 'upload'], ['/profile', 'profile'], ['/calendar', 'calendar'], [`/path?enrollment=${ada.enrollment}`, 'subjects'], ['/curriculum', 'subjects'], ['/help', ''], ['/boosters', ''], ['/review', 'review']]) {
+        const pg = await open(ada, DESK, url); // eslint-disable-line no-await-in-loop
+        await pg.page.waitForSelector('#u2-dnav', { state: 'visible' }); // eslint-disable-line no-await-in-loop
+        await delay(400); // eslint-disable-line no-await-in-loop
+        const lay = await pg.page.evaluate(() => { // eslint-disable-line no-await-in-loop
+          const w = 252;
+          const under = [...document.querySelectorAll('body *')].filter((e) => !e.closest('#u2-dnav') && !e.closest('.tdock-panel') && !e.closest('dialog') && !e.closest('.skip-link')).filter((e) => { const r = e.getBoundingClientRect(); const cs = getComputedStyle(e); return r.width > 0 && r.height > 0 && r.left < w - 1 && cs.visibility !== 'hidden' && cs.position !== 'fixed' && e.offsetParent !== null; }).map((e) => `${e.tagName}#${e.id}.${e.className}`.slice(0, 60));
+          const cur = document.querySelector('#u2-dnav a[aria-current="page"]');
+          const back = document.getElementById('u2-back');
+          return { under: under.slice(0, 5), cur: cur ? cur.dataset.nav : '', back: !!(back && back.offsetParent), fits: document.documentElement.scrollWidth <= window.innerWidth + 1 };
+        });
+        assert.deepStrictEqual(lay.under, [], `${url}: nothing under the sidebar`);
+        assert(lay.fits, `${url}: no sideways scroll`);
+        assert.strictEqual(lay.cur, on, `${url}: the page you are on`);
+        if (['stats', 'upload', 'profile', 'calendar'].includes(on)) assert(!lay.back, `${url}: no back button beside the menu`);
+        assert.deepStrictEqual(pg.errors, [], url);
+        await pg.ctx.close(); // eslint-disable-line no-await-in-loop
+      }
       const tab = await open(ada, { viewport: { width: 820, height: 1180 } }, '/dashboard');
       await tab.page.waitForSelector('#u2-side');
+      assert(await tab.page.isVisible('#u2-dnav'), 'the sidebar on a tablet too');
       assert(!await tab.page.isVisible('#u2-tabs'), 'no bottom bar on a tablet');
       const tb = await tab.page.locator('#u2-start').boundingBox();
       assert(tb.width >= 260 && tb.width <= 360, `tablet button ${tb.width}`);
@@ -591,10 +631,10 @@ async function main() {
       const tSide = await tab.page.locator('#u2-side').boundingBox();
       assert(tSide.y >= tMain.y + tMain.height - 1 && Math.abs(tSide.x - tMain.x) < 2 && Math.abs(tSide.width - tMain.width) < 2, 'one column on a tablet, the side column under the rest');
       assert(await noOverflow(tab.page));
-      await tab.page.click('#u2-menu');
+      await tab.page.click('#u2-dn-subjects');
       await tab.page.waitForFunction(() => document.documentElement.dataset.u2View === 'everything');
       await delay(100);
-      assert(!await tab.page.isVisible('#u2-start'), 'the menu is a full page on a tablet');
+      assert(!await tab.page.isVisible('#u2-start'), 'Everything is a full page on a tablet');
       const col = await tab.page.locator('#u2-all').boundingBox();
       assert(col.width <= 640, `column ${col.width}`);
       await tab.ctx.close();
@@ -755,6 +795,38 @@ async function main() {
     await browser.close().catch(() => {});
     server.kill();
     await delay(600);
+
+    // ── the compact rail (A), the other desktop menu, by the one setting ──
+    const serverRail = start('on', tmp, { UI_V2_DESK_NAV: 'rail' });
+    try {
+      await up();
+      const br = await chromium.launch();
+      const rae = await account(br, 'rae@example.com', 'Rae Rail', [['math', 'algebra_1_part_a']]); // sessions do not outlive the server
+      await t('UI_V2_DESK_NAV=rail: the compact rail (A), 88 px, an icon with its short name, the same ten, the page you are on marked, nothing under it', async () => {
+        for (const url of ['/dashboard', '/stats']) {
+          const ctx = await br.newContext({ ...DESK, storageState: rae.storage }); // eslint-disable-line no-await-in-loop
+          const page = await ctx.newPage(); // eslint-disable-line no-await-in-loop
+          const errors = [];
+          page.on('pageerror', (e) => errors.push(e.message));
+          await page.goto(BASE + url); // eslint-disable-line no-await-in-loop
+          await page.waitForSelector('#u2-dnav.u2-dnav-rail', { state: 'visible' }); // eslint-disable-line no-await-in-loop
+          await delay(400); // eslint-disable-line no-await-in-loop
+          assert.strictEqual(await page.getAttribute('html', 'data-u2-nav'), 'rail'); // eslint-disable-line no-await-in-loop
+          const nav = await page.locator('#u2-dnav').boundingBox(); // eslint-disable-line no-await-in-loop
+          assert(nav.x === 0 && Math.abs(nav.width - 88) < 1, `rail ${JSON.stringify(nav)}`);
+          const names = await page.$$eval('#u2-dnav a[data-nav]', (xs) => xs.map((x) => x.getAttribute('aria-label') || x.querySelector('.u2-dn-l').innerText.trim())); // eslint-disable-line no-await-in-loop
+          assert.deepStrictEqual(names, TEN, 'the same ten, full names for readers');
+          assert.strictEqual(await page.innerText('#u2-dn-stats .u2-dn-l'), 'Stats', 'short names'); // eslint-disable-line no-await-in-loop
+          assert.strictEqual(await page.getAttribute(url === '/stats' ? '#u2-dn-stats' : '#u2-dn-home', 'aria-current'), 'page'); // eslint-disable-line no-await-in-loop
+          const left = await page.evaluate(() => Math.min(...[...document.querySelectorAll('main, #u2-home, .site-header')].map((e) => e.getBoundingClientRect().left))); // eslint-disable-line no-await-in-loop
+          assert(left >= 88, `the page clear of the rail ${left}`);
+          assert(await noOverflow(page)); // eslint-disable-line no-await-in-loop
+          assert.deepStrictEqual(errors, []);
+          await ctx.close(); // eslint-disable-line no-await-in-loop
+        }
+      });
+      await br.close();
+    } finally { serverRail.kill(); await delay(600); }
 
     // ── /start in the private beta: an account, from the application ──
     const tmp3 = fs.mkdtempSync(path.join(os.tmpdir(), 'ui2-browser-beta-'));

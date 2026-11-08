@@ -553,6 +553,55 @@ html[data-ui2] .u2-links > * + *::before { content: "·"; position: absolute; le
   html[data-ui2] #u2-home .u2-hd-two > .empty-state { grid-column: 1 / -1; }
 }
 
+/* ── the tablet and desktop menu (design-refs/home-clean/side-menu.png): B, the calm sidebar (the owner's pick), or A, the compact rail, by UI_V2_DESK_NAV (services/ui-v2.js).
+   data-u2-nav is on <html> from the server, so the room is kept from the first paint; js/ui2/shell.js draws #u2-dnav into it. Not on a phone, not in a sitting. ── */
+html[data-ui2] .u2-dnav { display: none; }
+@media (min-width: 768px) {
+  html[data-ui2][data-u2-nav="sidebar"] { --u2-dnav-w: 252px; }
+  html[data-ui2][data-u2-nav="rail"] { --u2-dnav-w: 88px; }
+  html[data-ui2][data-u2-nav="sidebar"]:not(.u2-in-sitting) body, html[data-ui2][data-u2-nav="rail"]:not(.u2-in-sitting) body { padding-left: var(--u2-dnav-w); }
+  /* Before the menu is drawn, its grey well is already there, so nothing moves when it arrives. */
+  html[data-ui2][data-u2-nav="sidebar"]:not(.u2-dnav-on):not(.u2-in-sitting) body::before, html[data-ui2][data-u2-nav="rail"]:not(.u2-dnav-on):not(.u2-in-sitting) body::before { content: ""; position: fixed; z-index: 35; top: 0; bottom: 0; left: 0; width: var(--u2-dnav-w); background: var(--well); }
+  html[data-ui2].u2-dnav-on:not(.u2-in-sitting) .u2-dnav { display: flex; flex-direction: column; position: fixed; z-index: 35; top: 0; bottom: 0; left: 0; width: var(--u2-dnav-w); overflow-y: auto; background: var(--well); }
+  html[data-ui2] .u2-dnav a { color: var(--ink); text-decoration: none; }
+  html[data-ui2] .u2-dnav a:focus-visible { outline: 2px solid var(--act); outline-offset: 2px; }
+  html[data-ui2] .u2-dn-wm { display: flex; align-items: center; color: var(--ink); }
+  html[data-ui2] .u2-dn-wm .u2-wm { fill: currentColor; display: block; }
+  html[data-ui2] .u2-dn-ic { display: grid; place-items: center; flex: none; }
+  html[data-ui2] .u2-dn-ic .u2-ic { width: 20px; height: 20px; color: var(--ink-2); }
+  html[data-ui2] .u2-dn-av { display: grid; place-items: center; flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--act-tint); color: var(--act-text); font-size: 12px; font-weight: 700; }
+  html[data-ui2] .u2-dnav a.on, html[data-ui2] .u2-dnav a.on .u2-ic { color: var(--act-text); }
+  html[data-ui2] .u2-dn-foot { margin-top: auto; }
+  /* the top bar: the menu has the wordmark and the way around, so no menu button, no wordmark, and no back button on the menu's own pages; the giraffe stays */
+  html[data-ui2].u2-dnav-on:not(.u2-in-sitting) #u2-menu, html[data-ui2].u2-dnav-on:not(.u2-in-sitting) .u2-tb-wm, html[data-ui2].u2-dnav-on.u2-nav-root:not(.u2-in-sitting) #u2-back { display: none; }
+  html[data-ui2].u2-dnav-on.u2-bar .site-header .wrap { padding-left: 24px; }
+
+  /* B: the grey well, three quiet labels, every name in full; the page you are on a raised white tile in Savant blue; Profile and Settings under a hairline. */
+  html[data-ui2] .u2-dnav-sidebar { padding: 22px 12px 16px; }
+  html[data-ui2] .u2-dnav-sidebar .u2-dn-wm { padding: 0 10px 18px; }
+  html[data-ui2] .u2-dnav-sidebar .u2-dn-h { margin: 14px 10px 6px; font-size: 11px; line-height: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+  html[data-ui2] .u2-dnav-sidebar .u2-dn-g a { display: flex; align-items: center; gap: 12px; min-height: 40px; margin: 0 0 2px; padding: 0 10px; border: 1px solid transparent; border-radius: 10px; font-size: 15px; font-weight: 600; line-height: 20px; }
+  html[data-ui2] .u2-dnav-sidebar .u2-dn-g a:hover { background: var(--well-2); }
+  html[data-ui2] .u2-dnav-sidebar .u2-dn-g a.on { background: var(--card); border-color: var(--line); box-shadow: 0 2px 0 var(--line); font-weight: 700; }
+  html[data-ui2] .u2-dnav-sidebar .u2-dn-foot { padding-top: 12px; border-top: 1px solid var(--line); }
+
+  /* A: an icon with its short name under it, the groups split by hairlines. */
+  html[data-ui2] .u2-dnav-rail { align-items: center; padding: 20px 6px 14px; }
+  html[data-ui2] .u2-dnav-rail .u2-dn-wm { padding: 0 0 14px; }
+  html[data-ui2] .u2-dnav-rail .u2-dn-g { display: flex; flex-direction: column; align-items: stretch; width: 100%; }
+  html[data-ui2] .u2-dnav-rail .u2-dn-g + .u2-dn-g { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line); }
+  html[data-ui2] .u2-dnav-rail .u2-dn-g.u2-dn-foot { margin-top: auto; }
+  html[data-ui2] .u2-dnav-rail .u2-dn-g a { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 0; font-size: 12px; font-weight: 600; line-height: 15px; }
+  html[data-ui2] .u2-dnav-rail .u2-dn-ic { width: 40px; height: 28px; border-radius: 99px; }
+  html[data-ui2] .u2-dnav-rail .u2-dn-g a:hover .u2-dn-ic { background: var(--well-2); }
+  html[data-ui2] .u2-dnav-rail .u2-dn-g a.on .u2-dn-ic { background: var(--act-tint); }
+  html[data-ui2] .u2-dnav-rail .u2-dn-g a.on { font-weight: 700; }
+}
+@media (min-width: 1025px) {
+  /* Everything opens beside the menu, not over it. */
+  html[data-ui2].u2-dnav-on:not(.u2-in-sitting) #u2-all { left: var(--u2-dnav-w); }
+}
+
 /* ── reduced motion ───────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   html[data-ui2] .verdict, html[data-ui2] .u2-dialog[open] { animation: none !important; }
