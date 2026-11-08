@@ -133,6 +133,15 @@ html[data-ui2] .tdock-form button.go:active { transform: translateY(6px); box-sh
   html[data-ui2] .tdock-panel:not([data-place="right"]) .tdock-form button.go { margin-bottom: 4px; padding: 0 16px; box-shadow: 0 4px 0 var(--act-edge); }
   html[data-ui2] .tdock-panel:not([data-place="right"]) .tdock-form button.go:active { transform: translateY(4px); }
 }
+/* The calendar card in the chat (tutor events): the look's pills, Add as the 3D one. */
+html[data-ui2] .tdock-log .tdock-card { border: 1.5px solid var(--line); border-radius: 18px; background: var(--page); }
+html[data-ui2] .tdock-card-q { font-weight: 700; color: var(--ink); }
+html[data-ui2] .tdock-card input { min-height: 42px; padding: 0 14px; border: 1.5px solid var(--line-strong); border-radius: 999px; background: var(--page); color: var(--ink); }
+html[data-ui2] .tdock-card input:focus { outline: none; border-color: var(--act); box-shadow: 0 0 0 1.5px var(--act); }
+html[data-ui2] .tdock-card-actions { align-items: flex-start; }
+html[data-ui2] .tdock-card-actions button { min-height: 44px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--page); color: var(--ink); font: 700 15px/1 var(--font); }
+html[data-ui2] .tdock-card-actions button.go { margin-bottom: 4px; border: 0; background: var(--act); color: var(--on-act); box-shadow: 0 4px 0 var(--act-edge); transition: transform .07s, box-shadow .07s; }
+html[data-ui2] .tdock-card-actions button.go:active { transform: translateY(4px); box-shadow: none; }
 html[data-ui2] .tdock-voice { gap: 10px; padding: 0 16px 10px; color: var(--ink-2); font: 600 14px/1.2 var(--font); }
 html[data-ui2] .tdock-voice select { min-height: 38px; padding: 0 14px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--page); color: var(--ink); font: 700 14.5px/1 var(--font); }
 html[data-ui2] .tdock-voice select:focus { outline: none; border-color: var(--act); box-shadow: 0 0 0 1.5px var(--act); }
