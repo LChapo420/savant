@@ -32,6 +32,7 @@ const db = require('../config/db');
 const courses = require('./course-builder');
 const path = require('./material-path');
 const retentionGoal = require('./retention-goal');
+const expand = require('./material-review-expand');
 
 const PASS = path.PASS;
 const QUIZ_SIZE = 5;
@@ -133,7 +134,7 @@ function skillState(r, id) {
 function save(r) {
   return db.update('material_progress', r.id, {
     skills: r.skills, placed: r.placed, placement: r.placement, pending: r.pending, pace: r.pace || 0, forget_m: r.forget_m || 0, fresh: r.fresh || null,
-    test: r.test || null, tests: r.tests || [], steps: r.steps, updated_at: new Date().toISOString(),
+    test: r.test || null, tests: r.tests || [], steps: r.steps, updated_at: new Date().toISOString(), ...(r.finished_on ? { finished_on: r.finished_on } : {}),
   });
 }
 
@@ -145,6 +146,7 @@ const specOf = (userId) => { try { return require('./learning-spec').buildSpec(u
 const isDue = (st, now) => st.status === 'mastered' && st.due && Date.parse(st.due) <= now;
 const dueAt = (now, days) => new Date(now + days * DAY).toISOString();
 function scheduleReview(r, st, now) {
+  if (expand.on()) return scheduleExpanded(r, st, now);
   let days = path.intervalDays(st.right, st.wrong_n, r.forget_m || 0, specOf(r.user_id));
   // The course's retention goal (services/retention-goal.js): a test date compresses the review to the date, a horizon stops
   // reviews that would land past it; forever (the default) leaves the curve's interval as it is.
@@ -155,6 +157,29 @@ function scheduleReview(r, st, now) {
   st.due = dueAt(now, days);
   st.interval_days = days;
   return days;
+}
+
+/** UPLOAD_REVIEW_EXPAND (services/material-review-expand.js): the same fields, from the skill's own half-life and the goal's end. */
+function scheduleExpanded(r, st, now, noGrow = false) {
+  const eff = retentionGoal.forMaterial(r.user_id, r.material_id, now);
+  const out = expand.plan(st, { eff, m: r.forget_m || 0, now, finishedOn: r.finished_on || null, spec: specOf(r.user_id), fresh: path.freshAccuracy(r.fresh), noGrow });
+  if (out.done) { st.due = null; st.interval_days = expand.gapFor(expand.effective(st.h_days, r.forget_m || 0), expand.PARAMS.TARGET); st.goal_done = true; return st.interval_days; }
+  delete st.goal_done;
+  st.due = dueAt(now, out.days);
+  st.interval_days = out.days;
+  return out.days;
+}
+/** The first time every skill is mastered, a horizon's end is known: note it and re-time each mastered skill from its last retrieval. Only with the switch on. */
+function noteFinished(course, r, now) {
+  if (!expand.on() || r.finished_on) return;
+  if (!course.skills.length || !course.skills.every((s) => (r.skills[s.id] || {}).status === 'mastered')) return;
+  r.finished_on = new Date(now).toISOString();
+  for (const s of course.skills) {
+    const st = r.skills[s.id];
+    if (!st.h_at) continue;
+    scheduleExpanded(r, st, Date.parse(st.h_at), true);
+    if (st.due && Date.parse(st.due) < now) st.due = new Date(now).toISOString();
+  }
 }
 
 /** Skills the learner's core-parts goal sets aside for this course (services/study-goal.js); empty for every other goal. */
@@ -244,6 +269,7 @@ function finishPlacement(course, r, now) {
     }
     for (const a of mine.filter((x) => !x.correct)) if (!st.wrong.includes(a.qid)) st.wrong.push(a.qid);
   }
+  noteFinished(course, r, now);
   r.placed = true;
   r.placement.pending = null;
   r.placement.done_at = new Date(now).toISOString();
@@ -481,7 +507,7 @@ function submit(userId, materialId, quizId, answers, opts = {}) {
       }
     } else if (quiz.mode === 'review') {
       const days = st.last_tested ? Math.max(0, (now - Date.parse(st.last_tested)) / DAY) : 1;
-      r.forget_m = path.updateForgetting(r.forget_m, days, st.right, st.wrong_n, score, path.freshAccuracy(r.fresh));
+      r.forget_m = expand.on() ? expand.updateM(r.forget_m, st, days, score, { fresh: path.freshAccuracy(r.fresh) }) : path.updateForgetting(r.forget_m, days, st.right, st.wrong_n, score, path.freshAccuracy(r.fresh));
       st.right += t.right; st.wrong_n += t.total - t.right;
       st.last_tested = new Date(now).toISOString();
       if (t.right === t.total) {
@@ -491,17 +517,20 @@ function submit(userId, materialId, quizId, answers, opts = {}) {
       } else if (t.right > 0) {
         // Half the last interval (at least a day): one miss in two is a wobble, not a reset.
         entry.passed = false; entry.shaky = true;
+        if (expand.on()) expand.afterShaky(st, now);
         const half = Math.max(1, Math.floor((st.interval_days || 1) / 2));
         st.due = dueAt(now, half); st.interval_days = half;
         entry.next_in_days = half;
       } else {
         entry.passed = false;
+        if (expand.on()) expand.afterLapse(st, now);
         st.status = 'learning'; st.remediate = true; st.tier = Math.max(1, st.tier - 1); st.due = null;
       }
     }
     report.push(entry);
   }
   noteAnswers(r, results, now);
+  noteFinished(course, r, now);
   save(r);
   db.saveSoon();
 
@@ -594,7 +623,7 @@ function dueSummary(userId, now = Date.now()) {
 }
 
 module.exports = {
-  internals: { qOf, row, skillState, save, loadCourse, scheduleReview, noteAnswers, publicQ, correctText, misconceptionOf, shuffle },
+  internals: { qOf, row, skillState, save, loadCourse, scheduleReview, noteFinished, specOf, noteAnswers, publicQ, correctText, misconceptionOf, shuffle },
   dueSummary, PASS, QUIZ_SIZE, gradeShort, isCorrect, misconceptionOf, state, nextStep, lesson, practice,
   placementNext, placementAnswer, startQuiz, submit, checkin, removeForMaterial,
 };
