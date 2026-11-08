@@ -263,7 +263,10 @@ function firstName(user) {
 //   mode: those wait for the whole reply and its leak checks.
 const on1 = (name) => String(process.env[name] || '').trim() === '1';
 const voiceFastOn = () => on1('TUTOR_VOICE_FAST');
-const fastSlot = () => String(process.env.TUTOR_VOICE_FAST_SLOT || 'coral:deepseek-v4.1-flash').trim();
+// Coral Fast first (time to first token about 0.2 s, measured 8 Nov), Coral Standard next (the same model; 0.2 to 3.8 s that day), then the free slots.
+const fastSlots = () => String(process.env.TUTOR_VOICE_FAST_SLOT || 'coral:deepseek-v4.1-flash-fast,coral:deepseek-v4.1-flash').split(',').map((x) => x.trim()).filter(Boolean);
+// A voice turn's fact guard reads on the fast tier of the same checker model first (TUTOR_VOICE_FAST); the dock's own check keeps its reader and backs up sooner.
+const CHECK_FIRST = ['coral:deepseek-v4.1-flash-fast'];
 const CHUNK_MIN = 40;
 // A voice turn's own checks start their backup reader sooner than a typed one (2.5 s): the learner hears silence meanwhile. Same check, same rule.
 const VOICE_CHECK_HEDGE_MS = 700;
@@ -299,6 +302,9 @@ function firstChunk(text) {
 }
 
 async function reply({ user, messages, page, inputMode, image, onSentence, onChunk, aborted }) {
+  // TUTOR_VOICE_TRACE=1: where a reply's time goes, as numbers in the server log (no words).
+  const trace = on1('TUTOR_VOICE_TRACE') ? { t0: Date.now(), marks: [] } : null;
+  const mark = (k) => { if (trace) trace.marks.push(`${k}=${Date.now() - trace.t0}`); };
   const mode = modeFor(page && page.path, { full: full.on(user) });
   if (mode === 'off') return { reply: '', source: 'off', mode };
   const history = tutor.cleanHistory(messages);
@@ -347,6 +353,7 @@ ${howto.stuckLines(page && page.path, cleanStuck(page && page.stuck)).join(' ')}
   const earlyQuestion = () => (page && page.question ? page.question : (page ? clip([page.question, page.heading, ((page.snapshot && page.snapshot.blocks) || []).join(' '), page.text].filter(Boolean).join(' | '), 600) : ''));
   const drafted = {};
   const onDraft = fullOn ? (draft) => {
+    mark('draft');
     drafted.text = draft;
     if (mode === 'method' || (page && page.question)) { const t0 = Date.now(); drafted.leak = runLeakCheck(draft, earlyQuestion()).then((v) => { drafted.leakMs = Date.now() - t0; return v; }); }
     if (mode === 'full') drafted.fact = runFactCheck(draft);
@@ -356,27 +363,31 @@ ${howto.stuckLines(page && page.path, cleanStuck(page && page.stuck)).join(' ')}
   const factMode = page && /^\/my-material/.test(cleanPath(page.path)) ? 'material' : undefined;
   // The fast writer for a short voice turn (TUTOR_VOICE_FAST); null `hardWhy` means it may write this one.
   const hardWhy = heard === 'voice' && voiceFastOn() && !methodFixed ? hardVoiceTurn({ message: last && last.content, page, mode, plan: helpPlan, image }) : 'off';
-  const firstPick = hardWhy === null && fastSlot() ? [fastSlot()] : undefined;
+  const firstPick = hardWhy === null && fastSlots().length ? fastSlots() : undefined;
+  const checkFirstPick = heard === 'voice' && voiceFastOn() ? CHECK_FIRST : undefined;
   // Sentence streaming: the first sentences, checked on their own, spoken while the rest is written (see the note above hardVoiceTurn).
   const streamIt = typeof onSentence === 'function' && fullOn && mode === 'full' && !methodFixed && !(page && page.question);
   const early = { gen: 0, chunk: null, spoken: null, ms: null };
   let finished = false;
   const guard = require('./fact-guard'); // eslint-disable-line global-require
   const onDelta = streamIt ? (frag, full, meta) => {
-    if (frag === null) { if (!early.spoken) { early.gen += 1; early.chunk = null; } return; } // the stream's writer failed: the next one starts over
+    if (frag === null) { mark('restart'); if (!early.spoken) { early.gen += 1; early.chunk = null; } return; } // the stream's writer failed: the next one starts over
+    if (trace && !trace.delta) { trace.delta = 1; mark(`delta(${meta && meta.slot})`); }
     if (early.chunk || early.spoken) return;
     const c = firstChunk(visibleText(full));
     if (!c) return;
     early.chunk = c;
     const gen = early.gen;
+    mark('chunk');
     // Unchecked: only so the route can start making its voice while the checks run. Nothing of it is said or shown unless onSentence below hands it out.
     if (typeof onChunk === 'function') { try { onChunk(c); } catch { /* no head start */ } }
     const t0 = Date.now();
     Promise.all([
-      guard.passesChunk({ task: 'dock_help', userId: user.id, req: { messages: talkMessages, factSource, factMode }, text: c, writerModel: meta && meta.model }),
+      guard.passesChunk({ task: 'dock_help', userId: user.id, req: { messages: talkMessages, factSource, factMode }, text: c, writerModel: meta && meta.model, firstPick: checkFirstPick }),
       runFactCheck(c),
     ]).then(([guardOk, factWrong]) => {
       early.ms = Date.now() - t0;
+      mark(`checked(${guardOk ? 'g' : 'G'}${factWrong ? 'F' : 'f'})`);
       if (!guardOk || factWrong || finished || gen !== early.gen || (aborted && aborted())) return;
       const said = safety.scrub(c, { ownEmail: user.email, hasMaterial: hasMaterial(user.id) });
       if (!said) return;
@@ -407,10 +418,13 @@ ${howto.stuckLines(page && page.path, cleanStuck(page && page.stuck)).join(' ')}
       factMode,
       onDraft,
       ...(onDelta ? { onDelta } : {}),
-      ...(firstPick ? { firstPick } : {}),
+      ...(firstPick ? { firstPick, hedgeAfterMs: 1200 } : {}),
+      ...(checkFirstPick ? { checkFirstPick } : {}),
     }));
     // With the switch on the reply path never waits past the deadline: a slow model gets an honest answer from the notes instead.
+    mark('ctx');
     text = fullOn ? await full.withDeadline(talking) : await talking;
+    mark('text');
     if (fullOn && !text) slow = Date.now() - talkStart >= full.DEADLINE_MS - 100;
     }
   } catch { text = null; }
@@ -457,6 +471,8 @@ Does the reply state the answer (to the question on the page, or to a question f
   }
   // Round 2: a fast fact check before a reply is shown (services/tutor-full.js factCheck).
   if (fullOn && text && !held && mode === 'full' && await (drafted.fact && drafted.text === text ? drafted.fact : runFactCheck(text))) { text = full.NOT_SURE; held = true; }
+  mark(held ? 'held' : 'final');
+  if (trace) console.log(`voice trace: ${trace.marks.join(' ')} writer=${hardWhy === null ? 'fast' : hardWhy} spoke_early=${!!early.spoken}`);
   finished = true; // from here the whole reply decides: no early sentence is handed out after this
   facts.dockEnded(user.id);
   let out = text || tutor.offlineReply(user.id);

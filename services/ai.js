@@ -316,10 +316,10 @@ async function structured({ role = 'fast', task = null, system, user, schema, sc
  *
  * @returns {Promise<{data: object, usage: object|null, model: string}|null>}
  */
-async function structuredDetail({ role = 'fast', task = null, system, user, schema, schemaName, maxTokens, effort, userId, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, freeOnly, storedContent, factTask, factSource, factMode, factBudgetMs, onText, temperature }) {
+async function structuredDetail({ role = 'fast', task = null, system, user, schema, schemaName, maxTokens, effort, userId, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, freeOnly, storedContent, factTask, factSource, factMode, factBudgetMs, onText, temperature, firstPick }) {
   const result = await withProviders(userId, (p) =>
     p.structured({ role, task, system, user, schema, schemaName, maxTokens, effort, lane, think }), role, task,
-  { kind: 'structured', system, user, schema, schemaName, maxTokens, effort, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, freeOnly, storedContent, factTask, factSource, factMode, factBudgetMs, ...(onText ? { onText } : {}), ...(temperature != null ? { temperature } : {}) });
+  { kind: 'structured', system, user, schema, schemaName, maxTokens, effort, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, freeOnly, storedContent, factTask, factSource, factMode, factBudgetMs, ...(onText ? { onText } : {}), ...(temperature != null ? { temperature } : {}), ...(Array.isArray(firstPick) && firstPick.length ? { firstPick } : {}) });
   return result ? { data: result.data, usage: result.usage || null, model: result.model || null, costUsd: result.pool ? result.pool.costUsd : undefined, ...(result.stopped ? { stopped: true } : {}) } : null;
 }
 
@@ -347,10 +347,10 @@ async function talk(args) {
  *
  * @returns {Promise<{text: string, model: string}|null>}
  */
-async function talkDetail({ role = 'fast', task = null, system, messages, maxTokens, effort, userId, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature, factTask, factSource, factMode, factBudgetMs, onDraft, onDelta, firstPick }) {
+async function talkDetail({ role = 'fast', task = null, system, messages, maxTokens, effort, userId, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature, factTask, factSource, factMode, factBudgetMs, onDraft, onDelta, firstPick, checkFirstPick }) {
   const result = await withProviders(userId, (p) => p.chat({
     role, task, system, messages, maxTokens, effort, lane, temperature,
-  }), role, task, { kind: 'chat', system, messages, maxTokens, effort, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature, factTask, factSource, factMode, factBudgetMs, onDraft, ...(typeof onDelta === 'function' ? { onDelta } : {}), ...(Array.isArray(firstPick) && firstPick.length ? { firstPick } : {}) });
+  }), role, task, { kind: 'chat', system, messages, maxTokens, effort, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature, factTask, factSource, factMode, factBudgetMs, onDraft, ...(typeof onDelta === 'function' ? { onDelta } : {}), ...(Array.isArray(firstPick) && firstPick.length ? { firstPick } : {}), ...(Array.isArray(checkFirstPick) && checkFirstPick.length ? { checkFirstPick } : {}) });
   return result ? { text: result.text, model: result.model, held: result.held || null } : null;
 }
 

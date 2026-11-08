@@ -161,7 +161,7 @@ const page = { path: '/dashboard', title: 'Home', heading: 'Hi', text: 'Today' }
   check('off: no first pick', !writerCall().firstPick);
   process.env.TUTOR_VOICE_FAST = '1';
   const f1 = await dock.reply({ user: paid, messages: [{ role: 'user', content: 'what is a verb' }], page, inputMode: 'voice' });
-  check('on: a short voice turn asks the pool for the fast slot first, same task and fact-check source', JSON.stringify(writerCall().firstPick) === '["coral:deepseek-v4.1-flash"]' && writerCall().task === 'dock_help' && typeof writerCall().factSource === 'string' && f1.writer === 'fast', { fp: writerCall().firstPick, w: f1.writer });
+  check('on: a short voice turn asks the pool for the fast slot first, same task and fact-check source', JSON.stringify(writerCall().firstPick) === '["coral:deepseek-v4.1-flash-fast","coral:deepseek-v4.1-flash"]' && JSON.stringify(writerCall().checkFirstPick) === '["coral:deepseek-v4.1-flash-fast"]' && writerCall().task === 'dock_help' && typeof writerCall().factSource === 'string' && f1.writer === 'fast', { fp: writerCall().firstPick, w: f1.writer });
   const f2 = await dock.reply({ user: paid, messages: [{ role: 'user', content: 'what is 12 times 13' }], page, inputMode: 'voice' });
   check('on: a hard one keeps the usual lineup', !writerCall().firstPick && f2.writer === 'usual' && f2.hard_why === 'maths');
   await dock.reply({ user: paid, messages: [{ role: 'user', content: 'what is a verb' }], page, inputMode: 'text' });
