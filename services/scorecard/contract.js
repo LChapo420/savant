@@ -256,6 +256,8 @@ function read(userId, { trackId = null, gradeId = null, hasInterests, card = nul
         if (rc && rc.curve && Number.isFinite(rc.curve.a)) out.memory = { ...rc, steers: false };
       } catch { /* the default curve stays */ }
     }
+    // score-month (docs/SCORE-MONTH.md): the modification plan, only with SCORECARD_MONTH=1. A separate field, NOT in promptLines (those carry no numbers; the plan has sizes and minutes).
+    if (userId && process.env.SCORECARD_MONTH === '1') { try { out.month = require('./month-stats').planFor(userId, {}); } catch { /* the plan is optional */ } } // eslint-disable-line global-require
     return out;
   } catch (err) {
     const out = envelope(where, 'fallback');
