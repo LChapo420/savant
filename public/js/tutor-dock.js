@@ -159,6 +159,78 @@
       return d;
     }
 
+    // Tests and other dates (services/tutor-events.js): the server read the dates; this card is the learner's to edit, Add or dismiss. Nothing is saved until Add (or a spoken/typed yes).
+    let openCard = null;
+    const evNice = (iso) => { const [y, m, d] = String(iso).split('-').map(Number); return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' }); };
+    function evJson(method, path, body) {
+      return fetch(path, { method, credentials: 'same-origin', headers: body ? { 'content-type': 'application/json' } : undefined, body: body ? JSON.stringify(body) : undefined })
+        .then(async (r) => { const j = await r.json().catch(() => ({})); if (!r.ok) throw new Error(j.error || 'That did not go through.'); return j; });
+    }
+    function evClose() { if (openCard) { openCard.remove(); openCard = null; } }
+    function evNote(text) { line('bot', text).className = 'tdock-note'; }
+    function goalCard(goal) {
+      const card = document.createElement('div');
+      card.className = 'tdock-card';
+      card.setAttribute('role', 'group');
+      card.setAttribute('aria-label', 'Review goal suggestion');
+      card.innerHTML = '<p class="tdock-card-q"></p><p class="tdock-card-sub"></p><div class="tdock-card-actions"><button type="button" class="go">Yes, aim reviews there</button><button type="button" class="no">No thanks</button></div>';
+      card.querySelector('.tdock-card-q').textContent = `Also aim your ${goal.subject} reviews at that date?`;
+      card.querySelector('.tdock-card-sub').textContent = goal.text;
+      card.querySelector('.go').addEventListener('click', async () => {
+        try { await evJson('PUT', '/api/retention-goals', { kind: 'enrollment', id: goal.enrollment_id, horizon: 'date', test_date: goal.test_date }); card.remove(); evNote(`Done. Your ${goal.subject} reviews now aim at ${evNice(goal.test_date)}.`); } catch (e) { card.querySelector('.tdock-card-sub').textContent = e.message; }
+      });
+      card.querySelector('.no').addEventListener('click', () => card.remove());
+      log.appendChild(card);
+      log.scrollTop = log.scrollHeight;
+    }
+    function eventsUi(out) {
+      if (!out) return;
+      if (out.added || out.dismissed || out.goal_set) evClose();
+      if (out.goal_offer && out.added) goalCard(out.goal_offer);
+      const sg = out.events && out.events.suggestions;
+      if (!sg || !sg.length) return;
+      evClose();
+      const card = document.createElement('div');
+      card.className = 'tdock-card';
+      card.setAttribute('role', 'group');
+      card.setAttribute('aria-label', 'Calendar suggestion');
+      openCard = card;
+      const done = () => { if (!card.querySelector('form')) { card.remove(); if (openCard === card) openCard = null; } };
+      for (const sug of sg) {
+        const row = document.createElement('form');
+        row.className = 'tdock-card-row';
+        row.noValidate = true;
+        row.innerHTML = '<p class="tdock-card-q"></p><div class="tdock-card-fields"><input type="text" name="title" maxlength="80" aria-label="Title"><input type="date" name="date" aria-label="Date"></div><p class="tdock-card-err" role="alert" hidden></p><div class="tdock-card-actions"><button type="submit" class="go">Add</button><button type="button" class="no">Not now</button></div>';
+        const q = row.querySelector('.tdock-card-q');
+        const title = row.elements.title; const date = row.elements.date; const err = row.querySelector('.tdock-card-err');
+        title.value = sug.title; date.value = sug.date || '';
+        q.textContent = sug.date ? `Add ${sug.title}, ${evNice(sug.date)}${sug.time ? ` at ${sug.time}` : ''}?` : (sug.ask || 'Which day is it?');
+        const sync = () => { row.querySelector('.go').disabled = !date.value || !title.value.trim(); };
+        title.addEventListener('input', sync);
+        date.addEventListener('change', () => { if (date.value) q.textContent = `Add ${title.value.trim() || sug.title}, ${evNice(date.value)}?`; sync(); });
+        sync();
+        row.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          try {
+            const r = await evJson('POST', '/api/events', { title: title.value, date: date.value, time: sug.time, kind: sug.kind, enrollment_id: sug.enrollment_id, source: 'tutor', suggestion_id: sug.id });
+            row.remove();
+            evNote(`Added ${r.event.title}, ${evNice(r.event.date)}, to your calendar.`);
+            done();
+            if (sug.enrollment_id && ['test', 'exam'].includes(r.event.kind)) {
+              try {
+                const pv = await evJson('GET', `/api/events/goal-preview?enrollment_id=${sug.enrollment_id}&date=${r.event.date}`);
+                goalCard({ enrollment_id: sug.enrollment_id, subject: (sug.goal_offer && sug.goal_offer.subject) || 'subject', test_date: r.event.date, text: pv.text });
+              } catch (e2) { /* no goal offer for this date */ }
+            }
+          } catch (e3) { err.textContent = e3.message; err.hidden = false; }
+        });
+        row.querySelector('.no').addEventListener('click', () => { evJson('POST', '/api/events/dismiss', { suggestion_id: sug.id }).catch(() => {}); row.remove(); done(); });
+        card.appendChild(row);
+      }
+      log.appendChild(card);
+      log.scrollTop = log.scrollHeight;
+    }
+
     /** One turn, typed or spoken. Resolves with the reply, or null when there is none to say. */
     async function ask(text, via) {
       if (busy || !text) return null;
@@ -189,6 +261,7 @@
         const reply = String(out.reply || '').replace(/\*\*([^*]+)\*\*/g, '$1').replace(/(^|[^*\w])\*([^*\n]+)\*(?!\w)/g, '$1$2');
         pending.textContent = reply || 'No reply just now. Try again in a moment.';
         if (reply) messages.push({ role: 'assistant', content: reply });
+        eventsUi(out);
         return reply || null;
       } catch (err) {
         pending.textContent = err && err.name === 'AbortError' ? 'That is taking too long. Tap Send to try again; your message is still here.' : (!navigator.onLine ? 'You look offline. Reconnect and tap Send to try again.' : (err.message || 'That did not go through. Try again.'));
@@ -245,6 +318,7 @@
               const reply = clean(ev.reply);
               pending.textContent = reply || 'No reply just now. Try again in a moment.';
               if (reply) messages.push({ role: 'assistant', content: reply });
+              eventsUi(ev);
               if (on.done) on.done({ ...ev, reply, speak: (ev.speak || []).map((p) => ({ i: p.i, text: clean(p.text) })) });
             }
           }

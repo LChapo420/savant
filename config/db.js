@@ -25,6 +25,7 @@ const TMP_PATH = DB_PATH + '.tmp';
 
 const COLLECTIONS = [
   'users',
+  'tutor_events', // the learner's own dates (tests, quizzes, due dates), put on their calendar by the tutor or by hand (services/tutor-events.js)
   'learner_agreements', // onboarding v2: what a learner agreed to and when (services/onboarding-v2.js)
   'onboarding_answers', // onboarding v2: what a learner said on the way in (services/onboarding-v2.js)
   'enrollments',     // one per user per (track, grade) they signed up for
