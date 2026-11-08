@@ -809,7 +809,8 @@ function budgetOk(slot, req, opts, spentRef) {
 async function callHedged(req, opts = {}) {
   const t0 = now();
   const kind = reqKind(req);
-  const cands = opts.slots ? opts.slots.filter((s) => !refusal(s, req, kind)) : candidatesFor(req, opts);
+  const cands0 = opts.slots ? opts.slots.filter((s) => !refusal(s, req, kind)) : candidatesFor(req, opts);
+  const cands = Array.isArray(req.firstPick) && req.firstPick.length ? [...cands0.filter((s) => req.firstPick.includes(s.id)), ...cands0.filter((s) => !req.firstPick.includes(s.id))] : cands0;
   const timeout = (slot) => timeoutFor(slot, req, opts);
   const maxTimeout = Math.max(...cands.map(timeout), opts.timeoutMs || DEFAULT_TIMEOUT_MS());
   const waitingCall = isWaitingStore(lane.getStore()) && req.coral === true;

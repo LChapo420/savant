@@ -106,13 +106,12 @@ router.post('/tutor/dock/stream', requireAuth, limit('tutor', 150, 60 * 60 * 100
   const callId = String(body.call || '');
   const lang = body.lang === 'es' ? 'es' : 'en';
   const voices = [];
-  const speak = (i, text) => {
-    if (!callId || closed) return;
-    voices.push(call.say(req.user, callId, text, { lang })
-      .then((mp3) => send({ type: 'audio', i, mp3: Buffer.from(mp3).toString('base64') }))
-      .catch((err) => send({ type: 'audio', i, error: err.status || 503 })));
-  };
+  const voiceEvent = (i, text) => (!callId || closed ? Promise.resolve() : call.say(req.user, callId, text, { lang })
+    .then((mp3) => send({ type: 'audio', i, mp3: Buffer.from(mp3).toString('base64') }))
+    .catch((err) => send({ type: 'audio', i, error: err.status || 503 })));
+  const speak = (i, text) => { voices.push(voiceEvent(i, text)); };
   let first = null;
+  let head = null; // { text, audio }: the voice for the draft's first sentences, made while their checks run, sent only if they pass
   const finishWith = (out) => {
     call.noteReply(req.user.id, out.reply);
     const r = call.rest(out.reply, first);
@@ -124,12 +123,21 @@ router.post('/tutor/dock/stream', requireAuth, limit('tutor', 150, 60 * 60 * 100
   try {
     const out = await dock.reply({
       user: req.user, messages: body.messages, page: body.page, inputMode: body.input_mode || 'voice', image: body.image,
+      onChunk: (draft) => {
+        if (!callId || closed || head) return;
+        const text = call.sentences(draft).join(' ');
+        head = { text, audio: call.prepare(req.user, callId, text, { lang }) };
+        head.audio.catch(() => {}); // dropped unheard if the words do not pass
+      },
       onSentence: (text) => {
         if (closed || first) return;
         first = text;
         call.noteReply(req.user.id, text); // checked on its own: the call may speak it
         send({ type: 'sentence', i: 0, text });
-        speak(0, call.sentences(text).join(' '));
+        const said = call.sentences(text).join(' ');
+        if (head && head.text === said) {
+          voices.push(head.audio.then((mp3) => send({ type: 'audio', i: 0, mp3: Buffer.from(mp3).toString('base64') })).catch(() => voiceEvent(0, said)));
+        } else speak(0, said);
       },
       aborted: () => closed,
     });
@@ -142,7 +150,7 @@ router.post('/tutor/dock/stream', requireAuth, limit('tutor', 150, 60 * 60 * 100
       finishWith({ ...full.fallback({ user: req.user, page: body.page, message: last ? last.content : '', mode, name: dock.firstName(req.user) }), source: 'fallback', mode });
     } else finishWith({ reply: tutor.offlineReply(req.user.id), source: 'fallback', mode });
   }
-  await Promise.all(voices);
+  for (let k = 0; k < voices.length; k++) await voices[k]; // eslint-disable-line no-await-in-loop
   if (!closed) res.end();
 });
 

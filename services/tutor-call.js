@@ -256,10 +256,23 @@ async function hear(user, callId, buf, { lang = 'en' } = {}) {
 
 /** Speaking: one sentence. Only what the tutor's route returned, or a fixed notice. */
 async function say(user, callId, text, { lang = 'en' } = {}) {
-  live(user, callId);
   const line = String(text || '').trim().slice(0, 600);
+  if (line && !maySay(user.id, line)) { live(user, callId); throw refuse(403, 'Only the tutor\'s own checked words are spoken.'); }
+  return voiceFor(user, callId, line, lang);
+}
+
+/**
+ * The stream route's head start (routes/tutor.js POST /tutor/dock/stream): the voice for the first sentences of the tutor's own draft, made while their checks run.
+ * The route keeps the audio and sends it only if those words pass; otherwise it is dropped unheard. Not reachable from the page: no route takes text for it. Same
+ * live-call check, limits and ledger as say().
+ */
+function prepare(user, callId, text, { lang = 'en' } = {}) {
+  return voiceFor(user, callId, String(text || '').trim().slice(0, 600), lang);
+}
+
+async function voiceFor(user, callId, line, lang) {
+  live(user, callId);
   if (!line) throw refuse(400, 'Nothing to say.');
-  if (!maySay(user.id, line)) throw refuse(403, 'Only the tutor\'s own checked words are spoken.');
   if (!voice.gatewayFor(user.id)) throw refuse(503, 'The voice is the browser\'s on this account.');
   const cost = ledger.costOf({ kind: 'tts', model: voice.tutorTtsModel(), chars: line.length });
   if (usage(user.id).usd + cost > limits().day_usd) throw refuse(429, 'Today\'s paid voice is used up.');
@@ -268,4 +281,4 @@ async function say(user, callId, text, { lang = 'en' } = {}) {
   return mp3;
 }
 
-module.exports = { info, start, end, hear, say, noteReply, maySay, usage, limits, wavSeconds, close, switches, sentences, rest, NOTICES, LIMITS, _open: open, _said: said };
+module.exports = { info, start, end, hear, say, prepare, noteReply, maySay, usage, limits, wavSeconds, close, switches, sentences, rest, NOTICES, LIMITS, _open: open, _said: said };

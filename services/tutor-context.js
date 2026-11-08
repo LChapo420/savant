@@ -265,6 +265,8 @@ const on1 = (name) => String(process.env[name] || '').trim() === '1';
 const voiceFastOn = () => on1('TUTOR_VOICE_FAST');
 const fastSlot = () => String(process.env.TUTOR_VOICE_FAST_SLOT || 'coral:deepseek-v4.1-flash').trim();
 const CHUNK_MIN = 40;
+// A voice turn's own checks start their backup reader sooner than a typed one (2.5 s): the learner hears silence meanwhile. Same check, same rule.
+const VOICE_CHECK_HEDGE_MS = 700;
 const HARD_ASK = /\b(prove|derive|step[- ]by[- ]step|walk me through|show (me )?(how|the steps|your working|the working)|work (it|this|that) out|solve|calculate|in (more )?detail|go deeper|more detail|explain (it|this|that) (again|differently|another way))\b/i;
 /** Why a voice turn should go to the usual (stronger) writer, or null when the fast one may write it. */
 function hardVoiceTurn({ message, page, mode, plan, image }) {
@@ -296,7 +298,7 @@ function firstChunk(text) {
   return null;
 }
 
-async function reply({ user, messages, page, inputMode, image, onSentence, aborted }) {
+async function reply({ user, messages, page, inputMode, image, onSentence, onChunk, aborted }) {
   const mode = modeFor(page && page.path, { full: full.on(user) });
   if (mode === 'off') return { reply: '', source: 'off', mode };
   const history = tutor.cleanHistory(messages);
@@ -340,7 +342,7 @@ async function reply({ user, messages, page, inputMode, image, onSentence, abort
   const checkNotes = () => `${ctx.text}
 ${howto.sheet()} What each feature does: ${howto.FEATURES.map((f) => `${f.title}: ${f.steps}`).join(' ')}
 ${howto.stuckLines(page && page.path, cleanStuck(page && page.stuck)).join(' ')} (a count of wrong tries or quiet seconds that the page reports is true)`;
-  const runFactCheck = (draft) => full.factCheck({ ai, user, message: last ? last.content : '', text: draft, notes: checkNotes(), question: page && page.question });
+  const runFactCheck = (draft) => full.factCheck({ ai, user, message: last ? last.content : '', text: draft, notes: checkNotes(), question: page && page.question, ...(heard === 'voice' ? { hedgeAfterMs: VOICE_CHECK_HEDGE_MS } : {}) });
   const runLeakCheck = (draft, q) => full.leakCheck({ ai, user, question: q, message: last ? last.content : '', text: draft });
   const earlyQuestion = () => (page && page.question ? page.question : (page ? clip([page.question, page.heading, ((page.snapshot && page.snapshot.blocks) || []).join(' '), page.text].filter(Boolean).join(' | '), 600) : ''));
   const drafted = {};
@@ -367,6 +369,8 @@ ${howto.stuckLines(page && page.path, cleanStuck(page && page.stuck)).join(' ')}
     if (!c) return;
     early.chunk = c;
     const gen = early.gen;
+    // Unchecked: only so the route can start making its voice while the checks run. Nothing of it is said or shown unless onSentence below hands it out.
+    if (typeof onChunk === 'function') { try { onChunk(c); } catch { /* no head start */ } }
     const t0 = Date.now();
     Promise.all([
       guard.passesChunk({ task: 'dock_help', userId: user.id, req: { messages: talkMessages, factSource, factMode }, text: c, writerModel: meta && meta.model }),
