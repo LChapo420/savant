@@ -2,6 +2,8 @@
 
 Branch `upload-4x`. Round 1, 7 Nov 2026. **No real learner is in this file.** SIMULATED means the numbers come from a learning model and assumed seconds. MEASURED means counted from the code or the built courses. Nothing here used a model or spent money.
 
+Round 2 (levers 2 to 4, question fit) is at the end of this file.
+
 The target, per learner: time from Savant at most a quarter of the time to reach the same result studying the original, exam at the chosen horizon equal or higher, everything in the material covered.
 
 ## Plain answer
@@ -169,3 +171,80 @@ Item 35 s, right 3 s, feedback 25 s, retry 38 s, 230 words a minute (all ASSUMED
 2. **Learn memory growth per learner from their own reviews**, so a FSRS-like memory is not over-reviewed and a v2-like one not under-reviewed. The largest move in the sensitivity table.
 3. **Test-first (lever 2):** practice is 27 of the first pass's 30 minutes. It can only remove what the learner already knows. An earlier sim put skipping known pages at 3% to 5%, on the old costs.
 4. **Material (lever 3):** following and readability, unchanged by this round.
+
+---
+
+# Round 2 (branch `upload-4x-2`, 8 Nov 2026): levers 2 to 4 and question fit
+
+**No real learner is in this section.** Labels: SIMULATED (the v2 model, assumed seconds), AI-JUDGED (a free NVIDIA model), MEASURED (counted from code). Nothing was spent: no paid model, no learner data. Everything new is behind a switch, default off.
+
+## Plain answer
+
+**4x is not reached, and lever 2 and lever 3 do not move it (SIMULATED, 320 held-out learners, 240 extreme or random, 9 goals).** Against a careful student the multiple stays about x0.65 to x1.1, with no learner at 4x at any goal (0 of 320 in every cell). Test-first skipping with proof makes the path about 4% to 11% **slower** on the lean page, and up to 6% slower on today's whole course, not faster, with 0.1 to 4.6 points less recall at short goals. Scorecard custom material adds nothing beyond that and, on a dated test 6 months or more away, costs up to 11 points for some learners. The own-control study (lever 4) is built so the real answer can come from testers from Nov 15. Question fit moves the AI-judged on-topic share from 2.8% to 6.4%, near the judge's noise; the bank cannot write questions it has no generator for.
+
+Why 4x is out of reach in the model (held-out, 1 month, lean page): 105 minutes, of which 3 are reading, 27 practice, 75 reviews. A part skipped by test-first saves its first pass (about 30% of the time) and then needs the same review cycle as any other part, because the model gives prior knowledge no memory trace (a part known from before has recall 1 only at its first answer and decays from there). A careful student doing the same recall under the same memory model has the same floor. The limit is the model, and real testers settle it.
+
+## Lever 2: test-first skipping with proof (`UPLOAD_TESTFIRST=1`)
+
+The app's starting check (`material-path.nextPlacement`) already skips a part on one right answer, inferring through prerequisites. What was missing is proof and a recheck. Built (`services/material-testfirst.js`, wired into `material-study.js`, `routes/materials.js`, `public/js/my-material-study.js`):
+
+- a part is skipped only on 2 right answers, no miss on it, and at least one given as "sure" (the starting check shows "Next, I am sure", "Next, not sure" and "I do not know"; a learner whose scorecard says they guess or rush needs 3);
+- a wrong answer given as "sure" is a misconception: the part is never skipped and goes to remediation;
+- the walk asks one more question on each part it would skip until it has the right answers, or the part has no unused question;
+- a skipped part comes back for a recheck after 3 days (sooner than a learned part), and a failed recheck reopens it by the ordinary review rule.
+
+Result (SIMULATED; `tf1` = today's one-answer rule, `tf` = with proof, `expand` = lean page without skipping; seeds 20261131 and 20261132; `docs/upload-4x-2/report-held.txt`):
+
+| goal | tf1: minutes % of expand, exam diff (pts) | tf: minutes %, exam diff | tf exam diff, worst 1% | learners more than 5 pts lower with tf |
+|---|---|---|---|---|
+| 1 week | 97%, -10.5 | 108%, -4.6 | -18.6 | 136 of 320 |
+| 1 month | 113%, -0.8 | 111%, -0.9 | -9.3 | 26 |
+| 6 months | 112%, +0.1 | 109%, -0.2 | -3.6 | 2 |
+| 1 year | 111%, -0.1 | 108%, -0.2 | -2.1 | 0 |
+| no test day (3 y) | 110%, 0.0 | 107%, 0.0 | -1.7 | 0 |
+| test in 1 week | 93%, -5.9 | 104%, -1.5 | -5.9 | 13 |
+| test in 1 year | 104%, 0.0 | 107%, -0.1 | -1.9 | 0 |
+
+- **The proof does what it is for:** against the one-answer rule, recall at a 1-week goal is 5.9 points higher and at a test in a week 4.4 points higher, for about 10% more time. The one-answer rule as it stands today loses 10.5 points at a 1-week goal in this model.
+- **Skipping saves no time.** 28% of parts are skipped with proof (53% with one answer) and time still rises. On the lean page a question (35 s) costs more than reading the part (about 21 s). On today's whole course, where a part costs about 8 questions, `course_tf` is still 98% to 106% of `course`: practice minutes fall (60 to 49 with the one-answer rule) but reviews rise (54 to 74), because a skipped part starts its review cycle with 2 answers, not 8.
+- By prior knowledge (1 month): the high-prior third skips 40% and is still 111% of expand; the low-prior third skips 17%. No third gets faster.
+- Not modelled, so likely understated: prior knowledge that is already remembered for a long time. Real testers can show it.
+
+## Lever 3: custom material from the scorecard (`UPLOAD_CUSTOM=1`)
+
+`services/material-custom.js`. Only the four classes whose decision accuracy beats never-lean in `docs/SCORE-95.md` steer anything: habit 75.6, performance 73.4, contrast 69.3, memory 68.6 against 57 to 61. Benefit, preference and hidden (63.6, 54.7, 58.3 against 64.0, 57.7, 63.8) do not, and reasoning and scale are not in that table: they are excluded, and a test checks that every rule's measure is in an allowed class. A measure leans only past the card's hard edge (30 / 70, `decisions.decide`) and with confidence at least 0.5. 17 rules; votes on one knob add. Knobs that reach the app: practice questions per part (+-1), proof answers needed (2 or 3), review gap scale (0.8, 1, 1.2), starting tier bias, and whether a low-prior learner is asked first at all. Page depth, interleaving and sitting length are computed and not yet read by any page (no effect, said plainly).
+
+Result (SIMULATED; estimated traits with shrink 0.55 and noise 9 points, which gives 71.4% decision accuracy on these learners, inside the doc's 68.6 to 75.6; `oracle` uses the true traits, an upper bound):
+
+- Against `tf`: time within 1 point at most goals, exam 0.2 to 1.3 points lower. **On a test 6 months or a year away, 57 and 48 learners are more than 5 points lower** (worst -11.4). The oracle is no better than the estimate (1 month: -0.9 for both), so the loss is not estimate noise: the knobs themselves (longer gaps for good retainers, a third proof answer) do not pay in this model.
+- I did not tune the knobs after seeing outcomes. The next step is learning which knob helps which learner from their own logs, not a fixed map.
+
+## Lever 4: the own-control study (`UPLOAD_STUDY=1`)
+
+`services/upload-study.js`, routes under `/api/materials/:id/study/own-control`, a card in `public/js/my-material-study.js`, collection `upload_studies`. Flow:
+
+1. After the starting check the learner sees one plain offer (`CONSENT_TEXT`: what is split, what is recorded, "at most 24 questions", "does not change your grade or your scorecard", "you can stop at any time"). Only an exact `agree: true` starts it, and the account must pass `boosters.allowed` (age screen answered and, under the age of consent, a parent's agreement: the gate of the other extra measurements).
+2. The parts still to learn are split into two **matched halves**: sorted by prior knowledge then size, neighbours paired, a seeded coin per pair, rebalanced when the halves' words would drift more than 3% apart. One half is Savant's way. The other is the learner's normal way: the original passages and an "I am done" button, no Savant lesson, questions or reviews.
+3. Two questions per part, up to 6 parts a half, are held back from the Savant half's practice and checks (moved out of the questions the path sees) and used only in the test.
+4. The test comes at the learner's own horizon after both halves are in (their retention goal: a horizon in days, a test date, or 90 days if they set none). Both halves are in one mixed order, same format, no feedback.
+5. Time is logged for both halves by one rule: the gaps between a learner's actions on a part, each capped at 10 minutes, a part at 45. Result per learner: time ratio (normal minutes per 1,000 words over Savant minutes per 1,000 words) and the score difference in points.
+6. `analyse()` pools learners with a seeded bootstrap interval: "equal or more" means the lower bound of the score difference is at or above -5 points; "4x" per learner is ratio at least 4 and difference at least -5. Under 30 learners it says "no claim".
+
+The normal half's revision outside the app is not timed (this under-counts the normal side and is against Savant's ratio); the test is small; a tester may study the normal half more carefully because it is watched. These are stated in the code header. Not built: a staff view of the pooled result (call `upload-study.analyse(upload-study.allResults())`). The card is untested in a browser.
+
+## Question fit (`SPEED_TOPIC_FIT=on`)
+
+`services/topic-fit.js`, used in `services/sessions.js`. On a practice level, a focus or stretch question is the best of 24 bank draws for the lesson's skill and difficulty by word overlap with the lesson's title and what it covers (answer key and rationale excluded). It never does worse than the first draw, and when no draw overlaps it keeps one and says fit 0. AI-JUDGED with the round-4 judge and script (60 held-out first practice levels, 360 questions each way, `docs/upload-4x-2/on-topic-fit-*.json`): on topic **2.8% off, 6.4% on** (10 and 23 of 360). The difference is near the judge's noise (about 1.5 points on a difference of 3.6). The bank's generators write per-skill templates, so the ceiling is what a skill's generator can say. Where questions were written for the objective, on-topic is 59% (`SPEED_OBJECTIVE_PRACTICE`, 8 of 219 grades). **The fix that works is writing questions per objective for the other 211 grades** with the existing factory (`scripts/build-objective-items.js`, two blind judges); that needs a model batch and a fact check, not done here.
+
+## Switches and what to turn on
+
+| switch | does | recommendation |
+|---|---|---|
+| `UPLOAD_STUDY=1` | the own-control study, with consent | turn on for the Nov 15 testers: only it can show 4x |
+| `UPLOAD_TESTFIRST=1` | proof and recheck on the starting check | optional: safer than today's one-answer rule (5.9 points at 1 week), not faster |
+| `UPLOAD_CUSTOM=1` | scorecard knobs on practice, proof and review gaps | leave off: no gain, a loss on far tests |
+| `SPEED_TOPIC_FIT=on` | topic-matched practice questions | harmless, small lift; the real fix is written questions |
+
+## Not verified
+
+Anything on a real learner; the study cards, the confidence buttons and the test in a browser; the pooled study view; page depth, interleaving and sitting length reaching any page; question fit on the live app (it ran on a throwaway database for 60 levels per arm); a time ratio from the study.

@@ -33,6 +33,9 @@ const courses = require('./course-builder');
 const path = require('./material-path');
 const retentionGoal = require('./retention-goal');
 const expand = require('./material-review-expand');
+const testFirst = require('./material-testfirst');
+const custom = require('./material-custom');
+const ownStudy = require('./upload-study');
 
 const PASS = path.PASS;
 const QUIZ_SIZE = 5;
@@ -103,7 +106,7 @@ function loadCourse(userId, materialId) {
   // 'building' with skills: a partial course being resumed (or a build that died) stays studyable meanwhile.
   if (!c || !['ready', 'partial', 'building'].includes(c.status) || !(c.skills || []).length) return null;
   // The goal's reading and the learner's own changes (services/material-parts.js; both off by default): one choke point, so the lesson, practice, checks, reviews, remediation and the practice test all serve it.
-  return require('./material-parts').viewCourse(userId, c); // eslint-disable-line global-require
+  return ownStudy.holdOut(userId, materialId, require('./material-parts').viewCourse(userId, c)); // eslint-disable-line global-require
 }
 /** A question of a skill by id, also when the goal has set it aside: an answer already on its way must still be marked. */
 const qOf = (skill, id) => skill && (skill.all_questions || skill.questions || []).find((x) => x.id === id);
@@ -146,8 +149,11 @@ const specOf = (userId) => { try { return require('./learning-spec').buildSpec(u
 const isDue = (st, now) => st.status === 'mastered' && st.due && Date.parse(st.due) <= now;
 const dueAt = (now, days) => new Date(now + days * DAY).toISOString();
 function scheduleReview(r, st, now) {
+  delete st.recheck;
   if (expand.on()) return scheduleExpanded(r, st, now);
   let days = path.intervalDays(st.right, st.wrong_n, r.forget_m || 0, specOf(r.user_id));
+  const cp = custom.forUser(r.user_id); // UPLOAD_CUSTOM: a learner who forgets fast is asked sooner, one who holds on, later
+  if (cp && cp.knobs.reviewScale !== 1) days = Math.max(1, Math.round(days * cp.knobs.reviewScale));
   // The course's retention goal (services/retention-goal.js): a test date compresses the review to the date, a horizon stops
   // reviews that would land past it; forever (the default) leaves the curve's interval as it is.
   const lim = retentionGoal.limitInterval(retentionGoal.forMaterial(r.user_id, r.material_id, now), days, now);
@@ -197,7 +203,50 @@ function nextStep(course, r, now) {
   const s = fix || open[0];
   if (!s) return course.skills.every((k) => aside.has(k.id) || (r.skills[k.id] || {}).status === 'mastered') ? { kind: 'done' } : { kind: 'wait' };
   const st = r.skills[s.id] || {};
+  // UPLOAD_STUDY: a part in the learner's normal half is studied their own way: the original text and a done button.
+  if (ownStudy.enabled() && ownStudy.armOf(ownStudy.rowOf(r.user_id, r.material_id), s.id) === 'normal') return { kind: 'normal', skill: s.id, title: s.title };
   return { kind: st.read && !st.remediate ? 'quiz' : 'lesson', skill: s.id, title: s.title, remediation: !!st.remediate };
+}
+
+// ── the own-control study (services/upload-study.js, UPLOAD_STUDY) ───────────────
+function ownStatus(userId, materialId, now = Date.now()) { return ownStudy.status(userId, materialId, now); }
+function ownOffer(userId) { try { return ownStudy.offer(db.byId('users', userId)); } catch { return { available: false }; } }
+function ownStart(userId, materialId, body) {
+  const course = loadCourse(userId, materialId);
+  if (!course) return { error: 'There is no course to study yet.', code: 'no_course' };
+  // The learner's own retention goal sets the test day: a horizon in days, a test date, or (no goal) 90 days, said in the doc.
+  let horizon = Number(body && body.horizon_days);
+  if (!(horizon > 0)) {
+    const g = retentionGoal.forMaterial(userId, materialId, Date.now()) || {};
+    horizon = g.status === 'horizon' && g.days ? g.days : g.status === 'date' && g.test_date ? Math.max(1, Math.round((Date.parse(g.test_date) - Date.now()) / DAY)) : 90;
+  }
+  return ownStudy.start(userId, materialId, { agree: body && body.agree, horizonDays: horizon }, { course, progress: row(userId, materialId), user: db.byId('users', userId) });
+}
+function ownPart(userId, materialId, skillId) {
+  const course = loadCourse(userId, materialId);
+  if (!course) return { error: 'There is no course to study yet.', code: 'no_course' };
+  return ownStudy.normalPart(userId, materialId, skillId, course);
+}
+/** A normal-half part is done: the part counts as passed for the path (so what depends on it opens), with no reviews from Savant. */
+function ownDone(userId, materialId, skillId, now = Date.now()) {
+  const out = ownStudy.normalDone(userId, materialId, skillId, now);
+  if (out.error) return out;
+  const r = row(userId, materialId);
+  const st = skillState(r, skillId);
+  st.status = 'mastered'; st.via = 'own-control'; st.due = null; st.read = true;
+  save(r);
+  ownStudy.noteStudied(userId, materialId, Object.keys(r.skills).filter((id) => r.skills[id].status === 'mastered'), now);
+  return { ok: true };
+}
+function ownTest(userId, materialId) {
+  const course = loadCourse(userId, materialId);
+  if (!course) return { error: 'There is no course to study yet.', code: 'no_course' };
+  return ownStudy.testNext(userId, materialId, course);
+}
+function ownTestSubmit(userId, materialId, answers) {
+  const course = loadCourse(userId, materialId);
+  if (!course) return { error: 'There is no course to study yet.', code: 'no_course' };
+  return ownStudy.testSubmit(userId, materialId, course, answers, isCorrect);
 }
 
 /** What the goal makes of the first pass, in the learner's terms; null unless the optimizer is on. An estimate (services/material-optimize.js estimateMinutes), said to be one on the page. */
@@ -228,6 +277,7 @@ function state(userId, materialId, now = Date.now()) {
   return {
     course: { title: course.title, status: course.status, planned: course.status === 'building' ? (course.outline || []).length || null : null },
     units: course.units || [{ id: 'u1', title: course.title, skills: course.skills.map((s) => s.id) }],
+    ...(ownStudy.enabled() ? { own_control: { ...ownStudy.status(userId, materialId, now), offer: r.placed ? ownOffer(userId) : { available: false } } } : {}),
     reading: readingOf(course), placed: !!r.placed, skills, mastered: skills.filter((s) => s.status === 'mastered').length, total: skills.length,
     due_count: dues.length, next_due: dues.length ? 'now' : upcoming, next: nextStep(course, r, now),
     steps: r.steps, pace: Math.round((r.pace || 0) * 100) / 100,
@@ -249,23 +299,34 @@ function placementAskable(course, r, rnd) {
   };
 }
 
+/** Right answers a skipped skill needs: 2, or 3 for a learner whose scorecard says guesses or rushing are likely (UPLOAD_CUSTOM). */
+function needOf(r) { const c = custom.forUser(r.user_id); return c ? c.knobs.proofNeed : testFirst.PARAMS.need; }
+
 function seedOf(userId, materialId) { return (Number(userId) * 131 + Number(materialId) * 7) >>> 0; }
 
 /** Apply what placement concluded: known skills mastered (review on the curve), half-known ones a tier up. */
 function finishPlacement(course, r, now) {
   const result = path.placementResult(course, r.placement.answers, seedOf(r.user_id, r.material_id));
   for (const s of course.skills) {
-    const v = result[s.id];
+    let v = result[s.id];
     const st = skillState(r, s.id);
     st.placement_p = Math.round(v.p * 1000) / 1000;
     const mine = r.placement.answers.filter((a) => a.skill === s.id);
+    // UPLOAD_TESTFIRST: a skill is skipped only on proof (right answers, one of them sure, no miss); a sure-but-wrong answer is a misconception to fix first.
+    let proved = null;
+    if (testFirst.enabled()) {
+      proved = testFirst.proof(mine, { ...testFirst.PARAMS, need: needOf(r) });
+      if (v.verdict === 'known' && !proved.skip) { v = { ...v, verdict: 'unsure' }; result[s.id] = v; }
+      if (proved.misconception && st.status === 'new') { st.remediate = true; st.misconceptions.push('placement: a wrong answer given as sure'); }
+    }
     if (v.verdict === 'known' && st.status === 'new') {
       st.status = 'mastered'; st.via = 'placement'; st.tier = 2;
       st.right += mine.filter((a) => a.correct).length; st.wrong_n += mine.filter((a) => !a.correct).length;
       st.last_tested = new Date(now).toISOString();
       scheduleReview(r, st, now);
+      if (proved && proved.skip) { st.via = 'testfirst'; st.due = testFirst.recheckAt(now); st.recheck = true; }
     } else if (st.status === 'new') {
-      st.tier = path.startTier(v.p, r.pace);
+      st.tier = Math.max(1, Math.min(3, path.startTier(v.p, r.pace) + ((custom.forUser(r.user_id) || { knobs: { startTierBias: 0 } }).knobs.startTierBias)));
     }
     for (const a of mine.filter((x) => !x.correct)) if (!st.wrong.includes(a.qid)) st.wrong.push(a.qid);
   }
@@ -295,9 +356,9 @@ function placementNext(userId, materialId, opts = {}) {
     const p = r.placement.pending;
     const skill = course.skills.find((s) => s.id === p.skill);
     const q = qOf(skill, p.qid);
-    if (q) return { done: false, question: publicQ(q, skill.id), stage: p.stage, asked: r.placement.answers.length, most };
+    if (q) return { done: false, question: publicQ(q, skill.id), stage: p.stage, asked: r.placement.answers.length, most, ...(testFirst.enabled() ? { confidence: true } : {}) };
   }
-  const nx = path.nextPlacement(course, r.placement.answers, placementAskable(course, r, rnd), seedOf(userId, materialId));
+  const nx = path.nextPlacement(course, r.placement.answers, placementAskable(course, r, rnd), seedOf(userId, materialId), testFirst.enabled() ? needOf(r) : 1);
   if (!nx) {
     const result = finishPlacement(course, r, now);
     save(r);
@@ -306,11 +367,11 @@ function placementNext(userId, materialId, opts = {}) {
   }
   r.placement.pending = { skill: nx.skill, qid: nx.question.id, stage: nx.stage };
   save(r);
-  return { done: false, question: publicQ(nx.question, nx.skill), stage: nx.stage, asked: r.placement.answers.length, most };
+  return { done: false, question: publicQ(nx.question, nx.skill), stage: nx.stage, asked: r.placement.answers.length, most, ...(testFirst.enabled() ? { confidence: true } : {}) };
 }
 
 /** Answer the pending placement question. No feedback: placement only decides where to start. */
-function placementAnswer(userId, materialId, qid, answer, opts = {}) {
+function placementAnswer(userId, materialId, qid, answer, opts = {}, confidence = null) {
   const course = loadCourse(userId, materialId);
   if (!course) return { error: 'There is no course to study yet.', code: 'no_course' };
   const r = row(userId, materialId);
@@ -321,7 +382,7 @@ function placementAnswer(userId, materialId, qid, answer, opts = {}) {
   const q = qOf(skill, p.qid);
   if (!q) return { error: 'No such question.', code: 'not_found' };
   const correct = isCorrect(q, answer);
-  r.placement.answers.push({ skill: p.skill, qid: q.id, correct, guess: path.guessOf(q), stage: p.stage });
+  r.placement.answers.push({ skill: p.skill, qid: q.id, correct, guess: path.guessOf(q), stage: p.stage, ...(testFirst.enabled() && testFirst.cleanConfidence(confidence) ? { confidence: testFirst.cleanConfidence(confidence) } : {}) });
   r.placement.pending = null;
   r.pace = path.updatePace(r.pace, q.tier || 2, correct);
   r.steps.questions++;
@@ -340,9 +401,11 @@ function lesson(userId, materialId, skillId, opts = {}) {
   const r = row(userId, materialId);
   if (!unlocked(course, r, skill)) return { error: 'Master the earlier skills first.', code: 'locked' };
   const st = skillState(r, skill.id);
+  ownStudy.touch(userId, materialId, skill.id, 'open', opts.now || Date.now());
   if (st.status === 'new') st.status = 'learning';
   const remediating = !!st.remediate;
-  const n = path.practiceCount(st.tier, r.pace, remediating, specOf(userId));
+  const cp = custom.forUser(userId);
+  const n = Math.max(1, Math.min(4, path.practiceCount(st.tier, r.pace, remediating, specOf(userId)) + (cp ? cp.knobs.practiceDelta : 0)));
   // Practice at the skill's tier and below, the ones missed before first.
   const practiceQs = path.pickForTier(skill, Math.max(1, st.tier - 1), n, st.wrong, [], rnd);
   st.read = true;
@@ -363,6 +426,7 @@ function lesson(userId, materialId, skillId, opts = {}) {
 
 /** One practice question, answered and explained at once. Does not count toward mastery; moves the learner's pace. */
 function practice(userId, materialId, skillId, qid, answer) {
+  ownStudy.touch(userId, materialId, skillId, 'answer');
   const course = loadCourse(userId, materialId);
   if (!course) return { error: 'There is no course to study yet.', code: 'no_course' };
   const skill = course.skills.find((s) => s.id === skillId);
@@ -424,6 +488,7 @@ function startQuiz(userId, materialId, mode, skillId, opts = {}) {
 
   const picked = pickQuestions(course, r, mode, skillId, now, rnd);
   if (!picked.length) return { error: 'No questions available.', code: 'empty' };
+  for (const sid of new Set(picked.map((x) => x.skill.id))) ownStudy.touch(userId, materialId, sid, 'open', now);
   const id = crypto.randomBytes(8).toString('hex');
   r.pending = { id, mode, skill: mode === 'mastery' ? skillId : null, qids: picked.map(({ skill, q, role }) => [skill.id, q.id, role]), issued_at: new Date(now).toISOString() };
   save(r);
@@ -465,6 +530,7 @@ function submit(userId, materialId, quizId, answers, opts = {}) {
   const quiz = r.pending;
   if (!quiz || quiz.id !== String(quizId || '')) return { error: 'That quiz is not open any more. Start a new one.', code: 'no_quiz' };
   r.pending = null; // one shot, graded or not
+  for (const sid of new Set(quiz.qids.filter((x) => x[2] !== 'mix').map((x) => x[0]))) ownStudy.touch(userId, materialId, sid, 'answer', now);
   const given = answers && typeof answers === 'object' ? answers : {};
 
   const per = new Map(); // skill id -> { right, total }
@@ -533,6 +599,7 @@ function submit(userId, materialId, quizId, answers, opts = {}) {
   noteFinished(course, r, now);
   save(r);
   db.saveSoon();
+  if (ownStudy.enabled()) ownStudy.noteStudied(userId, materialId, Object.keys(r.skills).filter((id) => r.skills[id].status === 'mastered'), now);
 
   const out = { mode: quiz.mode, report, overall: { right: results.filter((x) => x.ok).length, total: results.length } };
   // Remediation: for each miss, the answer, the reason, the misunderstanding behind the pick and the passage.
@@ -623,6 +690,7 @@ function dueSummary(userId, now = Date.now()) {
 }
 
 module.exports = {
+  ownStatus, ownOffer, ownStart, ownPart, ownDone, ownTest, ownTestSubmit,
   internals: { qOf, row, skillState, save, loadCourse, scheduleReview, noteFinished, specOf, noteAnswers, publicQ, correctText, misconceptionOf, shuffle },
   dueSummary, PASS, QUIZ_SIZE, gradeShort, isCorrect, misconceptionOf, state, nextStep, lesson, practice,
   placementNext, placementAnswer, startQuiz, submit, checkin, removeForMaterial,

@@ -1,0 +1,174 @@
+SIMULATED. 320 learners (240 extreme/random, 80 ordinary). Minutes at ASSUMED seconds; recall from the v2 model.
+Arms: expand = lean page + expanding intervals (the round-1 reference). tf1 = a part is skipped on one right answer (today's starting-check rule). tf = test first with proof (2 right, one sure, recheck in 3 days).
+custom = tf + the scorecard knobs from ESTIMATED traits (only habit, performance, contrast, memory). oracle = same from TRUE traits (an upper bound, not a claim).
+
+## Minutes and exam
+goal | arm | minutes mean | worst 1% minutes | exam mean | exam worst 1% | skipped on test-first, mean share
+1 week | expand | 65.4 | 125.5 | 0.77 | 0.54 |
+1 week | tf1 | 63.2 | 124.9 | 0.66 | 0.46 |
+1 week | tf | 70.2 | 142.1 | 0.72 | 0.48 |
+1 week | custom | 70.9 | 143.4 | 0.73 | 0.48 |
+1 week | oracle | 71.1 | 141.9 | 0.74 | 0.46 |
+1 month | expand | 105.4 | 217.1 | 0.83 | 0.77 |
+1 month | tf1 | 118.3 | 229.7 | 0.83 | 0.74 |
+1 month | tf | 116.1 | 231.5 | 0.82 | 0.74 |
+1 month | custom | 115.6 | 224.2 | 0.82 | 0.75 |
+1 month | oracle | 115.7 | 227.0 | 0.82 | 0.74 |
+6 months | expand | 160.2 | 329.5 | 0.93 | 0.90 |
+6 months | tf1 | 178.6 | 344.1 | 0.93 | 0.90 |
+6 months | tf | 173.9 | 340.5 | 0.93 | 0.89 |
+6 months | custom | 172.8 | 328.5 | 0.92 | 0.87 |
+6 months | oracle | 172.7 | 333.0 | 0.92 | 0.87 |
+1 year | expand | 181.4 | 357.0 | 0.95 | 0.93 |
+1 year | tf1 | 200.3 | 375.7 | 0.95 | 0.93 |
+1 year | tf | 195.1 | 370.0 | 0.95 | 0.93 |
+1 year | custom | 194.5 | 365.5 | 0.94 | 0.90 |
+1 year | oracle | 194.2 | 367.1 | 0.94 | 0.90 |
+no test day (3 y) | expand | 209.0 | 404.5 | 0.96 | 0.94 |
+no test day (3 y) | tf1 | 228.6 | 417.5 | 0.96 | 0.94 |
+no test day (3 y) | tf | 223.7 | 409.2 | 0.96 | 0.94 |
+no test day (3 y) | custom | 223.1 | 407.7 | 0.96 | 0.93 |
+no test day (3 y) | oracle | 222.6 | 412.8 | 0.96 | 0.92 |
+test in 1 week | expand | 91.6 | 161.8 | 0.95 | 0.85 |
+test in 1 week | tf1 | 85.2 | 159.4 | 0.89 | 0.76 |
+test in 1 week | tf | 95.2 | 177.5 | 0.94 | 0.83 |
+test in 1 week | custom | 92.0 | 169.7 | 0.93 | 0.83 |
+test in 1 week | oracle | 89.8 | 169.7 | 0.93 | 0.84 |
+test in 1 month | expand | 168.0 | 307.4 | 0.99 | 0.97 |
+test in 1 month | tf1 | 175.9 | 317.3 | 0.99 | 0.95 |
+test in 1 month | tf | 176.4 | 314.6 | 0.99 | 0.97 |
+test in 1 month | custom | 170.9 | 310.8 | 0.99 | 0.96 |
+test in 1 month | oracle | 168.0 | 311.8 | 0.99 | 0.96 |
+test in 6 months | expand | 171.0 | 344.6 | 0.98 | 0.96 |
+test in 6 months | tf1 | 189.1 | 360.4 | 0.98 | 0.96 |
+test in 6 months | tf | 184.5 | 357.8 | 0.98 | 0.96 |
+test in 6 months | custom | 184.9 | 346.9 | 0.97 | 0.87 |
+test in 6 months | oracle | 185.3 | 354.7 | 0.96 | 0.87 |
+test in 1 year | expand | 192.1 | 373.6 | 0.99 | 0.98 |
+test in 1 year | tf1 | 210.9 | 389.6 | 0.99 | 0.97 |
+test in 1 year | tf | 205.7 | 386.5 | 0.99 | 0.97 |
+test in 1 year | custom | 207.2 | 390.5 | 0.98 | 0.90 |
+test in 1 year | oracle | 207.8 | 390.5 | 0.97 | 0.90 |
+
+## Each arm against `expand`, same learners: time saved, exam difference (points), worst case
+goal | arm | minutes % of expand (mean) | slowest-relative learner | exam diff mean | exam diff worst 1% | exam diff worst | learners >5 pts lower | newly under 0.70
+1 week | tf1 | 97.1% | x1.26 | -10.5 | -21.4 | -24.5 | 286 | 136
+1 week | tf | 107.7% | x1.40 | -4.6 | -18.6 | -23.1 | 136 | 51
+1 week | custom | 108.5% | x1.40 | -3.6 | -16.8 | -23.1 | 110 | 44
+1 week | oracle | 108.6% | x1.37 | -3.1 | -15.9 | -23.1 | 105 | 39
+1 month | tf1 | 113.1% | x1.53 | -0.8 | -7.9 | -10.9 | 22 | 0
+1 month | tf | 111.0% | x1.47 | -0.9 | -9.3 | -11.5 | 26 | 1
+1 month | custom | 110.6% | x1.47 | -0.9 | -8.5 | -13.1 | 30 | 2
+1 month | oracle | 110.3% | x1.45 | -0.9 | -9.2 | -13.1 | 32 | 1
+6 months | tf1 | 112.1% | x1.46 | 0.1 | -2.7 | -3.6 | 0 | 0
+6 months | tf | 109.1% | x1.41 | -0.2 | -3.6 | -5.9 | 2 | 0
+6 months | custom | 108.5% | x1.48 | -0.7 | -5.9 | -7.3 | 12 | 0
+6 months | oracle | 108.3% | x1.48 | -0.9 | -6.3 | -7.5 | 18 | 0
+1 year | tf1 | 110.9% | x1.37 | -0.1 | -2.3 | -2.9 | 0 | 0
+1 year | tf | 108.0% | x1.42 | -0.2 | -2.1 | -2.6 | 0 | 0
+1 year | custom | 107.7% | x1.45 | -0.4 | -4.9 | -6.3 | 3 | 0
+1 year | oracle | 107.5% | x1.45 | -0.6 | -4.9 | -5.8 | 2 | 0
+no test day (3 y) | tf1 | 109.7% | x1.37 | -0.0 | -1.8 | -2.2 | 0 | 0
+no test day (3 y) | tf | 107.4% | x1.35 | -0.0 | -1.7 | -2.3 | 0 | 0
+no test day (3 y) | custom | 107.1% | x1.44 | -0.0 | -3.2 | -3.7 | 0 | 0
+no test day (3 y) | oracle | 106.9% | x1.44 | -0.0 | -3.4 | -4.0 | 0 | 0
+test in 1 week | tf1 | 93.0% | x1.11 | -5.9 | -13.6 | -17.1 | 179 | 0
+test in 1 week | tf | 103.9% | x1.23 | -1.5 | -5.9 | -9.3 | 13 | 0
+test in 1 week | custom | 100.3% | x1.23 | -1.8 | -7.7 | -9.1 | 25 | 0
+test in 1 week | oracle | 97.8% | x1.17 | -1.9 | -7.6 | -8.5 | 23 | 0
+test in 1 month | tf1 | 104.8% | x1.20 | -0.2 | -2.7 | -4.0 | 0 | 0
+test in 1 month | tf | 105.1% | x1.19 | -0.1 | -2.5 | -3.7 | 0 | 0
+test in 1 month | custom | 101.8% | x1.19 | -0.3 | -2.8 | -6.2 | 1 | 0
+test in 1 month | oracle | 99.9% | x1.17 | -0.4 | -3.2 | -7.0 | 1 | 0
+test in 6 months | tf1 | 111.1% | x1.40 | -0.0 | -2.2 | -3.3 | 0 | 0
+test in 6 months | tf | 108.4% | x1.37 | -0.1 | -2.6 | -3.0 | 0 | 0
+test in 6 months | custom | 108.7% | x1.57 | -1.4 | -11.0 | -11.4 | 57 | 0
+test in 6 months | oracle | 108.7% | x1.57 | -2.2 | -11.8 | -12.3 | 94 | 0
+test in 1 year | tf1 | 110.2% | x1.34 | -0.1 | -1.4 | -2.3 | 0 | 0
+test in 1 year | tf | 107.4% | x1.39 | -0.1 | -1.9 | -2.6 | 0 | 0
+test in 1 year | custom | 108.3% | x1.52 | -1.2 | -8.8 | -10.4 | 48 | 0
+test in 1 year | oracle | 108.4% | x1.52 | -1.8 | -8.9 | -9.0 | 73 | 0
+
+## By prior knowledge (theta0 tercile of the learners), 1 month: each arm against expand, minutes % and exam diff points, and the share of parts skipped
+1 month | low prior (n 107) | tf1 113.3% / -0.9 pts / skipped 0.44 | tf 111.2% / -0.5 pts / skipped 0.17 | custom 107.7% / -0.5 pts / skipped 0.12 | oracle 106.1% / -0.5 pts / skipped 0.09
+1 month | mid prior (n 107) | tf1 113.2% / -0.8 pts / skipped 0.55 | tf 110.5% / -0.9 pts / skipped 0.28 | custom 111.2% / -1.3 pts / skipped 0.26 | oracle 110.7% / -1.4 pts / skipped 0.26
+1 month | high prior (n 106) | tf1 113.0% / -0.7 pts / skipped 0.64 | tf 111.4% / -1.2 pts / skipped 0.40 | custom 113.0% / -0.9 pts / skipped 0.39 | oracle 114.3% / -0.7 pts / skipped 0.39
+1 year | low prior (n 107) | tf1 110.2% / -0.1 pts / skipped 0.44 | tf 107.9% / -0.1 pts / skipped 0.17 | custom 105.2% / -0.5 pts / skipped 0.12 | oracle 104.0% / -0.4 pts / skipped 0.09
+1 year | mid prior (n 107) | tf1 111.0% / -0.0 pts / skipped 0.55 | tf 107.6% / -0.3 pts / skipped 0.28 | custom 108.6% / -0.4 pts / skipped 0.26 | oracle 107.9% / -0.7 pts / skipped 0.26
+1 year | high prior (n 106) | tf1 111.5% / 0.0 pts / skipped 0.64 | tf 108.5% / -0.1 pts / skipped 0.40 | custom 109.5% / -0.4 pts / skipped 0.39 | oracle 110.5% / -0.7 pts / skipped 0.39
+
+## Test-first on the whole course of today (a part costs about 8 questions there): each arm against `course`, same learners
+goal | arm | minutes % of course | exam diff mean | exam diff worst 1% | worst | learners >5 pts lower | share of parts skipped
+1 week | course_tf1 | 89.4% | -8.3 | -17.9 | -19.3 | 250 | 0.53
+1 week | course_tf | 99.8% | -3.4 | -13.1 | -15.8 | 98 | 0.28
+1 month | course_tf1 | 104.3% | -1.4 | -11.5 | -12.0 | 68 | 0.53
+1 month | course_tf | 104.2% | -1.1 | -12.8 | -15.3 | 50 | 0.28
+6 months | course_tf1 | 106.8% | -0.7 | -11.6 | -14.1 | 53 | 0.53
+6 months | course_tf | 105.6% | -0.5 | -8.7 | -11.4 | 44 | 0.28
+1 year | course_tf1 | 107.0% | 0.1 | -7.2 | -9.0 | 13 | 0.53
+1 year | course_tf | 105.8% | -0.2 | -7.5 | -11.9 | 16 | 0.28
+no test day (3 y) | course_tf1 | 106.7% | -0.0 | -2.6 | -3.8 | 0 | 0.53
+no test day (3 y) | course_tf | 104.5% | -0.0 | -3.5 | -4.6 | 0 | 0.28
+test in 1 week | course_tf1 | 88.7% | -4.5 | -13.4 | -15.1 | 139 | 0.53
+test in 1 week | course_tf | 97.9% | -1.3 | -6.9 | -8.3 | 21 | 0.28
+test in 1 month | course_tf1 | 100.7% | -0.2 | -3.2 | -7.0 | 1 | 0.53
+test in 1 month | course_tf | 101.7% | -0.1 | -2.5 | -4.0 | 0 | 0.28
+test in 6 months | course_tf1 | 103.8% | 0.0 | -0.1 | -1.5 | 0 | 0.53
+test in 6 months | course_tf | 103.0% | 0.0 | -0.2 | -0.4 | 0 | 0.28
+test in 1 year | course_tf1 | 103.8% | 0.0 | -0.0 | -0.0 | 0 | 0.53
+test in 1 year | course_tf | 103.0% | 0.0 | -0.0 | -0.2 | 0 | 0.28
+
+## The multiple: baseline minutes over Savant minutes (cheapest careful or reread plan reaching the same exam). Mean, worst 1% in brackets, n both reach, learners at 4x
+-- against careful
+goal | expand | tf1 | tf | custom | oracle
+1 week | x0.79 (0.49) n320 4x:0 | x0.66 (0.44) n320 4x:0 | x0.65 (0.43) n320 4x:0 | x0.66 (0.43) n320 4x:0 | x0.67 (0.42) n320 4x:0
+1 month | x1.06 (0.78) n263 4x:0 | x0.93 (0.64) n268 4x:0 | x0.96 (0.66) n267 4x:0 | x0.96 (0.59) n263 4x:0 | x0.96 (0.66) n253 4x:0
+6 months | x1.07 (0.91) n140 4x:0 | x0.96 (0.77) n137 4x:0 | x0.98 (0.80) n144 4x:0 | x0.98 (0.77) n145 4x:0 | x0.98 (0.77) n156 4x:0
+1 year | x1.03 (0.65) n69 4x:0 | x0.92 (0.53) n58 4x:0 | x0.96 (0.60) n69 4x:0 | x0.92 (0.52) n75 4x:0 | x0.91 (0.51) n80 4x:0
+no test day (3 y) | x1.06 (0.91) n43 4x:0 | x0.96 (0.83) n44 4x:0 | x0.98 (0.81) n42 4x:0 | x0.99 (0.81) n49 4x:0 | x1.01 (0.81) n62 4x:0
+test in 1 week | x1.11 (0.91) n57 4x:0 | x0.94 (0.64) n274 4x:0 | x1.01 (0.74) n131 4x:0 | x1.02 (0.70) n146 4x:0 | x1.02 (0.70) n152 4x:0
+test in 1 month | x0.78 (0.78) n1 4x:0 | x0.72 (0.63) n6 4x:0 | x0.68 (0.51) n4 4x:0 | x0.81 (0.62) n10 4x:0 | x0.83 (0.62) n9 4x:0
+test in 6 months | x0.89 (0.62) n150 4x:0 | x0.80 (0.49) n152 4x:0 | x0.83 (0.50) n150 4x:0 | x0.73 (0.33) n152 4x:0 | x0.68 (0.34) n173 4x:0
+test in 1 year | x0.88 (0.58) n91 4x:0 | x0.79 (0.52) n98 4x:0 | x0.79 (0.51) n101 4x:0 | x0.68 (0.33) n131 4x:0 | x0.64 (0.31) n143 4x:0
+-- against reread
+goal | expand | tf1 | tf | custom | oracle
+1 week | x0.17 (0.06) n184 4x:0 | x0.12 (0.06) n299 4x:0 | x0.13 (0.06) n243 4x:0 | x0.13 (0.05) n235 4x:0 | x0.13 (0.05) n227 4x:0
+1 month | x0.22 (0.09) n70 4x:0 | x0.19 (0.06) n92 4x:0 | x0.18 (0.05) n99 4x:0 | x0.19 (0.04) n92 4x:0 | x0.18 (0.04) n84 4x:0
+6 months | x0.24 (0.14) n91 4x:0 | x0.20 (0.11) n90 4x:0 | x0.21 (0.11) n95 4x:0 | x0.21 (0.10) n101 4x:0 | x0.21 (0.10) n115 4x:0
+1 year | x0.13 (0.07) n13 4x:0 | x0.11 (0.07) n10 4x:0 | x0.12 (0.06) n12 4x:0 | x0.12 (0.07) n21 4x:0 | x0.14 (0.07) n25 4x:0
+no test day (3 y) | x0.24 (0.12) n77 4x:0 | x0.22 (0.10) n74 4x:0 | x0.22 (0.13) n74 4x:0 | x0.20 (0.08) n69 4x:0 | x0.21 (0.08) n72 4x:0
+test in 1 week | x- (-) n0 4x:0 | x0.09 (0.09) n1 4x:0 | x- (-) n0 4x:0 | x- (-) n0 4x:0 | x- (-) n0 4x:0
+test in 1 month | x- (-) n0 4x:0 | x- (-) n0 4x:0 | x- (-) n0 4x:0 | x0.16 (0.16) n1 4x:0 | x- (-) n0 4x:0
+test in 6 months | x0.29 (0.19) n14 4x:0 | x0.22 (0.11) n14 4x:0 | x0.27 (0.10) n17 4x:0 | x0.16 (0.05) n42 4x:0 | x0.16 (0.05) n60 4x:0
+test in 1 year | x0.31 (0.25) n7 4x:0 | x0.24 (0.17) n9 4x:0 | x0.22 (0.12) n12 4x:0 | x0.17 (0.06) n35 4x:0 | x0.18 (0.06) n55 4x:0
+
+## By learner kind, custom against expand (minutes %, exam diff points), 1 month and 1 year
+1 month | age_old (n 24) | 112.9% | exam 0.1, worst -7.4
+1 month | age_young (n 24) | 110.5% | exam -0.7, worst -8.2
+1 month | contradict (n 48) | 111.3% | exam -1.1, worst -7.5
+1 month | ell (n 24) | 111.6% | exam -1.1, worst -6.8
+1 month | ordinary (n 80) | 108.9% | exam -1.0, worst -9.6
+1 month | random (n 48) | 112.1% | exam -1.3, worst -13.1
+1 month | tail_both (n 24) | 107.7% | exam -0.2, worst -8.5
+1 month | tail_hi (n 24) | 111.6% | exam -0.6, worst -7.3
+1 month | tail_lo (n 24) | 110.6% | exam -1.4, worst -8.1
+1 year | age_old (n 24) | 110.5% | exam -0.1, worst -4.2
+1 year | age_young (n 24) | 106.5% | exam -1.0, worst -6.0
+1 year | contradict (n 48) | 108.4% | exam -0.5, worst -4.9
+1 year | ell (n 24) | 110.2% | exam -0.7, worst -6.3
+1 year | ordinary (n 80) | 106.5% | exam -0.2, worst -3.3
+1 year | random (n 48) | 108.8% | exam -0.6, worst -5.9
+1 year | tail_both (n 24) | 104.4% | exam -0.4, worst -4.5
+1 year | tail_hi (n 24) | 108.0% | exam -0.3, worst -2.1
+1 year | tail_lo (n 24) | 107.6% | exam -0.5, worst -4.3
+
+## Worst individuals, custom (lowest multiple against careful per goal, and biggest exam drop against expand)
+1 week: lowest x0.40 random, 31, 41.4 min against 16.5; biggest exam drop -23.1 pts (contradict, 22: 0.43 against 0.66)
+1 month: lowest x0.53 random, 61, 111.0 min against 59.4; biggest exam drop -13.1 pts (random, 44: 0.68 against 0.81)
+6 months: lowest x0.72 contradict, 29, 157.8 min against 113.0; biggest exam drop -7.3 pts (contradict, 26: 0.87 against 0.94)
+1 year: lowest x0.52 random, 24, 101.2 min against 52.4; biggest exam drop -6.3 pts (ell, 43: 0.89 against 0.95)
+no test day (3 y): lowest x0.81 random, 14, 128.6 min against 104.6; biggest exam drop -3.7 pts (random, 33: 0.92 against 0.96)
+test in 1 week: lowest x0.68 contradict, 29, 65.5 min against 44.6; biggest exam drop -9.1 pts (contradict, 53: 0.85 against 0.95)
+test in 1 month: lowest x0.62 tail_both, 68, 145.6 min against 89.7; biggest exam drop -6.2 pts (contradict, 22: 0.93 against 0.99)
+test in 6 months: lowest x0.31 random, 27, 216.9 min against 66.4; biggest exam drop -11.4 pts (age_young, 10: 0.87 against 0.99)
+test in 1 year: lowest x0.32 random, 24, 101.2 min against 32.1; biggest exam drop -10.4 pts (random, 31: 0.89 against 0.99)

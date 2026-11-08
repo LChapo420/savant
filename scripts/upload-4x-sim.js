@@ -22,6 +22,8 @@ const X = require('./lib/extreme-learners');
 const MP = require('../services/material-path');
 const E = require('../services/material-review-expand');
 const RG = require('../services/retention-goal');
+const CU = require('../services/material-custom');
+const TF = require('../services/material-testfirst');
 
 const args = Object.fromEntries(process.argv.slice(2).map((a) => { const m = a.match(/^--([^=]+)=?(.*)$/); return [m[1], m[2] === '' ? '1' : m[2]]; }));
 const num = (k, d) => (args[k] === undefined ? d : Number(args[k]));
@@ -41,6 +43,9 @@ const KLOSS = num('kloss', 0);           // ADVERSE: a deep lapse costs this sha
 const LEAN_GAIN = num('lean-gain', 1);   // ADVERSE: what a lean page teaches, as a share of a full page (v2 credits a page, not its words)
 const REVIEW_QS = num('review-qs', 2);   // services/material-study.js: two questions a skill
 const MEMORY = args.memory || 'v2';
+const EST_R = num('est-r', 0.55);        // lever 3: how far the scorecard's estimate of a trait follows the truth (shrink toward 50) ...
+const EST_SD = num('est-sd', 9);         // ... and its noise, in points; calibrated so the lean decisions are right about 70% of the time (docs/SCORE-95.md: 68.6 to 75.6)
+const SURE_CAL = num('sure-cal', 1);     // lever 2: how often a right answer is given as "sure", as a multiple of the learner's true knowledge of the part (ASSUMED)
 const SALT = args.salt || '';              // noise control: the same arms on another random stream
 const WORDS_MULT = num('words-mult', 1);  // sensitivity: a less dense document, same points, this many times the words (the lean reading scales with it: an assumption)
 const GUESS = 0.25;
@@ -161,10 +166,30 @@ const ARMS = {
   lean: (doc) => ({ words: doc.lean_words, practice: doc.lean_practice / doc.skills, checks: doc.lean_checks / doc.skills, expand: false, gain: LEAN_GAIN }),
   expand: (doc) => ({ words: doc.lean_words, practice: doc.lean_practice / doc.skills, checks: doc.lean_checks / doc.skills, expand: true, gain: LEAN_GAIN }),
 };
+// Lever 2 and 3 arms (docs/UPLOAD-4X.md). tf1: today's starting-check rule, one right answer skips a part. tf: test-first with proof (two right, one sure, a recheck in 3 days). custom: tf plus the scorecard's knobs from ESTIMATED traits; oracle: the same from TRUE traits (an upper bound, never a claim).
+ARMS.tf1 = (doc) => ({ ...ARMS.expand(doc), tf: { need: 1, sure: false } });
+ARMS.tf = (doc) => ({ ...ARMS.expand(doc), tf: { need: TF.PARAMS.need, sure: true } });
+ARMS.course_tf1 = (doc) => ({ ...ARMS.course(doc), tf: { need: 1, sure: false } }); // the same two rules on today's whole course, where a part costs about 8 questions, not a page
+ARMS.course_tf = (doc) => ({ ...ARMS.course(doc), tf: { need: TF.PARAMS.need, sure: true } });
+ARMS.custom = (doc) => ({ ...ARMS.expand(doc), tf: { need: TF.PARAMS.need, sure: true }, custom: 'est' });
+ARMS.oracle = (doc) => ({ ...ARMS.expand(doc), tf: { need: TF.PARAMS.need, sure: true }, custom: 'true' });
+const CUSTOM_CACHE = new Map();
+function knobsFor(L, kind) {
+  const key = `${L.id}:${kind}`;
+  if (!CUSTOM_CACHE.has(key)) {
+    const T = {};
+    if (kind === 'true') Object.assign(T, L.traits);
+    else { const r = rngOf('est', L.id); for (const id of X.IDS) T[id] = clamp(50 + EST_R * (L.traits[id] - 50) + EST_SD * r.normal(), 2, 98); }
+    CUSTOM_CACHE.set(key, CU.plan(T));
+  }
+  return CUSTOM_CACHE.get(key);
+}
 /** A fractional count: this skill gets the floor or the ceiling, by its turn. */
 const countOf = (x, i) => { const f = Math.floor(x); return f + ((i * 0.6180339887) % 1 < x - f ? 1 : 0); };
 function savant(L, P, doc, rep, armName, H, dated = false) {
   const arm = ARMS[armName](doc);
+  const knobs = arm.custom ? knobsFor(L, arm.custom).knobs : null;
+  if (knobs) { arm.practice = Math.max(0, arm.practice + knobs.practiceDelta); if (knobs.testFirst === 'off') arm.tf = null; else if (arm.tf) arm.tf = { ...arm.tf, need: knobs.proofNeed }; }
   const w = world(L, P, doc, rep);
   const app = { m: 0, fresh: { right: 0, total: 0 } };
   const pagesWords = (arm.words * WORDS_MULT) / doc.skills;
@@ -199,7 +224,8 @@ function savant(L, P, doc, rep, armName, H, dated = false) {
       const goal = dated ? eff : (end === null ? { status: 'forever' } : { status: 'horizon', days: H });
       const out = E.plan(s.st, { eff: goal, m: app.m, now: iso(t), finishedOn: end === null ? null : new Date(iso(examDayOf() - H)).toISOString(), fresh: freshOf(), p: P_EXPAND });
       if (out.done) { s.stop = true; s.due = null; return; }
-      s.due = t + out.days; s.interval = out.days;
+      const dd = knobs && knobs.reviewScale !== 1 ? Math.max(1, Math.round(out.days * knobs.reviewScale)) : out.days;
+      s.due = t + dd; s.interval = dd;
       return;
     } else {
       days = MP.intervalDays(s.st.right, s.st.wrong_n, app.m, null);
@@ -208,14 +234,33 @@ function savant(L, P, doc, rep, armName, H, dated = false) {
     if (dated) { days = dateLimited(days, t); if (days === null) { s.stop = true; s.due = null; return; } }
     s.due = t + days; s.interval = days;
   };
+  /** Lever 2: ask first. Adaptive: a miss ends it at once (learn the part); `need` right answers, one given as sure, skip it. */
+  const tryTestFirst = (s, t0) => {
+    let right = 0; let sure = 0;
+    for (let q = 0; q < arm.tf.need; q++) {
+      const know = s.k;
+      if (!answer(w, P, s, t0, 'practice')) return false;
+      right++; if (w.rnd() < clamp(SURE_CAL * know, 0.05, 0.95)) sure++;
+    }
+    if (arm.tf.sure && !sure) return false;
+    s.st.right += right; app.fresh.right += right; app.fresh.total += right;
+    return true;
+  };
   let t = 0;
-  w.sk.forEach((s, i) => { t = learn(s, i, t); s.lastT = t; });
+  w.sk.forEach((s, i) => {
+    if (arm.tf && tryTestFirst(s, t)) { s.skipped = true; s.lastT = t; } else { t = learn(s, i, t); s.lastT = t; }
+  });
   const finish = Math.ceil(t);
   const examDay = finish + H;
   const end = H >= 1095 ? null : examDay; // no test day: nothing ends the reviews; the exam is at 3 years
   examDayNow = examDay;
   if (dated) eff = { status: 'date', test_date: new Date(iso(examDay)).toISOString().slice(0, 10), set_on: new Date(iso(examDay - H)).toISOString().slice(0, 10) };
-  w.sk.forEach((s) => schedule(s, t, end));
+  w.sk.forEach((s) => {
+    if (s.skipped) { // a skipped part is rechecked in a few days, then goes on the ordinary schedule
+      const due = s.lastT + TF.PARAMS.recheckDays;
+      if (end !== null && !dated && due >= end) { s.stop = true; s.due = null; } else if (dated && due > examDay) { s.stop = true; s.due = null; } else { s.due = due; s.interval = TF.PARAMS.recheckDays; }
+    } else schedule(s, t, end);
+  });
   for (let guard = 0; guard < 4000; guard++) {
     const open = w.sk.filter((s) => s.due !== null && (dated ? s.due <= examDay : s.due < examDay));
     if (!open.length) break;
@@ -252,7 +297,7 @@ function savant(L, P, doc, rep, armName, H, dated = false) {
   }
   const e = exam(w, examDay);
   const by = w.minutes;
-  return { min: by.read + by.practice + by.review, read: by.read, practice: by.practice, review: by.review, score: e.score, low: e.low, reviews: mean(w.sk.map((s) => s.reviews)), m: app.m };
+  return { min: by.read + by.practice + by.review, read: by.read, practice: by.practice, review: by.review, score: e.score, low: e.low, reviews: mean(w.sk.map((s) => s.reviews)), skipped: mean(w.sk.map((s) => (s.skipped ? 1 : 0))), m: app.m };
 }
 
 // ---------- baselines ----------
@@ -329,12 +374,12 @@ for (const L of learners) {
   const pick = rngOf('docs', L.id);
   const docsHere = [];
   for (let r = 0; r < REPS; r++) docsHere.push([DOCS[Math.floor(pick() * DOCS.length)], r]);
-  const row = { id: L.id, kind: L.kind, age: L.age, goals: {} };
+  const row = { id: L.id, kind: L.kind, age: L.age, prior: P.theta0, goals: {} };
   for (const [name, H, kind] of HORIZONS) {
     const cell = {};
     for (const arm of Object.keys(ARMS)) {
       const rs = docsHere.map(([d, rep]) => savant(L, P, d, rep, arm, H, kind === 'date'));
-      cell[arm] = Object.fromEntries(['min', 'read', 'practice', 'review', 'score', 'low', 'reviews'].map((k) => [k, mean(rs.map((x) => x[k]))]));
+      cell[arm] = Object.fromEntries(['min', 'read', 'practice', 'review', 'score', 'low', 'reviews', 'skipped'].map((k) => [k, mean(rs.map((x) => x[k]))]));
     }
     if (args['no-base']) { row.goals[name] = cell; continue; }
     const src = mean(docsHere.map(([d]) => d.src));
@@ -344,7 +389,7 @@ for (const L of learners) {
     const rereadPlans = []; for (const massed of [0, 1, 2, 4]) for (const d of days) rereadPlans.push({ massed, days: d });
     const carefulTable = tableOf(careful, L, P, docsHere, H, carefulPlans);
     const rereadTable = tableOf(reread, L, P, docsHere, H, rereadPlans);
-    for (const arm of ['lean', 'expand', 'course']) {
+    for (const arm of ['lean', 'expand', 'course', 'tf1', 'tf', 'custom', 'oracle', 'course_tf1', 'course_tf']) {
       const target = cell[arm].score;
       cell[`careful_${arm}`] = cheapest(carefulTable, target);
       cell[`reread_${arm}`] = cheapest(rereadTable, target);

@@ -24,6 +24,7 @@ const partModify = require('./part-modify');
 const curriculum = require('../config/curriculum');
 const gradeSkills = require('../config/grade-skills');
 const bank = require('../content/bank');
+const topicFit = require('./topic-fit');
 const itemTheme = require('./item-theme');
 const mastery = require('./mastery');
 const learner = require('./learner');
@@ -534,6 +535,18 @@ async function materialize({ userId, session, entries, params, level, blockIndex
       }
     }
   } catch { practiceObjective = null; }
+  // SPEED_TOPIC_FIT (services/topic-fit.js): on a practice level, focus and stretch questions are the bank draw that overlaps the lesson's own topic most. Off: nothing here runs.
+  let fitTopic = null; let fitSkill = null;
+  try {
+    if (topicFit.enabled() && !session.preview) {
+      const g = curriculum.getGrade(session.track_id, session.grade_id);
+      if (g && curriculum.levelKind(level, g.pathLength, g) === 'practice') {
+        const m = require('./coverage').modelFor(session.track_id, session.grade_id); // eslint-disable-line global-require
+        const e = m && m.levelMap[level];
+        if (e && e.direct !== undefined) { const o = m.objectives[e.direct]; fitTopic = topicFit.topicOf(o.title, o.covers); fitSkill = curriculum.levelPlan(g, level).focus; }
+      }
+    }
+  } catch { fitTopic = null; }
   for (let slot = 0; slot < entries.length; slot++) {
     const entry = entries[slot];
     let item = fresh[slot] || null;
@@ -558,6 +571,10 @@ async function materialize({ userId, session, entries, params, level, blockIndex
         item = require('./objective-items').pick({ trackId: session.track_id, gradeId: session.grade_id, objectiveId: practiceObjective, avoid, difficulty: entry.difficulty });
         if (item) { entry.objective = practiceObjective; entry.reviewReason = null; }
       } catch { item = null; }
+    }
+    if (!item && fitTopic && (entry.role === 'focus' || entry.role === 'stretch') && entry.skillId === fitSkill) {
+      const got = topicFit.pick((i) => bank.generate({ skillId: entry.skillId, difficulty: entry.difficulty, seed: `${entry.skillId}:${entry.difficulty}:fit:${slot}:${i}:${Math.random()}`, avoid, school: entry.school }), fitTopic, (it) => avoid.has(bank.itemKey(it)));
+      if (got.item) item = got.item;
     }
     if (!item && themeDomain && entry.role !== 'review' && !entry.objective) {
       item = itemTheme.take({ skillId: entry.skillId, difficulty: entry.difficulty, domain: themeDomain, avoid });

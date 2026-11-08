@@ -354,19 +354,26 @@ router.post('/:id/cards', requireAuth, ownMaterial, limit('materials-cards-write
 router.patch('/:id/cards/:card', requireAuth, ownMaterial, limit('materials-cards-write', 120, 60 * 60 * 1000), cardBody, (req, res) => cardReply(res, cards.edit(req.user.id, req.params.id, req.params.card, req.body)));
 router.delete('/:id/cards/:card', requireAuth, ownMaterial, limit('materials-cards-write', 120, 60 * 60 * 1000), (req, res) => cardReply(res, cards.remove(req.user.id, req.params.id, req.params.card)));
 
-const STUDY_STATUS = { no_course: 404, not_found: 404, locked: 403, no_quiz: 409, no_test: 409, empty: 400, already_placed: 409, nothing_due: 409, use_placement: 409, not_practice: 409 };
+const STUDY_STATUS = { no_course: 404, not_found: 404, locked: 403, no_quiz: 409, no_test: 409, off: 404, no_consent: 400, not_eligible: 403, already: 409, not_placed: 409, too_small: 409, not_normal: 409, not_due: 409, empty: 400, already_placed: 409, nothing_due: 409, use_placement: 409, not_practice: 409 };
 function studyReply(res, out, key) {
   if (out.error) return res.status(STUDY_STATUS[out.code] || 400).json({ error: out.error, code: out.code });
   return res.json(key ? { [key]: out[key] } : out);
 }
 const studyBody = express.json({ limit: '64kb' });
+// The own-control study (services/upload-study.js, UPLOAD_STUDY, off by default): consent, the normal half's original text and done button, and the test at the learner's horizon.
+router.get('/:id/study/own-control', requireAuth, ownMaterial, (req, res) => res.json({ offer: study.ownOffer(req.user.id), status: study.ownStatus(req.user.id, req.params.id) }));
+router.post('/:id/study/own-control', requireAuth, ownMaterial, limit('materials-own-control', 20, 60 * 60 * 1000), studyBody, (req, res) => studyReply(res, study.ownStart(req.user.id, req.params.id, req.body || {})));
+router.get('/:id/study/own-control/part/:skill', requireAuth, ownMaterial, (req, res) => studyReply(res, study.ownPart(req.user.id, req.params.id, req.params.skill)));
+router.post('/:id/study/own-control/part/:skill/done', requireAuth, ownMaterial, limit('materials-own-control', 200, 60 * 60 * 1000), (req, res) => studyReply(res, study.ownDone(req.user.id, req.params.id, req.params.skill)));
+router.get('/:id/study/own-control/test', requireAuth, ownMaterial, (req, res) => studyReply(res, study.ownTest(req.user.id, req.params.id)));
+router.post('/:id/study/own-control/test', requireAuth, ownMaterial, limit('materials-own-control', 20, 60 * 60 * 1000), studyBody, (req, res) => studyReply(res, study.ownTestSubmit(req.user.id, req.params.id, (req.body || {}).answers)));
 
 router.get('/:id/study', requireAuth, ownMaterial, (req, res) => studyReply(res, study.state(req.user.id, req.params.id)));
 router.get('/:id/study/lesson/:skill', requireAuth, ownMaterial, (req, res) => studyReply(res, study.lesson(req.user.id, req.params.id, req.params.skill)));
 router.get('/:id/study/placement', requireAuth, ownMaterial, (req, res) => studyReply(res, study.placementNext(req.user.id, req.params.id)));
 router.post('/:id/study/placement', requireAuth, ownMaterial, limit('materials-placement', 300, 60 * 60 * 1000), studyBody, (req, res) => {
   const b = req.body || {};
-  studyReply(res, study.placementAnswer(req.user.id, req.params.id, String(b.question || ''), b.answer));
+  studyReply(res, study.placementAnswer(req.user.id, req.params.id, String(b.question || ''), b.answer, {}, b.confidence));
 });
 router.post('/:id/study/practice', requireAuth, ownMaterial, limit('materials-practice', 300, 60 * 60 * 1000), studyBody, (req, res) => {
   const b = req.body || {};
