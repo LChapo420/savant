@@ -218,3 +218,8 @@ Desktop home is D1 (lesson first, today beside). Desktop side menu is B, the cal
 ## Desktop side menu (owner, 7 Nov 2026)
 
 "I like the simplicity of A but I like how it shows the logo in B so lets go with B but we might switch to something like A in the future, please build quick so we can get the entire design of the whole site finished way before launch day". Built: B, the calm sidebar, on tablet and desktop; A, the compact rail, is one setting away (`UI_V2_DESK_NAV=rail`). Mockup: design-refs/home-clean/side-menu.png.
+
+## Tutor voice (8 Nov 2026)
+- The tutor speaks as Will (ElevenLabs) for everyone, "for now at least" (TUTOR_VOICE_DEFAULT can name another).
+- Learners do not pick the voice in the chat: "later on we'll probably make more characters with different voices". The picker stays in code, off (TUTOR_VOICE_PICKER).
+- Coral Fast writes short voice replies (TUTOR_VOICE_FAST on); owner: "we might keep it on even for the beta".
