@@ -182,6 +182,7 @@ function sections(userId, page, mode, picture, query) {
     modelOn ? null : ['Goals', labelled('Goals')],
     ['ACT', actLines(userId)],
     ['Plan', [...planLines(userId), ...materialDueLines(userId)]],
+    ['Their calendar, next 30 days', require('./tutor-events').contextLines(userId)], // eslint-disable-line global-require
     ['Mastery', [...masteryLines(userId), ...labelled('Skills still weak')]],
     mode === 'method' ? null : ['Recent mistakes', labelled('Recent mistakes')],
     ['Misconceptions', misconceptionLines(userId)],

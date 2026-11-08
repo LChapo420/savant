@@ -22,6 +22,25 @@ const { limit } = require('../utils/rate-limit');
 
 const voice = require('../services/spanish/voice');
 const call = require('../services/tutor-call');
+const events = require('../services/tutor-events');
+
+// Tests and other dates (services/tutor-events.js, TUTOR_EVENTS): code, not the model, reads the dates. A message that names an event and a date
+// leaves a suggestion beside the reply (nothing is written until the learner says yes or taps Add); a "yes" to a waiting suggestion is answered here, no model.
+const lastSaid = (messages) => [...tutor.cleanHistory(messages)].reverse().find((m) => m.role === 'user');
+function eventAnswer(user, messages, mode) {
+  const last = lastSaid(messages);
+  const a = last ? events.answer(user, last.content) : null;
+  if (!a) return null;
+  call.noteReply(user.id, a.reply);
+  return { reply: a.reply, source: 'events', mode, held: false, ...(a.events ? { events: a.events } : {}), ...(a.added ? { added: a.added } : {}), ...(a.goal_offer ? { goal_offer: a.goal_offer } : {}), ...(a.goal_set ? { goal_set: a.goal_set } : {}), ...(a.dismissed ? { dismissed: true } : {}) };
+}
+function withEvents(user, messages, out, voice) {
+  if (!out || !out.reply || out.source === 'safety' || out.source === 'events') return out;
+  const last = lastSaid(messages);
+  const block = last ? events.suggest(user, last.content) : null;
+  if (!block) return out;
+  return { ...out, events: block, reply: voice ? `${out.reply} ${events.spoken(block)}`.trim() : out.reply };
+}
 
 const router = express.Router();
 
@@ -67,8 +86,10 @@ router.put('/tutor/dock/mode', requireAuth, (req, res) => {
 router.post('/tutor/dock', requireAuth, limit('tutor', 150, 60 * 60 * 1000), async (req, res) => {
   const body = req.body || {};
   if (dock.modeFor(body.page && body.page.path) === 'off') return res.status(403).json({ error: 'The tutor is off on this page.' });
+  const quick = eventAnswer(req.user, body.messages, dock.modeFor(body.page && body.page.path));
+  if (quick) return res.json(quick);
   try {
-    const out = await dock.reply({ user: req.user, messages: body.messages, page: body.page, inputMode: body.input_mode, image: body.image });
+    const out = withEvents(req.user, body.messages, await dock.reply({ user: req.user, messages: body.messages, page: body.page, inputMode: body.input_mode, image: body.image }), body.input_mode === 'voice');
     call.noteReply(req.user.id, out.reply); // these words passed safety and the fact check: a voice call may speak them
     res.json(out);
   } catch (err) {
@@ -78,8 +99,9 @@ router.post('/tutor/dock', requireAuth, limit('tutor', 150, 60 * 60 * 1000), asy
     if (full.on(req.user)) {
       const last = [...tutor.cleanHistory(body.messages)].reverse().find((m) => m.role === 'user');
       const fb = full.fallback({ user: req.user, page: body.page, message: last ? last.content : '', mode, name: dock.firstName(req.user) });
-      call.noteReply(req.user.id, fb.reply);
-      return res.json({ ...fb, source: 'fallback', mode });
+      const fe = withEvents(req.user, body.messages, { ...fb, source: 'fallback', mode }, body.input_mode === 'voice');
+      call.noteReply(req.user.id, fe.reply);
+      return res.json(fe);
     }
     const offline = tutor.offlineReply(req.user.id);
     call.noteReply(req.user.id, offline);
@@ -112,7 +134,8 @@ router.post('/tutor/dock/stream', requireAuth, limit('tutor', 150, 60 * 60 * 100
   const speak = (i, text) => { voices.push(voiceEvent(i, text)); };
   let first = null;
   let head = null; // { text, audio }: the voice for the draft's first sentences, made while their checks run, sent only if they pass
-  const finishWith = (out) => {
+  const finishWith = (out0) => {
+    const out = withEvents(req.user, body.messages, out0, true);
     call.noteReply(req.user.id, out.reply);
     // Nothing was spoken early, but the whole reply (now checked) begins with the draft words whose voice was made ahead: they are part 0, with that voice.
     const useHead = !first && head && head.chunk && call.rest(out.reply, head.chunk).replace === false && String(out.reply || '').trim().length > head.chunk.length;
@@ -123,6 +146,8 @@ router.post('/tutor/dock/stream', requireAuth, limit('tutor', 150, 60 * 60 * 100
     parts.forEach((p) => { if (useHead && p.i === 0) voices.push(head.audio.then((mp3) => send({ type: 'audio', i: 0, mp3: Buffer.from(mp3).toString('base64') })).catch(() => voiceEvent(0, head.text))); else speak(p.i, p.text); });
   };
   try {
+    const quick = eventAnswer(req.user, body.messages, dock.modeFor(body.page && body.page.path));
+    if (quick) { finishWith(quick); for (let k = 0; k < voices.length; k++) await voices[k]; if (!closed) res.end(); return; } // eslint-disable-line no-await-in-loop
     const out = await dock.reply({
       user: req.user, messages: body.messages, page: body.page, inputMode: body.input_mode || 'voice', image: body.image,
       onChunk: (draft) => {

@@ -442,6 +442,7 @@ const KNOWN_COLLECTIONS = [
   'act_guests', 'recruit_counts', // no account behind them (services/act-check.js): a token hash and per-day totals; guests are deleted after 30 days
   'recruit_applicants', // 13+ applicants only; user_id is set when one signs up, so account deletion reaches it
   'speed_proof', 'speed_proof_blocks', // the speed proof's rows and draw blocks, per learner (services/speed-proof.js)
+  'tutor_events', // the learner's own dates (tests, quizzes, due dates) the tutor put on their calendar or they added (services/tutor-events.js), with the account
   'learner_agreements', // what a learner agreed to and when (services/onboarding-v2.js), with the account
   'onboarding_answers', // what a learner said on the way in (services/onboarding-v2.js), with the account
   'beta_blocks', // arm slots only, no learner id (services/beta-arm.js); a child's own arm is on the user row and goes with it

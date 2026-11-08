@@ -134,3 +134,17 @@ html { transition: padding-right .22s ease; }
 .tdock-voice select { min-height: 36px; padding: 0 10px; border: 1px solid var(--line-strong, #8a8f98); border-radius: 12px; background: var(--page, #fff); color: var(--ink, #1c1f24); font: inherit; font-size: 15px; }
 .tdock-voice label { white-space: nowrap; }
 .tdock-voice select { flex: 0 0 auto; width: auto; }
+
+/* Calendar suggestion card (js/tutor-dock.js eventsUi): the tutor's offer to put a test or date on the learner's calendar. Page tokens only. */
+.tdock-log .tdock-card { align-self: flex-start; width: 92%; box-sizing: border-box; display: grid; gap: 10px; padding: 12px; border: 1px solid var(--line, #cfd3da); border-radius: 14px; background: var(--card-bg, transparent); }
+.tdock-card-row { display: grid; gap: 8px; }
+.tdock-card-q { margin: 0; font-weight: 600; }
+.tdock-card-sub { margin: 0; font-size: .88em; color: var(--ink-3, #5b616b); }
+.tdock-card-fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 9.5rem); gap: 8px; }
+.tdock-card input { width: 100%; box-sizing: border-box; min-height: 40px; min-width: 0; padding: 0 10px; border: 1px solid var(--line-strong, #8a8f98); border-radius: 10px; background: transparent; color: inherit; font: inherit; }
+.tdock-card-err { margin: 0; font-size: .88em; color: var(--incorrect, #b3261e); }
+.tdock-card-actions { display: flex; gap: 8px; }
+.tdock-card-actions button { flex: 1; min-height: 44px; padding: 0 14px; border: 1px solid var(--line-strong, #8a8f98); border-radius: 12px; background: transparent; color: var(--ink, #1c1f24); font: inherit; font-weight: 600; cursor: pointer; }
+.tdock-card-actions button.go { background: var(--action, #2b5fd9); color: var(--on-action, #fff); border-color: var(--action, #2b5fd9); }
+.tdock-card-actions button:disabled { opacity: .5; cursor: default; }
+.tdock-card input:focus-visible, .tdock-card-actions button:focus-visible { outline: 3px solid var(--focus, #2b5fd9); outline-offset: 1px; }
