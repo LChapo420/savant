@@ -211,7 +211,7 @@ const page = { path: '/dashboard', title: 'Home', heading: 'Hi', text: 'Today' }
     q.end();
   });
   const st = (await req('GET', '/api/tutor/dock?path=/dashboard', null, paid.id)).json.call;
-  check('the status carries the switches and, for the paid voice, the choices', st.stream && st.eos && st.ack && st.voice === 'Aria' && st.voices.includes('Charlotte') && st.voices.length === 20, st);
+  check('the status carries the switches and, for the paid voice, the choices', st.stream && st.eos && st.ack && st.voice === 'Will' && st.voices.includes('Charlotte') && st.voices.length === 20, st);
   const stA = (await req('GET', '/api/tutor/dock?path=/dashboard', null, adult.id)).json.call;
   check('an account on the browser\'s voice gets no picker', !('voices' in stA));
   const stK = (await req('GET', '/api/tutor/dock?path=/dashboard', null, kid.id)).json.call;
@@ -270,7 +270,7 @@ const page = { path: '/dashboard', title: 'Home', heading: 'Hi', text: 'Today' }
   call.noteReply(paid.id, 'One line.');
   const s2 = sent.length;
   await call.say(paid, c.call_id, 'One line.');
-  check('picker off: the voice it always had', sent[s2].body.voice === 'Aria');
+  check('picker off: the default voice (Will)', sent[s2].body.voice === 'Will');
   server.close();
 
   console.log('the page');

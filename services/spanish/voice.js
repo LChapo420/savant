@@ -39,6 +39,8 @@ const GATEWAY_STT_MODEL = () => process.env.SPANISH_GATEWAY_STT_MODEL || 'grok-s
 const GATEWAY_USERS_FILE = () => path.join(process.env.HOLDOUT_DIR || path.join(__dirname, '..', '..', 'data'), 'spanish-gateway-users.json');
 /** ElevenLabs voice names; one is always sent, and the language is always "es", so it never reads Spanish in an English voice. */
 const ELEVEN_VOICES = new Set(['Sarah', 'Aria', 'Roger', 'Laura', 'Charlie', 'George', 'Callum', 'River', 'Liam', 'Charlotte', 'Alice', 'Matilda', 'Will', 'Jessica', 'Eric', 'Chris', 'Brian', 'Daniel', 'Lily', 'Bill']);
+// The tutor's English voice when the learner hasn't picked one. Owner, 8 Nov 2026: "lets change the voice to will, for now atleast". TUTOR_VOICE_DEFAULT names another from the list.
+const TUTOR_VOICE_DEFAULT = () => { const v = String(process.env.TUTOR_VOICE_DEFAULT || 'Will').trim(); return ELEVEN_VOICES.has(v) ? v : 'Will'; };
 
 function gatewayUsers() {
   const ids = new Set(String(process.env.SPANISH_GATEWAY_USERS || '').split(',').map((s) => s.trim()).filter(Boolean));
@@ -306,9 +308,9 @@ async function tutorSpeak(text, { userId, lang = 'en', callCapped = false, voice
   if (!callCapped && used + line.length > TUTOR_DAILY_CHARS()) throw Object.assign(new Error('daily tutor voice used'), { status: 429 });
   if (!callCapped) tutorSpent.set(key, used + line.length);
   try {
-    // The learner's own pick (services/tutor-mode.js voice, from ELEVEN_VOICES only); otherwise the voice it always had.
+    // The learner's own pick (services/tutor-mode.js voice, from ELEVEN_VOICES only); otherwise the tutor's default (English) or the Spanish narrator.
     const picked = chosen && ELEVEN_VOICES.has(chosen) ? chosen : null;
-    return await gatewaySpeak(picked || (lang === 'es' ? ((VOICES.narrator || {}).eleven || 'Aria') : 'Aria'), line, lang === 'es' ? 'es' : 'en', userId, TUTOR_TTS_MODEL());
+    return await gatewaySpeak(picked || (lang === 'es' ? ((VOICES.narrator || {}).eleven || 'Aria') : TUTOR_VOICE_DEFAULT()), line, lang === 'es' ? 'es' : 'en', userId, TUTOR_TTS_MODEL());
   } catch (err) {
     if (!callCapped) tutorSpent.set(key, used);
     noteGatewayFailure(err);
@@ -355,4 +357,4 @@ async function tutorTranscribe(buf, { userId, lang = 'en', seconds = null, callC
   }
 }
 
-module.exports = { ELEVEN_VOICES: [...ELEVEN_VOICES], tutorTtsModel: TUTOR_TTS_MODEL, tutorSttModel: GATEWAY_STT_MODEL, tutorTranscribe, audioKind, tutorSpeak, tts, asr, isEnabled, ttsEnabled, asrEnabled, gatewayFor, VOICES, MEDIA_DIR };
+module.exports = { ELEVEN_VOICES: [...ELEVEN_VOICES], tutorVoiceDefault: TUTOR_VOICE_DEFAULT,tutorTtsModel: TUTOR_TTS_MODEL, tutorSttModel: GATEWAY_STT_MODEL, tutorTranscribe, audioKind, tutorSpeak, tts, asr, isEnabled, ttsEnabled, asrEnabled, gatewayFor, VOICES, MEDIA_DIR };

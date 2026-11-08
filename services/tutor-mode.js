@@ -41,8 +41,8 @@ function setSide(userId, side) {
 }
 
 // The tutor's voice in a call (owner, 8 Nov 2026: a voice picker for learners): one of the ElevenLabs voices services/spanish/voice.js already allows, on the same row.
-// null means the voice it always had. Only the name is stored.
-const VOICE_DEFAULT = 'Aria';
+// null means the default (Will since 8 Nov 2026; TUTOR_VOICE_DEFAULT in services/spanish/voice.js). Only the name is stored.
+const voiceDefault = () => require('./spanish/voice').tutorVoiceDefault(); // eslint-disable-line global-require
 const voiceNames = () => require('./spanish/voice').ELEVEN_VOICES; // eslint-disable-line global-require
 const validVoice = (v) => (typeof v === 'string' && voiceNames().includes(v) ? v : null);
 function getVoice(userId) {
@@ -56,4 +56,4 @@ function setVoice(userId, voice) {
   return v;
 }
 
-module.exports = { MODES, DEFAULT, get, set, valid, SIDES, getSide, setSide, validSide, VOICE_DEFAULT, voiceNames, validVoice, getVoice, setVoice };
+module.exports = { MODES, DEFAULT, get, set, valid, SIDES, getSide, setSide, validSide, voiceDefault, voiceNames, validVoice, getVoice, setVoice };

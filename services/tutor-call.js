@@ -80,7 +80,7 @@ function info(user) {
   const paid = allowed && voice.gatewayFor(user.id);
   const lim = limits();
   const sw = switches();
-  const picker = sw.picker && paid ? { voice: tutorMode.getVoice(user.id) || tutorMode.VOICE_DEFAULT, voices: tutorMode.voiceNames() } : {};
+  const picker = sw.picker && paid ? { voice: tutorMode.getVoice(user.id) || tutorMode.voiceDefault(), voices: tutorMode.voiceNames() } : {};
   return { allowed, mic, why, speech: paid ? 'gateway' : 'browser', silence_warn_s: lim.silence_warn_s, silence_end_s: lim.silence_end_s, clip_s: lim.clip_s, notices: NOTICES, stream: sw.stream, eos: sw.eos, ack: sw.ack, warm: sw.warm, ...picker };
 }
 
