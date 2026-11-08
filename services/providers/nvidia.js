@@ -751,8 +751,10 @@ async function structured({ role = 'fast', task = null, system, user, schema, sc
 const structuredStream = (args) => structured(args);
 
 /** One plain-text exchange. Returns { text, usage, model } or null; throws when nothing answered. */
-async function chat({ role = 'fast', task = null, system, messages, maxTokens = 1024, effort = null, lane, model: wanted = null, timeoutMs = null, attempts = null, signal = null, temperature = null }) {
+async function chat({ role = 'fast', task = null, system, messages, maxTokens = 1024, effort = null, lane, model: wanted = null, timeoutMs = null, attempts = null, signal = null, temperature = null, onDelta = null }) {
   if (!isConfigured()) return null;
+  // The voice call's sentence streaming (services/tutor-context.js): the same exchange streamed, on the slot's own model.
+  if (typeof onDelta === 'function') return chatStream({ role, task, system, messages, maxTokens, effort, onDelta, timeoutMs, model: wanted, signal, temperature });
   const chosen = wanted ? { tier: 'explicit', entries: normalizeEntries([wanted]) } : plan(role, task);
   const entries = chosen.entries.filter((e) => wanted || !coolingDown(e.model));
   if (!entries.length) throw Object.assign(new Error('nvidia: every model for this role is resting'), { status: 503 });
@@ -781,10 +783,11 @@ async function chat({ role = 'fast', task = null, system, messages, maxTokens = 
  * answer fragment is replaced by the next one; after that the error is thrown, and
  * services/ai.js falls back to the unstreamed path.
  */
-async function chatStream({ role = 'fast', task = null, system, messages, maxTokens = 1024, effort = null, onDelta, timeoutMs = null }) {
+async function chatStream({ role = 'fast', task = null, system, messages, maxTokens = 1024, effort = null, onDelta, timeoutMs = null, model: wanted = null, signal = null, temperature = null }) {
   if (!isConfigured()) return null;
-  const chosen = plan(role, task);
-  const entries = chosen.entries.filter((e) => !coolingDown(e.model));
+  const chosen = wanted ? { tier: 'explicit', entries: normalizeEntries([wanted]) } : plan(role, task);
+  const entries = chosen.entries.filter((e) => wanted || !coolingDown(e.model));
+  const temp = temperature !== null && temperature !== undefined && Number.isFinite(Number(temperature)) ? Math.min(1, Math.max(0, Number(temperature))) : null;
   if (!entries.length) throw Object.assign(new Error('nvidia: every model for this role is resting'), { status: 503 });
   let lastErr = null;
   for (const raw of entries) {
@@ -793,8 +796,8 @@ async function chatStream({ role = 'fast', task = null, system, messages, maxTok
     const cls = learnerClass(task);
     await acquire('interactive', entry.model, cls);
     try {
-      const body = { ...baseBody(entry, { messages: messagesFor(system, messages), maxTokens }), stream: true, stream_options: { include_usage: true } };
-      const { res, done } = await post(body, timeoutFor(entry.effort, timeoutMs), true);
+      const body = { ...baseBody(entry, { messages: messagesFor(system, messages), maxTokens, temperature: temp }), stream: true, stream_options: { include_usage: true } };
+      const { res, done } = await post(body, timeoutFor(entry.effort, timeoutMs), true, signal);
       const decoder = new TextDecoder();
       let buffer = '';
       let full = '';
@@ -839,6 +842,8 @@ async function chatStream({ role = 'fast', task = null, system, messages, maxTok
       if (trimmed) return { text: trimmed, usage: usage || { input_tokens: 0, output_tokens: 0, cost_usd: 0 }, model: served, effort: entry.effort, tier: chosen.tier };
     } catch (err) {
       lastErr = err;
+      // The pool cancelled this copy (a hedge that lost): no health note, no cool-down.
+      if (signal && signal.aborted) { err.aborted = true; err.moveOn = false; throw err; }
       noteFailure(err);
       if (err.status === 401 || err.status === 403) {
         stoodDownUntil = now() + 10 * 60 * 1000;

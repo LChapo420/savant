@@ -22,11 +22,21 @@
  *
  * What it says: /say speaks only words the tutor's own route just returned (safety and fact check done) or the fixed notices below. It cannot be used as a free speech engine.
  * What it keeps: seconds, dollars and delays (tutor_call_usage, tutor_call_log). Never the audio; the words go where a typed message's words go, through the same route.
+ *
+ * Quicker turns (owner, 8 Nov 2026: "a perfect response but as fast as possible so it feels like a real conversation"), each behind its own switch, all off by default:
+ *   TUTOR_VOICE_STREAM=1  the call asks POST /api/tutor/dock/stream: the first sentences are spoken as soon as they pass the same checks as a whole reply, and the
+ *                         route makes their voice itself (say() below, same limits), so the page does not wait on another request. services/tutor-context.js has the rule.
+ *   TUTOR_VOICE_EOS=1     the end of the learner's turn is read from the words as well as the quiet (js/tutor-call.js): a finished sentence ends sooner, a trailing "and",
+ *                         "um" or comma waits longer, and words that start again before the tutor talks are joined to the turn instead of becoming a new one.
+ *   TUTOR_VOICE_FAST=1    a short voice turn is written by a fast model, a hard one by the usual lineup (services/tutor-context.js hardVoiceTurn).
+ *   TUTOR_CALL_ACK=1      a short soft sound while it thinks, made in the browser (no request, no cost).
+ *   TUTOR_VOICE_PICKER=1  the learner picks the tutor's voice from the ElevenLabs voices services/spanish/voice.js allows; kept on the account (services/tutor-mode.js).
  */
 const crypto = require('crypto');
 const db = require('../config/db');
 const voice = require('./spanish/voice');
 const ledger = require('./llmgateway-ledger');
+const tutorMode = require('./tutor-mode');
 
 const LIMITS = { call_s: 600, day_s: 1800, day_usd: 0.5, silence_warn_s: 20, silence_end_s: 35, clip_s: 45 };
 function envLow(name, cap) {
@@ -68,7 +78,51 @@ function info(user) {
   const allowed = mic && outside;
   const paid = allowed && voice.gatewayFor(user.id);
   const lim = limits();
-  return { allowed, mic, why, speech: paid ? 'gateway' : 'browser', silence_warn_s: lim.silence_warn_s, silence_end_s: lim.silence_end_s, clip_s: lim.clip_s, notices: NOTICES };
+  const sw = switches();
+  const picker = sw.picker && paid ? { voice: tutorMode.getVoice(user.id) || tutorMode.VOICE_DEFAULT, voices: tutorMode.voiceNames() } : {};
+  return { allowed, mic, why, speech: paid ? 'gateway' : 'browser', silence_warn_s: lim.silence_warn_s, silence_end_s: lim.silence_end_s, clip_s: lim.clip_s, notices: NOTICES, stream: sw.stream, eos: sw.eos, ack: sw.ack, ...picker };
+}
+
+const on1 = (name) => String(process.env[name] || '').trim() === '1';
+/** The quicker-turn switches (see the header). Read on every request, so the owner can flip them with a restart of nothing but the env. */
+function switches() {
+  return { stream: on1('TUTOR_VOICE_STREAM'), eos: on1('TUTOR_VOICE_EOS'), ack: on1('TUTOR_CALL_ACK'), picker: on1('TUTOR_VOICE_PICKER'), fast: on1('TUTOR_VOICE_FAST') };
+}
+
+/** A reply as sentences to speak, the same way js/tutor-call.js cuts them: short ones are joined to the next. Markdown emphasis is dropped, as the chat drops it. */
+function sentences(text) {
+  const plain = String(text || '').replace(/\*\*([^*]+)\*\*/g, '$1').replace(/(^|[^*\w])\*([^*\n]+)\*(?!\w)/g, '$1$2');
+  const raw = plain.replace(/\s+/g, ' ').trim().match(/[^.!?]+[.!?]+["')\]]*\s*|[^.!?]+$/g) || [];
+  const out = [];
+  for (const s of raw) {
+    const t = s.trim();
+    if (!t) continue;
+    if (out.length && out[out.length - 1].length < 25) out[out.length - 1] += ` ${t}`; else out.push(t);
+  }
+  return out;
+}
+
+/**
+ * What is left to say once the whole reply is in. `first` is what was already spoken (checked on its own). When the whole reply begins with it, only the rest is said;
+ * when it does not (the whole reply was held, replaced or written again), what was spoken stops and the whole reply is said instead, as the chat shows it.
+ * @returns {{ replace: boolean, parts: string[] }}
+ */
+function rest(reply, first) {
+  const all = String(reply || '').trim();
+  if (!first) return { replace: false, parts: sentences(all) };
+  const f = String(first).trim();
+  if (all.startsWith(f)) return { replace: false, parts: sentences(all.slice(f.length)) };
+  const nf = norm(f);
+  const na = norm(all);
+  if (nf && na.startsWith(nf)) {
+    // The same words with different spacing or punctuation: drop as many words as were spoken.
+    const n = nf.split(' ').length;
+    const words = all.split(/\s+/);
+    let seen = 0; let cut = 0;
+    while (cut < words.length && seen < n) { if (norm(words[cut])) seen += norm(words[cut]).split(' ').length; cut += 1; }
+    return { replace: false, parts: sentences(words.slice(cut).join(' ')) };
+  }
+  return { replace: true, parts: sentences(all) };
 }
 
 // ── Usage: one row per learner per day, so a restart cannot reset a limit ──
@@ -111,7 +165,7 @@ function close(userId, reason, metrics) {
 function cleanTurn(t) {
   if (!t || typeof t !== 'object') return null;
   const out = {};
-  for (const k of ['detect_ms', 'stt_ms', 'reply_ms', 'audio_ms', 'total_ms']) {
+  for (const k of ['detect_ms', 'stt_ms', 'hold_ms', 'reply_ms', 'audio_ms', 'total_ms']) {
     const v = Number(t[k]);
     if (Number.isFinite(v) && v >= 0) out[k] = Math.min(600000, Math.round(v));
   }
@@ -209,9 +263,9 @@ async function say(user, callId, text, { lang = 'en' } = {}) {
   if (!voice.gatewayFor(user.id)) throw refuse(503, 'The voice is the browser\'s on this account.');
   const cost = ledger.costOf({ kind: 'tts', model: voice.tutorTtsModel(), chars: line.length });
   if (usage(user.id).usd + cost > limits().day_usd) throw refuse(429, 'Today\'s paid voice is used up.');
-  const mp3 = await voice.tutorSpeak(line, { userId: user.id, lang, callCapped: true });
+  const mp3 = await voice.tutorSpeak(line, { userId: user.id, lang, callCapped: true, voice: switches().picker ? tutorMode.getVoice(user.id) : null });
   addUsage(user.id, { usd: cost, chars: line.length });
   return mp3;
 }
 
-module.exports = { info, start, end, hear, say, noteReply, maySay, usage, limits, wavSeconds, close, NOTICES, LIMITS, _open: open, _said: said };
+module.exports = { info, start, end, hear, say, noteReply, maySay, usage, limits, wavSeconds, close, switches, sentences, rest, NOTICES, LIMITS, _open: open, _said: said };

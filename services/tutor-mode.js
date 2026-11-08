@@ -40,4 +40,20 @@ function setSide(userId, side) {
   return s;
 }
 
-module.exports = { MODES, DEFAULT, get, set, valid, SIDES, getSide, setSide, validSide };
+// The tutor's voice in a call (owner, 8 Nov 2026: a voice picker for learners): one of the ElevenLabs voices services/spanish/voice.js already allows, on the same row.
+// null means the voice it always had. Only the name is stored.
+const VOICE_DEFAULT = 'Aria';
+const voiceNames = () => require('./spanish/voice').ELEVEN_VOICES; // eslint-disable-line global-require
+const validVoice = (v) => (typeof v === 'string' && voiceNames().includes(v) ? v : null);
+function getVoice(userId) {
+  const row = (db.forUser('tutor_modes', userId)[0] || null);
+  return row && validVoice(row.voice) ? row.voice : null;
+}
+function setVoice(userId, voice) {
+  const v = validVoice(voice);
+  if (!v) return getVoice(userId);
+  db.upsert('tutor_modes', (r) => r.user_id === userId, (row) => ({ user_id: userId, mode: (row && row.mode) || DEFAULT, switches: (row && row.switches) || 0, voice: v }));
+  return v;
+}
+
+module.exports = { MODES, DEFAULT, get, set, valid, SIDES, getSide, setSide, validSide, VOICE_DEFAULT, voiceNames, validVoice, getVoice, setVoice };

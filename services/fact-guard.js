@@ -282,6 +282,20 @@ async function pass({ task, factTask = null, userId = null, req = null, result, 
 }
 
 /**
+ * The same inline check as `pass`, on the first sentences of a chat reply that is still being written (the voice call's sentence streaming, services/tutor-context.js):
+ * the task's own row, source, conversation, mode and budget, as `pass` would use for the whole reply. true: those words may be spoken now. Fails closed, and the whole
+ * reply still goes through `pass` afterwards. A row that is not inline, or the switch off, answers as `pass` would: nothing to check here.
+ */
+async function passesChunk({ task, factTask = null, userId = null, req = null, text, writerModel = null }) {
+  if (!on() || !String(text || '').trim()) return true;
+  const entry = lazy('./fact-registry').lookup(factTask || (req && req.factTask) || task);
+  if (!entry) return false;
+  if (entry.kind !== 'inline') return true;
+  const v = await check({ pieces: [String(text)], source: (req && req.factSource) || '', learnerSaid: lastLearnerLine(req), mode: (req && req.factMode) || entry.mode || 'general', userId, budgetMs: (req && req.factBudgetMs) || entry.budgetMs || 60000, dataClass: req && req.dataClass, waiting: !!entry.live, writerModel });
+  return v.ran && !v.wrong.length;
+}
+
+/**
  * A check for model text that does not come through `withProviders` (the grading judges call their providers directly). true: it may be shown. Fails closed.
  */
 async function passesText({ task, text, source = '', mode = 'general', userId = null, budgetMs = 8000, waiting = false, learnerSaid = '' }) {
@@ -301,4 +315,4 @@ function stats(day = today()) {
 /** Is this reply one of the fixed sentences? A held reply is never stored as if it were written for the moment (a primed opener, say). */
 const isHeld = (text) => text === HELD.wrong || text === HELD.cant || text === HELD.cap;
 
-module.exports = { on, DEFAULT_ON, capReached, addSpend, lastLearnerLine, pass, check, passesText, checkUser, batches, piecesOf, stats, stripHtml, isHeld, SYSTEMS, SCHEMA, HELD };
+module.exports = { on, DEFAULT_ON, capReached, addSpend, lastLearnerLine, pass, check, passesText, passesChunk, checkUser, batches, piecesOf, stats, stripHtml, isHeld, SYSTEMS, SCHEMA, HELD };

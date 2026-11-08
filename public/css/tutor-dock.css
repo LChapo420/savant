@@ -128,3 +128,7 @@ html { transition: padding-right .22s ease; }
   .tdock-g[data-voice] .tdock-g-ring { border-color: CanvasText; }
   .tdock-panel { border-color: CanvasText; }
 }
+
+/* The tutor's voice in a call (TUTOR_VOICE_PICKER): a quiet row under the note, only for accounts on the paid voice. */
+.tdock-voice { flex: none; display: flex; align-items: center; gap: 8px; padding: 0 16px 8px; font-size: var(--t-meta, .8125rem); color: var(--ink-2, #3d424a); }
+.tdock-voice select { min-height: 36px; padding: 0 10px; border: 1px solid var(--line-strong, #8a8f98); border-radius: 12px; background: var(--page, #fff); color: var(--ink, #1c1f24); font: inherit; font-size: 15px; }

@@ -239,12 +239,15 @@ const coralProvider = {
   },
 
   /** One chat call (pipeline only). `model` names a Coral model (default CORAL_MODEL). */
-  async chat({ task = null, system, messages, maxTokens = 1024, effort = null, timeoutMs = null, signal = null, temperature = 0, model: wanted = null }) {
+  // `onDelta(fragment, textSoFar)` (the voice call's sentence streaming, services/tutor-context.js): the same request streamed; the answer is the same shape.
+  async chat({ task = null, system, messages, maxTokens = 1024, effort = null, timeoutMs = null, signal = null, temperature = 0, model: wanted = null, onDelta = null }) {
     const model = modelOf(wanted);
-    const { payload, usage } = await post(
-      { model, messages: [...(system ? [{ role: 'system', content: String(system) }] : []), ...(messages || []).map((m) => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: String(m.content || '') }))], max_tokens: Number(maxTokens) || 1024, temperature: Math.min(1, Math.max(0, Number(temperature) || 0)), ...reasoning(effort) },
-      timeoutMs || Number(process.env.CORAL_TIMEOUT_MS) || 180000, { signal, task },
-    );
+    const body = { model, messages: [...(system ? [{ role: 'system', content: String(system) }] : []), ...(messages || []).map((m) => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: String(m.content || '') }))], max_tokens: Number(maxTokens) || 1024, temperature: Math.min(1, Math.max(0, Number(temperature) || 0)), ...reasoning(effort) };
+    const limit = timeoutMs || Number(process.env.CORAL_TIMEOUT_MS) || 180000;
+    let sent = '';
+    const { payload, usage } = typeof onDelta === 'function'
+      ? await postStream(body, limit, { signal, task, onText: (text) => { const frag = text.slice(sent.length); sent = text; if (frag) onDelta(frag, text); return false; } })
+      : await post(body, limit, { signal, task });
     const text = sj.stripThinking(payload.choices && payload.choices[0] && payload.choices[0].message && payload.choices[0].message.content);
     if (!text) throw Object.assign(new Error(`coral: ${model} returned no text`), { status: 422, unusable: true, usage });
     return { text, usage: { ...usage, cost_usd: ledger.costOf(model, usage) }, model, tier: 'coral' };

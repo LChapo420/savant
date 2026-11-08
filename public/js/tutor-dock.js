@@ -128,6 +128,7 @@
         <button type="button" class="tdock-icon tdock-close" aria-label="Close the chat" title="Close the chat">${ICON.close}</button>
       </div>
       <div class="tdock-note tdock-sees">The tutor can see this page. Hold the giraffe to talk out loud.</div>
+      ${status.call && Array.isArray(status.call.voices) && status.call.voices.length ? `<div class="tdock-voice"><label for="tdock-voice-pick">Voice in a call</label><select id="tdock-voice-pick">${status.call.voices.map((v) => `<option${v === status.call.voice ? ' selected' : ''}>${String(v).replace(/[^A-Za-z]/g, '')}</option>`).join('')}</select></div>` : ''}
       ${status.mode === 'method' ? '<div class="tdock-note">Hints about method only on this page, so your result is honest.</div>' : ''}
       <div class="tdock-log" aria-live="polite"></div>
       <div class="tdock-chips" role="group" aria-label="Quick questions"${fullOn ? '' : ' hidden'}><button type="button">I'm stuck</button><button type="button">How does this page work?</button><button type="button">What should I do next?</button></div>
@@ -196,6 +197,74 @@
       } finally { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); pending.dataset.done = '1'; busy = false; }
     }
 
+    /**
+     * A voice-call turn, streamed (the server's TUTOR_VOICE_STREAM; POST /api/tutor/dock/stream): the same message, page and rules as ask(), but the first checked
+     * sentences arrive (and, with `call`, their voice) before the whole reply. `on.sentence(i, text)`, `on.audio(i, mp3Base64, error)`, `on.done(out)`.
+     * Resolves with the whole reply, or null. `signal` drops the turn: the learner kept talking, so their words join the next turn and this one leaves the chat.
+     */
+    async function askStream(text, { call: callId, signal, on = {} } = {}) {
+      if (busy || !text) return null;
+      busy = true;
+      const info0 = pageInfo();
+      if (fullOn && info0.question && askedQuestion && info0.question !== askedQuestion) { messages.length = 0; toldAt = 0; line('bot', 'New question: starting fresh.').className = 'tdock-note'; }
+      askedQuestion = info0.question || askedQuestion;
+      messages.push({ role: 'user', content: text });
+      const mine = line('me', text);
+      askedHere = true;
+      const chips = panel.querySelector('.tdock-chips');
+      if (chips) chips.hidden = true;
+      const pending = line('bot', fullOn ? 'Thinking…' : '…');
+      const clean = (s) => String(s || '').replace(/\*\*([^*]+)\*\*/g, '$1').replace(/(^|[^*\w])\*([^*\n]+)\*(?!\w)/g, '$1$2');
+      try {
+        const r = await fetch('/api/tutor/dock/stream', {
+          method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ messages, page: info0, input_mode: 'voice', call: callId || undefined, lang: lang.slice(0, 2) }), signal,
+        });
+        if (!r.ok || !r.body) throw Object.assign(new Error('stream'), { status: r.status });
+        const reader = r.body.getReader();
+        const dec = new TextDecoder();
+        let buf = '';
+        let out = null;
+        for (;;) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          buf += dec.decode(value, { stream: true });
+          let nl = buf.indexOf('\n');
+          while (nl >= 0) {
+            const raw = buf.slice(0, nl).trim();
+            buf = buf.slice(nl + 1);
+            nl = buf.indexOf('\n');
+            if (!raw) continue;
+            let ev = null;
+            try { ev = JSON.parse(raw); } catch { ev = null; }
+            if (!ev) continue;
+            if (ev.type === 'sentence') { pending.textContent = clean(ev.text); if (on.sentence) on.sentence(ev.i, clean(ev.text)); }
+            else if (ev.type === 'audio') { if (on.audio) on.audio(ev.i, ev.mp3 || null, ev.error || null); }
+            else if (ev.type === 'done') {
+              out = ev;
+              const reply = clean(ev.reply);
+              pending.textContent = reply || 'No reply just now. Try again in a moment.';
+              if (reply) messages.push({ role: 'assistant', content: reply });
+              if (on.done) on.done({ ...ev, reply, speak: (ev.speak || []).map((p) => ({ i: p.i, text: clean(p.text) })) });
+            }
+          }
+        }
+        return out ? (clean(out.reply) || null) : null;
+      } catch (err) {
+        // Dropped (the learner kept talking: the words join the next turn), or refused before a word (the call then asks the plain route): this turn leaves the chat.
+        if (err && (err.name === 'AbortError' || err.status)) {
+          if (messages.length && messages[messages.length - 1].role === 'assistant') messages.pop();
+          if (messages.length && messages[messages.length - 1].role === 'user' && messages[messages.length - 1].content === text) messages.pop();
+          mine.remove();
+          pending.remove();
+          throw err;
+        }
+        pending.textContent = !navigator.onLine ? 'You look offline. Reconnect and try again.' : 'That did not go through. Try again.';
+        if (fullOn) messages.pop();
+        return null;
+      } finally { pending.dataset.done = '1'; busy = false; }
+    }
+
     // Tell the server the conversation paused, so it can read what the tutor should remember (off the reply path).
     let toldAt = 0;
     function closed() {
@@ -257,6 +326,7 @@
       const c = window.TutorCall.create({
         info: callInfo, lang, giraffe, line,
         ask: (text) => ask(text, 'voice'),
+        askStream: callInfo.stream ? (text, opts) => askStream(text, opts) : null,
         onEnded: (why, { toChat }) => {
           call = null;
           unlock = null;
@@ -286,6 +356,23 @@
     // Ready before the first hold: a phone wants sound unlocked in the gesture that started the call.
     if (callInfo.allowed) loadScript('/js/tutor-call.js', () => !!window.TutorCall);
     panel.querySelector('.tdock-call-btn').addEventListener('click', () => { startCall(); });
+    // The tutor's voice (the server's TUTOR_VOICE_PICKER): kept on the account; the next sentence in a call already uses it.
+    const pick = panel.querySelector('#tdock-voice-pick');
+    if (pick) {
+      pick.addEventListener('change', async () => {
+        const voice = pick.value;
+        try {
+          const r = await fetch('/api/tutor/dock/voice', { method: 'PUT', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ voice }) });
+          const j = await r.json().catch(() => ({}));
+          if (!r.ok) throw new Error(j.error || 'That did not save.');
+          callInfo.voice = j.voice;
+          line('tdock-note', `The tutor will talk in the ${j.voice} voice.`);
+        } catch (err) {
+          pick.value = callInfo.voice || pick.value;
+          line('tdock-note', err.message || 'That did not save. Try again.');
+        }
+      });
+    }
     panel.querySelector('.tdock-close').addEventListener('click', () => closeChat());
     panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeChat(); });
     panel.querySelectorAll('.tdock-chips button').forEach((b) => b.addEventListener('click', () => ask(b.textContent, 'text')));

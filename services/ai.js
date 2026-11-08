@@ -257,7 +257,7 @@ async function withProviders(userId, attempt, role = 'fast', task = null, req = 
   if (req && typeof req.onDraft === 'function') { try { req.onDraft(result.text); } catch { /* its checks run later instead */ } }
   // A chat that a check finds wrong gets one more try on the pool, with what the checker found.
   const rerun = req && req.kind === 'chat' && poolOn(role)
-    ? (note) => callProviders(userId, attempt, role, task, { ...req, system: `${req.system || ''}\n\n${note}`, timeoutMs: Math.min(req.timeoutMs || 15000, 10000) })
+    ? (note) => callProviders(userId, attempt, role, task, { ...req, onDelta: undefined, system: `${req.system || ''}\n\n${note}`, timeoutMs: Math.min(req.timeoutMs || 15000, 10000) })
     : null;
   return factGuard.pass({ task, userId, req, result, rerun });
 }
@@ -347,10 +347,10 @@ async function talk(args) {
  *
  * @returns {Promise<{text: string, model: string}|null>}
  */
-async function talkDetail({ role = 'fast', task = null, system, messages, maxTokens, effort, userId, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature, factTask, factSource, factMode, factBudgetMs, onDraft }) {
+async function talkDetail({ role = 'fast', task = null, system, messages, maxTokens, effort, userId, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature, factTask, factSource, factMode, factBudgetMs, onDraft, onDelta, firstPick }) {
   const result = await withProviders(userId, (p) => p.chat({
     role, task, system, messages, maxTokens, effort, lane, temperature,
-  }), role, task, { kind: 'chat', system, messages, maxTokens, effort, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature, factTask, factSource, factMode, factBudgetMs, onDraft });
+  }), role, task, { kind: 'chat', system, messages, maxTokens, effort, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature, factTask, factSource, factMode, factBudgetMs, onDraft, ...(typeof onDelta === 'function' ? { onDelta } : {}), ...(Array.isArray(firstPick) && firstPick.length ? { firstPick } : {}) });
   return result ? { text: result.text, model: result.model, held: result.held || null } : null;
 }
 

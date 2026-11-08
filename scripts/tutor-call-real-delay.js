@@ -45,7 +45,7 @@ async function main() {
     const t0 = Date.now();
     let turns = [];
     const seen = [];
-    while (Date.now() - t0 < 180000) {
+    while (Date.now() - t0 < Number(arg('max-s', 180)) * 1000) {
       await delay(400);
       const s = await page.evaluate(() => ({ voice: document.querySelector('.tdock-g').dataset.voice, last: window.TutorCall && window.TutorCall.last }));
       if (seen[seen.length - 1] !== s.voice) seen.push(s.voice);
@@ -63,7 +63,8 @@ async function main() {
     console.log('log:'); log.forEach((l) => console.log(`  ${l.slice(0, 200)}`));
     console.log('states seen:', seen.join(' > '));
     console.log('turns:', JSON.stringify(turns));
-    for (const k of ['detect_ms', 'stt_ms', 'reply_ms', 'audio_ms', 'total_ms']) console.log(`  ${k}: median ${median(turns.map((t) => t[k]))}, min ${Math.min(...turns.map((t) => t[k]))}, max ${Math.max(...turns.map((t) => t[k]))}`);
+    for (const k of ['detect_ms', 'stt_ms', 'reply_ms', 'audio_ms', 'total_ms']) { const v = turns.map((t) => t[k]).filter((x) => Number.isFinite(x)); console.log(`  ${k}: n ${v.length}, median ${median(v)}, min ${Math.min(...v)}, max ${Math.max(...v)}`); }
+    if (arg('out', null)) fs.writeFileSync(arg('out'), JSON.stringify({ turns, log, seen }, null, 1));
     console.log(`gateway ledger: +$${spent.toFixed(4)} (now $${Number(after.settled_usd).toFixed(4)} of $${after.cap_usd}), tts ${after.by_task.tts.calls - before.by_task.tts.calls} calls, stt ${after.by_task.stt.calls - before.by_task.stt.calls} calls, ${chars} characters shown as replies, ${elapsedMin.toFixed(2)} min of call, $${(spent / elapsedMin).toFixed(4)} per minute of call`);
   } finally {
     await browser.close();

@@ -87,6 +87,73 @@ router.post('/tutor/dock', requireAuth, limit('tutor', 150, 60 * 60 * 1000), asy
   }
 });
 
+// The voice call's turn, streamed (TUTOR_VOICE_STREAM; services/tutor-call.js header, services/tutor-context.js onSentence). One JSON object a line:
+//   {"type":"sentence","i":0,"text"}     the first sentences, spoken now: they passed the same checks as a whole reply
+//   {"type":"done","reply",...,"speak":[{"i","text"}],"replace"}  the whole reply, checked as always. `speak` is what is left to say; `replace` means the whole reply did not
+//                                       begin with what was spoken (it was held or replaced), so the page stops and says `speak`, which is then the whole reply
+//   {"type":"audio","i","mp3"|"error"}  with `call` (a live call on the paid voice): the voice for part i, made here through services/tutor-call.js say() and its limits
+// Everything else is the dock route's: the same mode rule, the same reply, the same fallbacks. A page that hangs up early (the learner talked again) gets nothing more,
+// and its turn is not remembered (`aborted`).
+router.post('/tutor/dock/stream', requireAuth, limit('tutor', 150, 60 * 60 * 1000), async (req, res) => {
+  const body = req.body || {};
+  if (!call.switches().stream) return res.status(404).json({ error: 'Not on.' });
+  if (dock.modeFor(body.page && body.page.path) === 'off') return res.status(403).json({ error: 'The tutor is off on this page.' });
+  let closed = false;
+  res.on('close', () => { if (!res.writableFinished) closed = true; });
+  res.status(200).set({ 'Content-Type': 'application/x-ndjson; charset=utf-8', 'Cache-Control': 'private, no-store', 'X-Accel-Buffering': 'no' });
+  if (res.flushHeaders) res.flushHeaders();
+  const send = (o) => { if (!closed) { try { res.write(`${JSON.stringify(o)}\n`); } catch { closed = true; } } };
+  const callId = String(body.call || '');
+  const lang = body.lang === 'es' ? 'es' : 'en';
+  const voices = [];
+  const speak = (i, text) => {
+    if (!callId || closed) return;
+    voices.push(call.say(req.user, callId, text, { lang })
+      .then((mp3) => send({ type: 'audio', i, mp3: Buffer.from(mp3).toString('base64') }))
+      .catch((err) => send({ type: 'audio', i, error: err.status || 503 })));
+  };
+  let first = null;
+  const finishWith = (out) => {
+    call.noteReply(req.user.id, out.reply);
+    const r = call.rest(out.reply, first);
+    const at = first ? 1 : 0;
+    const parts = r.parts.map((text, k) => ({ i: at + k, text }));
+    send({ type: 'done', ...out, speak: parts, replace: r.replace });
+    parts.forEach((p) => speak(p.i, p.text));
+  };
+  try {
+    const out = await dock.reply({
+      user: req.user, messages: body.messages, page: body.page, inputMode: body.input_mode || 'voice', image: body.image,
+      onSentence: (text) => {
+        if (closed || first) return;
+        first = text;
+        call.noteReply(req.user.id, text); // checked on its own: the call may speak it
+        send({ type: 'sentence', i: 0, text });
+        speak(0, call.sentences(text).join(' '));
+      },
+      aborted: () => closed,
+    });
+    finishWith(out);
+  } catch (err) {
+    console.warn(`tutor dock stream: ${err.message}`);
+    const mode = dock.modeFor(body.page && body.page.path);
+    if (full.on(req.user)) {
+      const last = [...tutor.cleanHistory(body.messages)].reverse().find((m) => m.role === 'user');
+      finishWith({ ...full.fallback({ user: req.user, page: body.page, message: last ? last.content : '', mode, name: dock.firstName(req.user) }), source: 'fallback', mode });
+    } else finishWith({ reply: tutor.offlineReply(req.user.id), source: 'fallback', mode });
+  }
+  await Promise.all(voices);
+  if (!closed) res.end();
+});
+
+// The tutor's voice in a call (TUTOR_VOICE_PICKER): one of the ElevenLabs voices the call may use, kept on the account.
+router.put('/tutor/dock/voice', requireAuth, (req, res) => {
+  if (!call.switches().picker) return res.status(404).json({ error: 'Not on.' });
+  const v = tutorMode.validVoice(req.body && req.body.voice);
+  if (!v) return res.status(400).json({ error: 'That voice is not one of the choices.' });
+  res.json({ voice: tutorMode.setVoice(req.user.id, v) });
+});
+
 // The learner closed the dock or left the page: read the turns that are waiting (services/tutor-facts.js), if the models are free.
 router.post('/tutor/dock/closed', requireAuth, limit('tutor-closed', 60, 60 * 60 * 1000), (req, res) => {
   require('../services/tutor-facts').flush(req.user.id).catch(() => {}); // eslint-disable-line global-require
