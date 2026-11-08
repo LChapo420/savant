@@ -933,6 +933,22 @@ async function main() {
       assert(/6px 0px/.test(edge), `3D edge: ${edge}`);
       assert(await noOverflow(c.page));
       await snap(c.page, '2-home');
+      // Owner, 8 Nov, desktop: the lead card's two buttons sat stacked, uneven, one off to the right, and the old "Pick your first subject" showed under the page.
+      await c.page.setViewportSize({ width: 1280, height: 800 });
+      await c.page.reload();
+      await homeWaiting(c.page);
+      const desk = await c.page.evaluate(() => {
+        const box = (s) => { const r = document.querySelector(s).getBoundingClientRect(); return { l: Math.round(r.left), t: Math.round(r.top), w: Math.round(r.width) }; };
+        const old = [...document.querySelectorAll('.empty-state')].filter((e) => e.getClientRects().length && getComputedStyle(e).display !== 'none' && e.offsetHeight > 0);
+        return { place: box('.u2-wait-lead a[data-start="placement"]'), pick: box('.u2-wait-lead a[data-start="pick"]'), card: box('.u2-wait-lead'), old: old.map((e) => e.innerText.slice(0, 40)) };
+      });
+      assert.deepStrictEqual(desk.old, [], 'no old empty page under the desktop home');
+      assert(desk.place.t === desk.pick.t && desk.place.w === desk.pick.w && desk.pick.l > desk.place.l, `desktop: the two buttons side by side, same width: ${JSON.stringify(desk)}`);
+      assert(desk.place.l - desk.card.l <= 40, `desktop: the buttons start at the card's left: ${JSON.stringify(desk)}`);
+      if (process.env.HOME_DESK_SHOT) { fs.mkdirSync(path.dirname(process.env.HOME_DESK_SHOT), { recursive: true }); await c.page.screenshot({ path: process.env.HOME_DESK_SHOT, fullPage: true }); }
+      await c.page.setViewportSize({ width: 375, height: 760 });
+      await c.page.reload();
+      await homeWaiting(c.page);
       // "Take the placement": the subject placement, Quick, straight to a question (no goal or length step).
       await openWait(c.page, 'math');
       await c.page.click('.u2-wait[data-waiting="math"] a[data-start="placement"]');

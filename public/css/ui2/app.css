@@ -519,6 +519,9 @@ html[data-ui2] .u2-links > * + *::before { content: "·"; position: absolute; le
   html[data-ui2] .u2-hd .u2-links { justify-content: flex-start; }
   html[data-ui2] .u2-hd .u2-done-card .u2-btn2 { margin: 0 auto 4px; }
   html[data-ui2] .u2-hd .u2-wait-two .u2-btn2 { min-width: 0; max-width: none; }
+  /* Owner, 8 Nov: the lead waiting card's two buttons sat stacked, different widths, one off to the right. Side by side, the same width, from the left, like the hero's. */
+  html[data-ui2] .u2-hd .u2-wait-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; margin-top: 20px; }
+  html[data-ui2] .u2-hd .u2-wait-acts .u2-btn, html[data-ui2] .u2-hd .u2-wait-acts .u2-btn2 { width: 280px; min-width: 0; max-width: 100%; margin: 0 0 6px; }
   /* The quiet side column: the grey well, no line, no raised edge, no buttons. */
   html[data-ui2] .u2-side { align-self: start; padding: 20px 20px 18px; background: var(--well); border-radius: 22px; }
   html[data-ui2] .u2-side-h { display: flex; justify-content: space-between; align-items: center; gap: 12px; }

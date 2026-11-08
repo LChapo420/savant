@@ -336,6 +336,8 @@
     // The empty page's other first steps (the style quiz, the survey) stay on the page, under the sections. Not while subjects wait: its "Choose subjects" would ask again.
     const empty = root.querySelector('.empty-state');
     if (empty && !waitFirst) { empty.hidden = false; host.querySelector('.u2-home-body').appendChild(empty); }
+    // Owner, 8 Nov: with subjects waiting, the old "Pick your first subject" stayed under the page on desktop, out of place. It waits hidden.
+    else if (empty) empty.hidden = true;
   }
 
   // ── Past ─────────────────────────────────────────────────────────────────
