@@ -66,14 +66,35 @@ html[data-ui2] .tdock-g-btn:hover, html[data-ui2] .tdock-g-btn[aria-expanded="tr
 html[data-ui2].u2-has-guide:not(.tdock-in-call) .tdock-g { position: absolute; width: 0; height: 0; overflow: hidden; visibility: hidden; }
 html[data-ui2][data-u2-view="everything"] .tdock-g { position: absolute; width: 0; height: 0; overflow: hidden; visibility: hidden; }
 
-/* The idle "Start session": a round button in the bar. A running one keeps its own line under the bar. */
-html[data-ui2] .site-header .study-strip { background: none; border: 0; flex: none; margin-left: auto; }
-html[data-ui2] .site-header .study-strip .wrap { padding: 0; min-height: 0; }
-html[data-ui2] .site-header .study-strip .study-row { padding: 0; min-height: 0; }
-html[data-ui2] .site-header .study-strip .study-what, html[data-ui2] .site-header .study-strip .study-note, html[data-ui2] .site-header .study-strip .btn-text { display: none; }
-html[data-ui2] .site-header .study-strip [data-study="start"] { display: grid; place-items: center; width: 40px; height: 40px; min-height: 40px; margin: 0; padding: 0; border-radius: 50%; border: 1.5px solid var(--line); background: var(--page); color: transparent; box-shadow: none; font-size: 0; overflow: hidden; transform: none; }
-html[data-ui2] .site-header .study-strip [data-study="start"]::before { content: ""; width: 21px; height: 21px; background: var(--ink-2); -webkit-mask: url(/icons/ui2-clock.svg) center / contain no-repeat; mask: url(/icons/ui2-clock.svg) center / contain no-repeat; }
-html[data-ui2] .study-strip { background: var(--page); }
+/* The study session control (js/ui2/session-bar.js): a round clock in the bar and a pill bar that slides out of it. js/study.js's own strip stays for the break line and a waiting enforcer. */
+html[data-ui2] .study-strip.study-has-session > .study-row:not(.study-break), html[data-ui2] .study-strip.study-strip-idle { display: none; }
+html[data-ui2] .u2-sb { position: relative; flex: none; margin-left: auto; width: 40px; height: 40px; }
+html[data-ui2] .u2-streak + .u2-sb { margin-left: 8px; }
+html[data-ui2] .u2-sb-clock { position: relative; display: block; width: 40px; height: 40px; margin: 0; padding: 0; border: 1.5px solid var(--line); border-radius: 50%; background: var(--page); color: var(--ink-2); cursor: pointer; box-sizing: border-box; }
+html[data-ui2] .u2-sb-clock svg { position: absolute; left: 50%; top: 50%; width: 22px; height: 22px; margin: -11px 0 0 -11px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+html[data-ui2] .u2-sb-clock:hover, html[data-ui2] .u2-sb.is-open .u2-sb-clock { background: var(--well); }
+html[data-ui2] .u2-sb-clock:focus-visible, html[data-ui2] .u2-sb-b:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+html[data-ui2] .u2-sb-dot { position: absolute; top: -2px; right: -2px; width: 11px; height: 11px; border-radius: 50%; background: var(--right); box-shadow: 0 0 0 2px var(--page); display: none; }
+html[data-ui2] .u2-sb:not([data-state="idle"]) .u2-sb-dot { display: block; }
+html[data-ui2] .u2-sb[data-state="running"] .u2-sb-dot { animation: u2-sb-pulse 2.6s ease-in-out infinite; }
+html[data-ui2] .u2-sb[data-state="paused"] .u2-sb-dot { background: var(--line-strong); }
+@keyframes u2-sb-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+html[data-ui2] .u2-sb-bar { position: absolute; z-index: 36; top: 0; right: 48px; height: 40px; display: flex; align-items: center; gap: 8px; padding: 0 4px 0 12px; box-sizing: border-box; max-width: calc(100vw - 76px); border: 1.5px solid var(--line); border-radius: 999px; background: var(--page); box-shadow: 0 4px 14px var(--scrim); white-space: nowrap; transform-origin: right center; clip-path: inset(-20px 0 -20px 100%); opacity: 0; visibility: hidden; transition: clip-path .22s ease, opacity .18s ease, visibility 0s linear .22s; }
+html[data-ui2] .u2-sb.is-open .u2-sb-bar { clip-path: inset(-20px -20px -20px -20px); opacity: 1; visibility: visible; transition: clip-path .22s ease, opacity .18s ease, visibility 0s; }
+html[data-ui2] .u2-sb-time { min-width: 3.4em; padding-right: 2px; font: 700 16px/1 var(--font); font-variant-numeric: tabular-nums; color: var(--ink); text-align: center; }
+html[data-ui2] .u2-sb[data-state="paused"] .u2-sb-time { color: var(--ink-3); }
+html[data-ui2] .u2-sb-b { height: 32px; min-height: 0; margin: 0; padding: 0 14px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--page); color: var(--ink); font: 700 14px/1 var(--font); cursor: pointer; transition: transform .07s, box-shadow .07s; }
+html[data-ui2] .u2-sb-b:hover:not(:disabled) { background: var(--well); }
+html[data-ui2] .u2-sb-b.u2-sb-main { border-color: transparent; background: var(--act); color: var(--on-act); box-shadow: 0 3px 0 var(--act-edge); margin-bottom: 3px; }
+html[data-ui2] .u2-sb-b.u2-sb-main:hover:not(:disabled) { background: var(--act-hover); }
+html[data-ui2] .u2-sb-b.u2-sb-main:active:not(:disabled) { transform: translateY(3px); box-shadow: none; }
+html[data-ui2] .u2-sb-b.u2-sb-quiet { border-color: transparent; background: none; color: var(--ink-2); padding: 0 8px; }
+html[data-ui2] .u2-sb-b:disabled { opacity: .6; cursor: default; }
+@media (prefers-reduced-motion: reduce) {
+  html[data-ui2] .u2-sb[data-state="running"] .u2-sb-dot { animation: none; }
+  html[data-ui2] .u2-sb-bar, html[data-ui2] .u2-sb.is-open .u2-sb-bar, html[data-ui2] .u2-sb-b { transition: none; }
+}
+html[data-ui2][data-u2-view="everything"] .u2-sb, html[data-ui2][data-u2-view="past"] .u2-sb { display: none; }
 
 /* ── Home: one task, one button, the giraffe beside you ───────────────── */
 html[data-ui2].u2-home-page main.page { padding: 0; }
@@ -375,7 +396,6 @@ html[data-ui2] .u2-seg button[aria-checked="true"] { background: var(--page); co
   html[data-ui2][data-u2-view="everything"] .u2-tb-view { margin-left: 8px; font-size: 28px; line-height: 34px; }
   html[data-ui2][data-u2-view="home"] .u2-streak { display: inline-flex; align-items: center; gap: 4px; height: 34px; margin-left: auto; padding: 0 10px 0 8px; font: 700 16px/1 var(--font); color: var(--ink); }
   html[data-ui2] .u2-streak .u2-ic { width: 20px; height: 20px; color: var(--flame); stroke-width: 2; }
-  html[data-ui2] .study-strip.study-strip-idle { display: none; }
   html[data-ui2]:not(.u2-study-idle) #u2-t-timer { display: none; }
   /* In the Menu the small giraffe sits top right: tap to chat, hold to call. */
   html[data-ui2] #u2-all-guide { display: none; }

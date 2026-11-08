@@ -66,6 +66,7 @@ const objItems = require('./objective-items');
 const retentionGoal = require('./retention-goal');
 const adaptiveCal = require('./enforcer-adaptive-app'); // ENFORCER_ADAPTIVE=on only (docs/ENFORCER-ADAPTIVE.md); off changes nothing here
 const adaptiveCore = require('./enforcer-adaptive');
+const prebuilt = require('./enforcer-prebuild'); // questions drawn while the session runs (docs/SESSION-BAR.md)
 
 const DAY = 24 * 3600 * 1000;
 const FINAL = new Set(['done', 'declined', 'skipped', 'stopped', 'expired', 'empty', 'merged']);
@@ -698,7 +699,9 @@ function slimUnit(u) {
  * full tier. Returns { at, tiers: {tier: {slots: [{key, k, c}], spent, budget,
  * attempts, topics, seconds, left_out}}, questions: {"key|k": q}, units }.
  */
-function draftAll(userId, enf, { now = Date.now() } = {}) {
+function draftAll(userId, enf, { now = Date.now(), seed } = {}) {
+  // Questions drawn while the session ran (enforcer-prebuild.js): used only for a topic this plan picks, and never one asked since.
+  const kept = enf.prebuild ? null : (seed === undefined ? prebuilt.seedFor(userId) : seed);
   const tzOf = enf.tz || study.zoneFor(userId);
   const sched = (enf.covers || []).filter((c) => SCHEDULED.has(c.type));
   const rows = keepRows(windowItems(userId, winOf(enf), tzOf), sched, sched.length ? goalView(userId, study.anchorOf(userId), now) : null, tzOf, enf.day_date || null);
@@ -716,7 +719,11 @@ function draftAll(userId, enf, { now = Date.now() } = {}) {
   const qOf = (u, k) => {
     const id = `${u.key}|${k}`;
     if (!drawn.has(id)) {
-      const q = questionFor(u, avoid, used, shapes, { scope: enf.scope, varied: k === 2 });
+      const pre = kept && kept[id];
+      const reuse = pre && !avoid.has(bank.itemKey(pre)) && !used.has(bank.itemKey(pre)) && !(pre.source === 'own_check' && used.has(`own:${pre.source_item_id}`));
+      if (reuse && pre.source === 'own_check') used.add(`own:${pre.source_item_id}`);
+      if (reuse) prebuilt.stats.reused += 1;
+      const q = reuse ? pre : questionFor(u, avoid, used, shapes, { scope: enf.scope, varied: k === 2 });
       if (q) { avoid.add(bank.itemKey(q)); used.add(bank.itemKey(q)); }
       drawn.set(id, q || null);
     }
@@ -907,6 +914,11 @@ function insertItem(userId, session, u, q, index, enforcerId, extra = {}) {
 /** End of a study session: the enforcer for it (or for the whole day). */
 function onSessionEnded(userId, row, { scope = 'session', auto = false, now = Date.now() } = {}) {
   if (!enabled()) return null;
+  try {
+    return onEnded(userId, row, { scope, auto, now });
+  } finally { prebuilt.forget(userId); }
+}
+function onEnded(userId, row, { scope, auto, now }) {
   try {
     if (scope === 'day') {
       const day = row.local_day;
@@ -1484,5 +1496,5 @@ module.exports = {
   enabled, foldsReview, windowItems, activeMs, unitsFrom, spread, options,
   create, plan, onSessionEnded, offers, deferSittingRetention, leftOutCounts, scheduledOffer, afterAnswer, finish, decline, skip, choose, reopen,
   view, calendar, reachStart, scheduledToday, itemsOf, results, FINAL, SCHEDULED, WIDTH, costModel, costOf, score, fillOrder, slots, budgetFor, fit, defaultTier,
-  draftAll, draftsOf,
+  draftAll, draftsOf, isBase,
 };

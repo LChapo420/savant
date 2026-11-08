@@ -147,11 +147,14 @@
     const o = state && state.offer;
     // The idle prompt only where it belongs; nothing at all inside a question player.
     const hide = off || onEnforcerPage() || inPlayer() || (!s && !o && !onIdleHome());
+    // js/ui2/session-bar.js (UI_V2) draws the session's controls itself and redraws on this.
+    setTimeout(() => document.dispatchEvent(new CustomEvent('study:draw')), 0);
     if (hide) { if (host) host.remove(); host = null; return; }
     const el = place();
     if (!el) return;
     let html = '';
     el.classList.remove('study-strip-idle');
+    el.classList.toggle('study-has-session', !!s);
     if (s && ending) {
       html = `
         <div class="wrap study-row">
@@ -292,6 +295,6 @@
   }, BEAT_MS);
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') refresh(); });
 
-  window.Study = { refresh, tz: TZ, state: () => state };
+  window.Study = { refresh, tz: TZ, state: () => state, act, activeNow, off: () => off };
   refresh();
 })();

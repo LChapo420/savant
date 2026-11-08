@@ -22,6 +22,7 @@ const express = require('express');
 const db = require('../config/db');
 const study = require('../services/study-sessions');
 const enforcers = require('../services/enforcers');
+const prebuild = require('../services/enforcer-prebuild');
 const retentionGoal = require('../services/retention-goal');
 const { requireAuth, requireSkip } = require('../middleware/auth');
 const { limit } = require('../utils/rate-limit');
@@ -44,6 +45,8 @@ function state(userId) {
   const waiting = enforcers.offers(userId, { now });
   return {
     study: study.view(open, now),
+    // How many enforcer questions are drawn ahead while the session runs (services/enforcer-prebuild.js). Counts only, never the questions.
+    prebuilt: open ? (() => { const r = prebuild.peek(userId); return r && r.session_id === open.id ? { ready: true, questions: Object.keys(r.questions).length, first: r.first.length, answered: r.n, build_ms: Math.round(r.ms) } : { ready: false }; })() : null,
     offer: waiting.length ? enforcers.view(waiting[0], { userId }) : null,
     waiting: waiting.length,
     // The nearest test date among the learner's subjects and courses, for the daily plan (services/retention-goal.js).
@@ -63,7 +66,9 @@ function own(req) {
 
 router.get('/retention/state', requireAuth, (req, res) => {
   zone(req);
-  res.json(state(req.user.id));
+  const out = state(req.user.id);
+  if (out && out.study && out.study.status === 'running') prebuild.later(req.user.id);
+  res.json(out);
 });
 
 router.post('/retention/study/start', requireAuth, limit('study-start', 120, 60 * 60 * 1000), (req, res) => {
@@ -82,6 +87,7 @@ router.post('/retention/study/start', requireAuth, limit('study-start', 120, 60 
 
 router.post('/retention/study/beat', requireAuth, limit('study-beat', 400, 60 * 60 * 1000), (req, res) => {
   const s = study.beat(req.user.id, {});
+  if (s) prebuild.later(req.user.id); // draws the enforcer's first questions while the learner works (docs/SESSION-BAR.md)
   res.json({ study: study.view(s) });
 });
 
