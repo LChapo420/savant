@@ -1,0 +1,36 @@
+/* The Menu's "Colours" under UI_V2 (docs/UI-V2.md): the learner's main colour, kept on this device (localStorage "savant.u2.accent", put on <html data-accent> by js/ui2/boot.js before paint).
+ * Savant blue is css/ui2/tokens.css and needs no block here. Each choice redefines only the five "act" tokens, light and dark; everything that uses the main colour (the 3D button, the
+ * selected answer, the active tab) follows. scripts/ui-v2-test.js checks every block against the same contrast pairs as the tokens.
+ */
+:root[data-ui2][data-accent="plum"] {
+  --act: oklch(0.50 0.15 335);
+  --act-hover: oklch(0.46 0.15 335);
+  --act-edge: oklch(0.37 0.13 335);
+  --act-tint: oklch(0.965 0.025 335);
+  --act-text: oklch(0.42 0.14 335);
+}
+:root[data-ui2][data-accent="ink"] {
+  --act: oklch(0.32 0.02 262);
+  --act-hover: oklch(0.27 0.02 262);
+  --act-edge: oklch(0.16 0.01 262);
+  --act-tint: oklch(0.955 0.006 262);
+  --act-text: oklch(0.32 0.02 262);
+}
+/* The Menu's swatches show each choice as it is, whatever is on now. */
+:root[data-ui2] .u2-sw[data-accent-set="blue"] i { background: oklch(0.50 0.15 262); }
+:root[data-ui2] .u2-sw[data-accent-set="ink"] i { background: oklch(0.32 0.02 262); }
+:root[data-ui2] .u2-sw[data-accent-set="plum"] i { background: oklch(0.50 0.15 335); }
+:root[data-ui2][data-mode="dark"][data-accent="plum"] {
+  --act: oklch(0.74 0.12 335);
+  --act-hover: oklch(0.78 0.12 335);
+  --act-edge: oklch(0.54 0.13 335);
+  --act-tint: oklch(0.30 0.06 335);
+  --act-text: oklch(0.87 0.08 335);
+}
+:root[data-ui2][data-mode="dark"][data-accent="ink"] {
+  --act: oklch(0.90 0.01 262);
+  --act-hover: oklch(0.95 0.01 262);
+  --act-edge: oklch(0.62 0.01 262);
+  --act-tint: oklch(0.32 0.01 262);
+  --act-text: oklch(0.92 0.01 262);
+}

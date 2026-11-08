@@ -1,5 +1,5 @@
 /**
- * UI_V2 (docs/UI-V2.md) in a real browser, in the approved look: Home, the menu, the top bar, feedback in the giraffe's bubble, /start with "How do you want to learn?"; phone 375 and 320, tablet, desktop, light and dark, keyboard, reduced motion. And with the flag off, no trace of it.
+ * UI_V2 (docs/UI-V2.md) in a real browser, in the approved look: Home (on a phone, option A with the bottom bar: Home, Upload your own, Leaderboard and stats, Menu), the menu, the top bar, feedback in the giraffe's bubble, /start with "How do you want to learn?"; phone 375 and 320, tablet, desktop, light and dark, keyboard, reduced motion. And with the flag off, no trace of it.
  *
  *   node scripts/ui-v2-browser-test.js
  *
@@ -107,7 +107,7 @@ async function main() {
       return false;
     };
 
-    await t('Home: one strong button on the same first step as GET /api/plan/today, a row with its own link for each other subject, upload, no tab bar, no streak or XP, the approved look', async () => {
+    await t('Home on a phone (option A): one strong button on the same first step as GET /api/plan/today, every subject once as a square, the bottom bar, no streak or XP in the page, no clock in the bar, the approved look', async () => {
       const { ctx, page, errors } = await open(ada, PHONE, '/dashboard');
       await page.waitForSelector('#u2-start');
       const plan = await page.evaluate(() => fetch('/api/plan/today').then((r) => r.json()));
@@ -122,11 +122,24 @@ async function main() {
       const squares = await page.$$eval('#u2-subjects a', (a) => a.map((x) => x.getAttribute('href')));
       assert.strictEqual(squares.length, 2, 'two subjects: a square each, two to a row');
       assert(squares.some((h) => !h.includes(String(first.enrollmentId))), 'the other subject has its own square');
-      assert(await page.isVisible('#u2-upload'), 'upload your own');
-      assert.strictEqual(await page.getAttribute('#u2-upload', 'href'), '/my-material');
+      assert.strictEqual((await page.$$('#u2-subjects .u2-cur')).length, 1, 'the lead subject outlined, once');
+      assert.strictEqual(await page.$('#u2-home .u2-mini'), null, 'no progress dots on the tiles');
+      const lines = await page.evaluate(() => { const c = document.querySelector('#u2-continue .u2-hero').getBoundingClientRect(); const g = document.getElementById('u2-subjects').getBoundingClientRect(); return { c: [Math.round(c.left), Math.round(c.right)], g: [Math.round(g.left), Math.round(g.right)] }; });
+      assert.deepStrictEqual(lines.g, lines.c, `the grid lines up with the card: ${JSON.stringify(lines)}`);
+      // The bottom bar: four destinations, Home on, fixed at the bottom; Upload goes to the existing page.
+      const tabs = await page.$$eval('#u2-tabs a', (as) => as.map((a) => ({ tab: a.dataset.tab, href: a.getAttribute('href'), on: a.getAttribute('aria-current'), label: a.getAttribute('aria-label') || a.textContent.trim() })));
+      assert.deepStrictEqual(tabs.map((x) => x.tab), ['home', 'upload', 'stats', 'menu']);
+      assert.deepStrictEqual(tabs.map((x) => x.label), ['Home', 'Upload your own', 'Leaderboard and stats', 'Menu']);
+      assert.strictEqual(tabs[0].on, 'page');
+      assert.deepStrictEqual(tabs.map((x) => x.href), ['/dashboard', '/my-material', '/stats', '/dashboard#menu']);
+      const barBox = await page.evaluate(() => { const b = document.getElementById('u2-tabs'); const r = b.getBoundingClientRect(); return { pos: getComputedStyle(b).position, bottom: Math.round(innerHeight - r.bottom), on: getComputedStyle(b.querySelector('a.on')).color, act: getComputedStyle(document.documentElement).getPropertyValue('--act-text').trim() }; });
+      assert.strictEqual(barBox.pos, 'fixed');
+      assert.strictEqual(barBox.bottom, 0);
+      assert.strictEqual(await page.$('#u2-upload'), null, 'upload is the bar\'s, not a row');
+      assert(!await page.isVisible('#u2-menu'), 'no menu button: the bar has the menu');
       assert(await page.isVisible('#u2-minutes') && await page.isVisible('#u2-peek'), 'time and today\'s plan stay');
       assert(!await page.isVisible('.site-header .tdock-g-btn'), 'the big one does the small one\'s work');
-      assert(await page.isVisible('.site-header [data-study="start"]'), 'Start session in the bar');
+      assert(!await page.isVisible('.site-header [data-study="start"]'), 'no round clock competing with Start');
       const start = await page.evaluate(() => { const c = getComputedStyle(document.getElementById('u2-start')); return { radius: parseFloat(c.borderRadius), edge: c.boxShadow }; });
       assert(start.radius >= 28, 'a full pill');
       assert(/ 6px 0px 0px$/.test(start.edge) || /0px 6px 0px/.test(start.edge), `6 px edge: ${start.edge}`);
@@ -156,16 +169,20 @@ async function main() {
       await ctx.close();
     });
 
-    await t('Everything: opens from the menu and back again; holds subjects, add, review, material, calendar, planner, recent, profile, theme, sign out', async () => {
+    await t('The phone\'s Menu (Everything as a list): opens from the bar and back again; holds profile, subjects, add, review, material, calendar, planner, recent, tutor, the timer, settings, sign out', async () => {
       const { ctx, page } = await open(ada, PHONE, '/dashboard');
-      await page.waitForSelector('#u2-menu');
       await page.waitForSelector('#u2-start');
-      await page.click('#u2-menu');
+      await page.click('#u2-tab-menu');
       await page.waitForFunction(() => document.documentElement.dataset.u2View === 'everything');
+      assert.strictEqual(await page.getAttribute('#u2-tab-menu', 'aria-current'), 'page');
+      assert.strictEqual((await page.innerText('#u2-tb-view')).trim(), 'Menu');
       assert(await page.isVisible('#u2-row-past'));
+      assert(await page.isVisible('#u2-me a[href="/profile"]'), 'profile and account first');
+      await page.click('#u2-t-subjects');
       const text = await page.innerText('#u2-all');
-      for (const want of ['Your subjects', 'Mathematics', 'Chess', 'Add a subject', 'Time today', 'Review', 'My material', 'Calendar', 'Sessions', 'Profile', 'Tutor', 'Sign out']) assert(text.includes(want), want);
-      assert(await page.isVisible('#u2-all-guide .tutor-svg'), 'the giraffe stays with you');
+      for (const want of ['Profile and account', 'Learn', 'Subjects', 'Mathematics', 'Chess', 'Add a subject', 'Review', 'My material', 'Calendar', 'Sessions', 'Tutor', 'Time a session', 'Settings', 'Colours', 'Chat', 'Theme', 'Sign out']) assert(text.includes(want), want);
+      assert(await page.isVisible('.site-header .tdock-g-btn'), 'the small giraffe top right: tap to chat, hold to call');
+      assert(await noOverflow(page));
       assert(await page.$('#u2-all a[href="/onboarding"]'));
       assert(await page.$('#u2-all a[href="/my-material"]'));
       assert(await page.$('#u2-all a[href="/profile"]'));
@@ -173,35 +190,99 @@ async function main() {
       // The planner: the real form, moved, and it still saves.
       await page.click('#u2-t-calendar');
       await page.waitForSelector('#u2-panel-calendar [data-planner-form]');
+      // Tomorrow, so the plan is still ahead whatever time of day the test runs (today at 18:15 had passed by evening, and the saved line never showed).
+      await page.fill('#u2-panel-calendar input[type="date"]', await page.evaluate(() => { const d = new Date(Date.now() + 86400000); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }));
       await page.fill('#u2-panel-calendar input[type="time"]', '18:15');
       await page.click('#u2-panel-calendar [data-planner-form] button[type="submit"]');
       await page.waitForSelector('#u2-panel-calendar .planner-set');
-      // Closing it returns to Home, and the phone's back works too.
-      await page.click('#u2-menu');
+      // Home in the bar returns to Home, and the phone's back works too.
+      await page.click('#u2-tab-home');
       await page.waitForFunction(() => document.documentElement.dataset.u2View === 'home');
       assert(await page.isVisible('#u2-start'));
-      await page.click('#u2-menu');
+      await page.click('#u2-tab-menu');
       await page.waitForFunction(() => document.documentElement.dataset.u2View === 'everything');
       await page.goBack();
       await page.waitForFunction(() => document.documentElement.dataset.u2View === 'home');
       await ctx.close();
     });
 
-    await t('Everything is reachable from another page, which has a back button in place of the tab bar', async () => {
+    await t('The Menu is reachable from another page, which has a back button and the bottom bar', async () => {
       const { ctx, page } = await open(ada, PHONE, `/path?enrollment=${ada.enrollment}`);
       await page.waitForSelector('#u2-back');
       assert.strictEqual(await page.$('#tabbar'), null);
+      assert(await page.isVisible('#u2-tabs'), 'the bar on a subject page');
       await page.click('#u2-back');
       await page.waitForURL(/dashboard/);
-      await page.goto(`${BASE}/dashboard#everything`);
+      await page.goto(`${BASE}/dashboard#menu`);
       await page.waitForFunction(() => document.documentElement.dataset.u2View === 'everything' && document.documentElement.classList.contains('u2-ready'));
-      assert(await page.isVisible('#u2-signout'));
+      assert(await page.isVisible('#u2-set-signout'));
+      await ctx.close();
+    });
+
+    await t('The phone\'s Settings: the colour is kept and recoloured, the chat side is saved as the chat saves it, the theme switches, sign out works', async () => {
+      const kim = await account(browser, 'kim@example.com', 'Kim Settings', [['math', 'algebra_1_part_a']]); // signing out ends this learner's session
+      const { ctx, page, errors } = await open(kim, PHONE, '/dashboard#menu', { colorScheme: 'light' });
+      await page.waitForSelector('[data-accent-set="plum"]');
+      const act = () => page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--act').trim());
+      const blue = await act();
+      await page.click('[data-accent-set="plum"]');
+      assert.strictEqual(await page.evaluate(() => document.documentElement.dataset.accent), 'plum');
+      assert.notStrictEqual(await act(), blue, 'the main colour changes');
+      assert.strictEqual(await page.getAttribute('[data-accent-set="plum"]', 'aria-checked'), 'true');
+      await page.reload();
+      await page.waitForSelector('[data-accent-set="plum"][aria-checked="true"]');
+      assert.strictEqual(await page.evaluate(() => document.documentElement.dataset.accent), 'plum', 'kept on this device, set before paint');
+      await page.click('[data-accent-set="blue"]');
+      assert.strictEqual(await page.evaluate(() => document.documentElement.dataset.accent || ''), '');
+      const put = page.waitForRequest((r) => r.url().endsWith('/api/tutor/dock/side') && r.method() === 'PUT');
+      await page.click('[data-side-set="top"]');
+      assert.strictEqual((await put).postDataJSON().side, 'top');
+      assert.strictEqual(await page.evaluate(() => localStorage.getItem('savant.tutor.side')), 'top');
+      await page.click('[data-side-set="bottom"]');
+      await page.click('[data-theme-set="dark"]');
+      await page.waitForFunction(() => document.documentElement.dataset.mode === 'dark');
+      await page.click('[data-theme-set="light"]');
+      await page.waitForFunction(() => document.documentElement.dataset.mode === 'light');
+      await page.click('[data-theme-set="auto"]');
+      assert.strictEqual(await page.evaluate(() => localStorage.getItem('polymath.theme')), null, 'Auto hands the theme back to the device');
+      assert.strictEqual(await page.getAttribute('[data-theme-set="auto"]', 'aria-checked'), 'true');
+      assert.deepStrictEqual(errors, []);
+      await page.click('#u2-set-signout');
+      await page.waitForURL((u) => !/dashboard/.test(u.pathname));
+      await ctx.close();
+    });
+
+    await t('Leaderboard and stats: the learner\'s own numbers, the week, the subjects, the scorecard; leaderboards are coming, with no ranking shown', async () => {
+      const { ctx, page, errors } = await open(ada, PHONE, '/stats');
+      await page.waitForSelector('.u2-stats');
+      assert.strictEqual(await page.getAttribute('#u2-tab-stats', 'aria-current'), 'page');
+      assert(!await page.isVisible('#u2-back'), 'a tab needs no back button');
+      const reply = await page.evaluate(() => fetch('/api/ui2/stats').then((r) => r.json()));
+      assert.strictEqual(reply.days.length, 7);
+      assert.strictEqual(reply.days[6].date, reply.today);
+      const text = await page.innerText('.u2-stats');
+      for (const want of ['day streak', 'XP', 'minutes this week', 'This week', 'Subjects', 'Mathematics', 'Chess', 'Leaderboards are coming']) assert(text.includes(want), want);
+      assert(text.includes(`${reply.week_minutes}\nminutes this week`) || text.includes(`${reply.week_minutes} minutes this week`), 'the minutes are the endpoint\'s');
+      assert(!/\brank|#\d|1st|2nd|3rd/i.test(text), 'no ranking, real or made up');
+      assert.strictEqual((await page.$$('.u2-week span')).length, 7);
+      assert(await noOverflow(page));
+      assert.deepStrictEqual(errors, []);
+      await ctx.close();
+    });
+
+    await t('Home on a phone with one subject: the card is the page, no grid; Add a subject is a quiet link', async () => {
+      const uno = await account(browser, 'uno@example.com', 'Uno One', [['math', 'algebra_1_part_a']]);
+      const { ctx, page } = await open(uno, PHONE, '/dashboard');
+      await page.waitForSelector('#u2-start');
+      assert.strictEqual(await page.$('#u2-subjects'), null);
+      assert(await page.isVisible('#u2-add-subject'));
+      assert(await noOverflow(page));
       await ctx.close();
     });
 
     await t('Theme and sign out still do what the old header buttons did', async () => {
       const sam = await account(browser, 'sam@example.com', 'Sam Signout', [['math', 'algebra_1_part_a']]); // signing out ends this learner's session
-      const { ctx, page } = await open(sam, PHONE, '/dashboard#everything', { colorScheme: 'light' });
+      const { ctx, page } = await open(sam, DESK, '/dashboard#everything', { colorScheme: 'light' }); // the phone has them in Settings, tested above
       await page.waitForSelector('#u2-theme');
       const before = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
       await page.click('#u2-theme');
@@ -370,12 +451,12 @@ async function main() {
       await a.page.waitForFunction(() => document.documentElement.classList.contains('u2-ready'));
       assert.strictEqual(await a.page.getAttribute('#u2-start', 'href'), '/onboarding');
       assert(await a.page.isVisible('#u2-giraffe .tutor-svg'), 'the giraffe');
-      assert(await a.page.isVisible('#u2-upload'));
+      assert(await a.page.isVisible('#u2-tab-upload'), 'upload in the bar');
       assert.strictEqual(await a.page.$('#u2-past-link'), null, 'no Past with nothing in it');
       assert(await noOverflow(a.page));
-      await a.page.click('#u2-menu');
+      await a.page.click('#u2-tab-menu');
       await a.page.waitForFunction(() => document.documentElement.dataset.u2View === 'everything');
-      assert(await a.page.isVisible('#u2-signout'));
+      assert(await a.page.isVisible('#u2-set-signout'));
       assert(!await a.page.isVisible('#u2-start'));
       await a.ctx.close();
       const b = await open(pat, PHONE, '/dashboard');
@@ -415,11 +496,12 @@ async function main() {
       await q.page.waitForSelector('#u2-past [data-past="sessions"]');
       assert(/\/path\?enrollment=/.test(await q.page.getAttribute('#u2-past [data-past="sessions"]', 'href')), 'a way back');
       assert(await noOverflow(q.page));
-      await q.page.click('#u2-menu');
+      assert.strictEqual((await q.page.innerText('#u2-tb-view')).trim(), 'Past');
+      await q.page.click('#u2-menu'); // Past keeps its close button on a phone
       await q.page.waitForFunction(() => document.documentElement.dataset.u2View === 'home');
-      await q.page.click('#u2-menu');
+      await q.page.click('#u2-tab-menu');
       await q.page.waitForFunction(() => document.documentElement.dataset.u2View === 'everything');
-      assert(await q.page.isVisible('#u2-row-past'), 'in the Everything menu');
+      assert(await q.page.isVisible('#u2-row-past'), 'in the Menu');
       await q.ctx.close();
     });
 
@@ -435,6 +517,7 @@ async function main() {
       assert.strictEqual(await page.$('#u2-upload'), null);
       assert.strictEqual(await page.$('#u2-material'), null);
       assert.strictEqual(await page.$('#u2-row-material'), null);
+      assert.strictEqual(await page.$('#u2-tab-upload'), null, 'no Upload in the bar');
       const reply = await page.evaluate(() => fetch('/api/ui2/material-progress').then((r) => r.json()));
       assert.deepStrictEqual(reply, { can_upload: false, materials: [] });
       await c.close();
@@ -449,7 +532,7 @@ async function main() {
       assert(b.y + b.height <= docH);
       const bar = await page.evaluate(() => { const w = document.querySelector('#header .wrap'); return w.scrollWidth <= w.clientWidth + 1; });
       assert(bar, 'the top bar fits');
-      await page.click('#u2-menu');
+      await page.click('#u2-tab-menu');
       await page.waitForFunction(() => document.documentElement.dataset.u2View === 'everything');
       assert(await noOverflow(page), 'everything');
       const e3 = await eve(3);
@@ -468,6 +551,8 @@ async function main() {
       await page.waitForSelector('#u2-start');
       assert(await page.isVisible('#u2-menu'));
       assert(await page.isVisible('.u2-tb-wm'));
+      assert(!await page.isVisible('#u2-tabs'), 'no bottom bar on a desktop');
+      assert(await page.isVisible('#u2-upload'), 'desktop Home as it was');
       assert.strictEqual(await page.$('.u2-side'), null, 'no side columns');
       const b = await page.locator('#u2-start').boundingBox();
       assert(b.width >= 260 && b.width <= 360, `button ${b.width}`);
@@ -484,6 +569,7 @@ async function main() {
       await ctx.close();
       const tab = await open(ada, { viewport: { width: 820, height: 1180 } }, '/dashboard');
       await tab.page.waitForSelector('#u2-start');
+      assert(!await tab.page.isVisible('#u2-tabs'), 'no bottom bar on a tablet');
       const tb = await tab.page.locator('#u2-start').boundingBox();
       assert(tb.width >= 260 && tb.width <= 360, `tablet button ${tb.width}`);
       assert(Math.abs(tb.x + tb.width / 2 - 410) < 2, 'centred');
@@ -507,16 +593,16 @@ async function main() {
       await ctx.close();
     });
 
-    await t('Keyboard: tab reaches menu, Start session, giraffe, Start, minutes, today\'s plan, in order and with a visible focus ring', async () => {
+    await t('Keyboard on a phone: tab reaches the giraffe, minutes, Start, today\'s plan, then the bar, in order and with a visible focus ring', async () => {
       const { ctx, page } = await open(ada, { viewport: { width: 375, height: 420 } }, '/dashboard');
       await page.waitForSelector('#u2-start');
       await delay(400);
       const seen = [];
-      for (let i = 0; i < 14; i++) {
+      for (let i = 0; i < 18; i++) {
         await page.keyboard.press('Tab'); // eslint-disable-line no-await-in-loop
         seen.push(await page.evaluate(() => { const a = document.activeElement; return a.id || a.getAttribute('data-study') || a.className || a.tagName; })); // eslint-disable-line no-await-in-loop
       }
-      const order = ['u2-menu', 'start', 'u2-giraffe', 'u2-start', 'u2-minutes', 'u2-peek'].map((k) => seen.findIndex((s) => String(s).includes(k)));
+      const order = ['u2-giraffe', 'u2-minutes', 'u2-start', 'u2-peek', 'u2-tab-home', 'u2-tab-menu'].map((k) => seen.findIndex((s) => String(s).includes(k)));
       assert(order.every((x) => x >= 0), `missing in ${seen.join(', ')}`);
       assert.deepStrictEqual([...order].sort((a, b) => a - b), order, `order ${seen.join(', ')}`);
       await page.focus('#u2-start');
@@ -693,8 +779,8 @@ async function main() {
       await page.waitForURL(/\/dashboard/); // straight to home: no upload screen in onboarding
       await page.waitForSelector('#u2-upload');
       assert(!/my-material|\/start/.test(page.url()), 'home, not an upload page or /start');
-      const first = await page.$eval('#u2-material .u2-rows', (r) => r.firstElementChild.id);
-      assert.strictEqual(first, 'u2-upload', 'Upload your own comes first in Your material');
+      assert.strictEqual(await page.getAttribute('#u2-upload', 'class'), 'u2-btn', 'Upload your own is the one strong button');
+      assert.strictEqual(await page.getAttribute('#u2-upload', 'href'), '/my-material');
       assert(/Add your notes when you.re ready\./.test(await page.textContent('.u2-bubble')), 'the giraffe says when to add notes');
       assert(await noOverflow(page));
       if (process.env.OB_NOUPLOAD_SHOT) { fs.mkdirSync(path.dirname(process.env.OB_NOUPLOAD_SHOT), { recursive: true }); await page.screenshot({ path: process.env.OB_NOUPLOAD_SHOT }); }
@@ -707,7 +793,8 @@ async function main() {
     const snap = async (page, name) => { if (SHOTS) { fs.mkdirSync(SHOTS, { recursive: true }); await page.screenshot({ path: path.join(SHOTS, `${name}.png`) }); } };
     const waitInfo = (c) => ({ id: c.dataset.waiting, place: c.querySelector('a[data-start="placement"]').getAttribute('href'), placeText: c.querySelector('a[data-start="placement"]').textContent.trim(), placeCls: c.querySelector('a[data-start="placement"]').className, pick: c.querySelector('a[data-start="pick"]').getAttribute('href'), pickText: c.querySelector('a[data-start="pick"]').textContent.trim(), pickCls: c.querySelector('a[data-start="pick"]').className });
     // One waiting subject shows its card; two or more are squares, and a tap opens that subject's card under the grid.
-    const openWait = async (page, id) => { await page.click(`[data-wait-tile="${id}"]`); await page.waitForSelector(`.u2-wait[data-waiting="${id}"]`); };
+    // On a phone each waiting subject's card is on the page, its two ways in on it; a wider screen keeps the squares that open one.
+    const openWait = async (page, id) => { if (await page.$(`[data-wait-tile="${id}"]`)) await page.click(`[data-wait-tile="${id}"]`); await page.waitForSelector(`.u2-wait[data-waiting="${id}"]`); };
     const homeWaiting = async (page) => {
       await page.waitForSelector('.u2-wait, [data-wait-tile]');
       const ids = await page.$$eval('[data-wait-tile]', (xs) => xs.map((x) => x.dataset.waitTile));
@@ -740,9 +827,11 @@ async function main() {
       const cards = await homeWaiting(c.page);
       assert.deepStrictEqual(cards.map((x) => x.id), process.env.OB_SQUARES_SHOT ? ['math', 'english', 'reading'] : ['math', 'english']);
       if (process.env.OB_SQUARES_SHOT) { await c.page.click('#u2-subjects'); await c.page.evaluate(() => window.scrollTo(0, 0)); fs.mkdirSync(path.dirname(process.env.OB_SQUARES_SHOT), { recursive: true }); await c.page.screenshot({ path: process.env.OB_SQUARES_SHOT }); }
-      // Two subjects: square tiles, two to a row, equal sides, centred.
-      const sq = await c.page.$$eval('.u2-squares > *', (xs) => xs.map((x) => { const r = x.getBoundingClientRect(); return { l: Math.round(r.left), w: Math.round(r.width), h: Math.round(r.height) }; }));
-      assert.strictEqual(sq.length, process.env.OB_SQUARES_SHOT ? 3 : 2); assert(Math.abs(sq[0].w - sq[0].h) <= 2, 'square'); assert.strictEqual(sq[0].l === sq[1].l, false, 'side by side');
+      // Waiting subjects on a phone: the first as the page's card, the others as wide cards in the grid, each with both buttons on it, one column wide.
+      const wc = await c.page.$$eval('.u2-wait', (xs) => xs.map((x) => { const r = x.getBoundingClientRect(); return { l: Math.round(r.left), w: Math.round(r.width), both: !!(x.querySelector('[data-start="placement"]') && x.querySelector('[data-start="pick"]')) }; }));
+      assert.strictEqual(wc.length, process.env.OB_SQUARES_SHOT ? 3 : 2);
+      assert(wc.every((x) => x.both && x.l === wc[0].l && x.w === wc[0].w), `both ways in on every card, lined up: ${JSON.stringify(wc)}`);
+      assert.strictEqual((await c.page.$$('#u2-home .u2-btn')).length, 1, 'one strong button');
       assert.strictEqual(cards[0].placeText, 'Take the placement');
       assert.strictEqual(cards[0].pickText, 'Pick my grade');
       assert.strictEqual(cards[0].placeCls, 'u2-btn', 'the main 3D pill');
@@ -780,7 +869,7 @@ async function main() {
       await c.page.waitForURL(/\/placement\?enrollment=/);
       await c.page.goto(`${BASE}/dashboard`);
       await c.page.waitForSelector('#u2-home');
-      const left = await c.page.$$eval('[data-wait-tile]', (xs) => xs.map((x) => x.dataset.waitTile));
+      const left = await c.page.$$eval('[data-waiting]', (xs) => xs.map((x) => x.dataset.waiting));
       assert.deepStrictEqual(left, process.env.OB_SQUARES_SHOT ? ['math', 'reading'] : ['math'], 'English has started; the others still wait');
       assert.deepStrictEqual(errs, []);
       await c.ctx.close();
@@ -797,7 +886,7 @@ async function main() {
       await a.page.click('#next');
       await a.page.waitForURL(/\/dashboard/); // no upload screen in onboarding
       assert.deepStrictEqual((await homeWaiting(a.page)).map((x) => x.id), ['math']);
-      assert.strictEqual(await a.page.$eval('#u2-material .u2-rows', (r) => r.firstElementChild.id), 'u2-upload', 'Upload your own first for "both"');
+      assert(await a.page.isVisible('#u2-tab-upload'), 'Upload your own in the bar for "both"');
       await a.page.goto(`${BASE}/start`);
       await a.page.waitForURL(/\/dashboard/);
       assert(!/\/start/.test(a.page.url()), 'never back through the flow');

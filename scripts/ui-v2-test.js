@@ -44,7 +44,18 @@ function contrast() {
   const lum = (c, set) => { const v = linear(c, set); return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2]; };
   const ratio = (a, b, set) => { const [x, y] = [lum(a, set), lum(b, set)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
   const PAIRS = [['ink', 'page', 4.5], ['ink', 'card', 4.5], ['ink', 'well', 4.5], ['ink-2', 'page', 4.5], ['ink-2', 'card', 4.5], ['ink-2', 'well', 4.5], ['ink-3', 'page', 4.5], ['ink-3', 'card', 4.5], ['ink', 'sel', 4.5], ['on-action', 'action', 4.5], ['good', 'good-wash', 4.5], ['bad', 'bad-wash', 4.5], ['ink', 'good-wash', 4.5], ['ink', 'bad-wash', 4.5], ['ink-2', 'good-wash', 3], ['ink-2', 'bad-wash', 3], ['bar-fill', 'bar-track', 3], ['sel-line', 'card', 3], ['on-mark', 'good', 3], ['on-mark', 'bad', 3], ['focus', 'page', 3], ['act-text', 'act-tint', 4.5], ['right-text', 'right-tint', 4.5], ['wrong-text', 'wrong-tint', 4.5], ['ink', 'right-tint', 4.5], ['ink', 'wrong-tint', 4.5], ['on-act', 'act', 4.5], ['ink-3', 'well-2', 3], ['act', 'page', 3], ['act-edge', 'page', 3]];
-  for (const [mode, set] of [['light', light], ['dark', dark]]) {
+  // The Menu's colour choices (css/ui2/accent.css): each one over the same tokens, light and dark, must pass the same pairs.
+  const accentCss = fs.readFileSync(path.join(ROOT, 'public', 'css', 'ui2', 'accent.css'), 'utf8');
+  const accentBlocks = [...accentCss.matchAll(/:root\[data-ui2\](\[data-mode="dark"\])?\[data-accent="([a-z]+)"\]\s*\{([^}]*)\}/g)];
+  const accents = [...new Set(accentBlocks.map((m) => m[2]))];
+  assert(accents.length >= 2, 'the colour choices are there');
+  const sets = [['light', light], ['dark', dark]];
+  for (const a of accents) {
+    const own = (dk) => read((accentBlocks.find((m) => m[2] === a && !!m[1] === dk) || [])[3] || '');
+    assert(Object.keys(own(false)).length && Object.keys(own(true)).length, `${a}: light and dark`);
+    sets.push([`${a} light`, { ...light, ...own(false) }], [`${a} dark`, { ...dark, ...own(true) }]);
+  }
+  for (const [mode, set] of sets) {
     for (const [fg, bg, min] of PAIRS) {
       const r = ratio(set[fg], set[bg], set);
       assert(r >= min, `${mode}: ${fg} on ${bg} is ${r.toFixed(2)}, needs ${min}`);

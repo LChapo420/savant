@@ -5,7 +5,7 @@
  *
  * On, the signed-in app pages listed below get a few things added to their HTML as it is served, and nothing else changes:
  *   - data-ui2="on" on <html>, which the stylesheets key on
- *   - css/ui2/tokens.css, css/ui2/look.css, css/ui2/app.css, css/ui2/pages.css and js/ui2/boot.js, last in <head>, so they restyle what is there
+ *   - css/ui2/tokens.css, css/ui2/look.css, css/ui2/app.css, css/ui2/pages.css, css/ui2/accent.css (the Menu's colour choice) and js/ui2/boot.js, last in <head>, so they restyle what is there
  *   - the original giraffe (js/start-tutor.js), js/ui2/look.js and js/ui2/shell.js and js/ui2/pages.js right after js/app.js (shell.js rearranges the header, pages.js the later pages), and js/ui2/home.js before js/dashboard.js on Home
  * No page's logic, API, gating, consent rule, scoring, player or fact-check path is edited: the existing scripts still draw the page, and the new ones move and restyle it.
  *
@@ -23,6 +23,7 @@ const PAGES = new Set([
   'dashboard', 'session', 'base-lesson', 'review', 'path', 'profile', 'calendar', 'catchup', 'enforcer', 'held', 'help', 'boosters', 'baseline', 'daily-check',
   'curriculum', 'onboarding', 'placement', 'reading-check', 'skill-check', 'skill-practice', 'skip', 'stage-check', 'stage-left', 'style-quiz', 'subject-placement', 'survey',
   'my-material', 'my-material-cards', 'my-material-notes', 'my-material-pack', 'my-material-podcast', 'my-material-study', 'my-material-test',
+  'stats', // the phone's "Leaderboard and stats" tab (js/ui2/stats.js); a page of its own that only exists under the flag
 ]);
 
 /** First in <head> on /start and every app page: a page that finds itself signed out goes to sign-in rather than show the new-account refusal (js/ui2/signed-out.js). */
@@ -32,7 +33,7 @@ const SIGNED_OUT = '<script src="/js/ui2/signed-out.js"></script>';
 function inject(html, page) {
   let out = html
     .replace(/<html\b/, '<html data-ui2="on"')
-    .replace('</head>', `  <link rel="stylesheet" href="/css/ui2/tokens.css">\n  <link rel="stylesheet" href="/css/ui2/look.css">\n  <link rel="stylesheet" href="/css/ui2/app.css">\n  <link rel="stylesheet" href="/css/ui2/pages.css">\n  ${SIGNED_OUT}\n  <script src="/js/ui2/boot.js"></script>\n</head>`)
+    .replace('</head>', `  <link rel="stylesheet" href="/css/ui2/tokens.css">\n  <link rel="stylesheet" href="/css/ui2/look.css">\n  <link rel="stylesheet" href="/css/ui2/app.css">\n  <link rel="stylesheet" href="/css/ui2/pages.css">\n  <link rel="stylesheet" href="/css/ui2/accent.css">\n  ${SIGNED_OUT}\n  <script src="/js/ui2/boot.js"></script>\n</head>`)
     .replace('<script src="/js/app.js"></script>', '<script src="/js/app.js"></script>\n  <script src="/js/start-tutor.js"></script>\n  <script src="/js/ui2/look.js"></script>\n  <script src="/js/ui2/shell.js"></script>\n  <script src="/js/ui2/pages.js"></script>');
   if (page === 'dashboard') out = out.replace('<script src="/js/dashboard.js"></script>', '<script src="/js/ui2/home.js"></script>\n  <script src="/js/dashboard.js"></script>');
   return out;

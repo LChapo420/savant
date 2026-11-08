@@ -5,6 +5,9 @@
  *   - puts a menu or back button at the left of the top bar, and on a wide screen the "Everything" link
  *   - leaves the giraffe to js/tutor-giraffe.js, which finds its own place in .site-header .wrap, before .header-actions
  *   - moves the idle "Start session" of js/study.js up into the top bar; a running session stays in its own line under it
+ * On a phone (under 768 px) the four destinations are a fixed bar at the bottom, safe-area aware: Home, Upload your own, Leaderboard and stats, Menu (/dashboard#menu, which is
+ * Everything dressed as a list). It takes the place of the menu button. Home's top bar is the wordmark and the streak; the idle "Start session" leaves the bar (the Menu
+ * has a quiet "Time a session" row that presses it), so no round clock competes with the lesson. The bar steps away in a sitting (a question, a lesson, a placement) and while the chat is open.
  * and on a question it puts the guide under the player's top bar: the original giraffe, cropped at the shoulders on a phone, with the question in its speech bubble. When the answer comes, the
  * words of js/player.js's .verdict show in that bubble, tinted, and the giraffe reacts; the box itself stays where the player put it and keeps the buttons. Nothing of the player's is moved:
  * the bubble holds copies and the originals stay in place for screen readers, focus and every listener.
@@ -41,6 +44,12 @@
     chat: 'M5.500 4.500h13A2 2 0 0 1 20.500 6.500v9a2 2 0 0 1-2 2H11l-4.500 3.500V17.500h-1a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2z',
     upload: 'M6 3h8l4 4v14H6zM14 3v4h4M12 17.500v-6M9.500 14 12 11.500l2.500 2.500',
     clock: 'M12 3.500a8.500 8.500 0 1 0 0 17 8.500 8.500 0 0 0 0-17zM12 7.500V12l3 2',
+    home: 'M4 10.500 12 4l8 6.500V20h-5.500v-5.500h-5V20H4z',
+    tray: 'M12 15V4.500M7.500 9 12 4.500 16.500 9M4 13.500V20h16v-6.500',
+    bars: 'M9 8.500h6V20H9zM3.500 13h5.500v7H3.500zM15 15.500h5.500V20H15z',
+    flame: 'M12 3.500c.8 3 4.800 5 4.800 9.500a4.800 4.800 0 0 1-9.600 0c0-2 .9-3.400 2-4.500.2 1.600 1 2.600 1.900 3C10.800 9 11.100 6.300 12 3.500z',
+    swatch: 'M12 3.500a8.500 8.500 0 1 0 0 17c1.200 0 1.800-.8 1.800-1.700 0-1.300-1-1.600-1-2.600 0-.8.700-1.400 1.600-1.400H17a3.500 3.500 0 0 0 3.500-3.500C20.500 7 16.700 3.500 12 3.500zM7.500 12h.01M9.500 8h.01M14.500 8h.01',
+    people: 'M9 11a3.500 3.500 0 1 0 0-7 3.500 3.500 0 0 0 0 7zM2.500 20c.6-3.300 3.200-5.300 6.500-5.300s5.900 2 6.500 5.300M16 4.300a3.300 3.300 0 0 1 0 6.400M18 14.800c2 .6 3.200 2.400 3.500 5.200',
     settings: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19 12a7 7 0 0 0-.1-1.200l2-1.500-2-3.400-2.300 1a7 7 0 0 0-2.100-1.200L14 3.500h-4l-.4 2.200a7 7 0 0 0-2.100 1.200l-2.300-1-2 3.400 2 1.500a7 7 0 0 0 0 2.400l-2 1.500 2 3.400 2.300-1a7 7 0 0 0 2.100 1.200l.4 2.200h4l.4-2.200a7 7 0 0 0 2.100-1.200l2.300 1 2-3.400-2-1.500c.1-.4.1-.8.1-1.200z',
   };
   const ic = (name, cls) => `<svg class="u2-ic${cls ? ` ${cls}` : ''}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="${PATHS[name]}"/></svg>`;
@@ -67,6 +76,12 @@
 
   const HOME = /^\/dashboard(\.html)?$/.test(location.pathname);
   const Look = window.U2Look;
+  const PHONE = window.matchMedia('(max-width: 767px)');
+  const PATH = location.pathname.replace(/\.html$/, '');
+  /** Pages that are one sitting or one flow: no bottom bar, the way out is the page's own. */
+  const FLOW = /^\/(session|base-lesson|placement|subject-placement|enforcer|skill-check|skill-practice|stage-check|stage-left|daily-check|reading-check|baseline|catchup|held|skip|style-quiz|survey|onboarding)$/;
+  /** A tab's own page needs no back button on a phone: the bar is the way around. */
+  const TAB_ROOT = /^\/(stats|my-material)$/.test(PATH);
 
   /** Where back goes: the page before it if that was ours and not a sitting left behind, otherwise up. */
   function upFrom(path) {
@@ -96,22 +111,79 @@
     const left = document.createElement('div');
     left.className = 'u2-left';
     left.innerHTML = HOME
-      ? `<a class="u2-ib" id="u2-menu" href="/dashboard#everything" aria-label="Open everything">${ic('menu')}</a><a class="u2-tb-wm" href="/dashboard" aria-label="Savant, home">${Look.wordmark(22)}</a>`
-      : `<a class="u2-ib" id="u2-back" href="${upFrom(location.pathname)}" aria-label="Back">${ic('back')}</a><b class="u2-tb-t" id="u2-tb-t">${App.escapeHtml(titleOf())}</b>`;
+      ? `<a class="u2-ib" id="u2-menu" href="/dashboard#everything" aria-label="Open everything">${ic('menu')}</a><a class="u2-tb-wm" href="/dashboard" aria-label="Savant, home">${Look.wordmark(22)}</a><b class="u2-tb-t u2-tb-view" id="u2-tb-view"></b>`
+      : `<a class="u2-ib${TAB_ROOT ? ' u2-tab-root' : ''}" id="u2-back" href="${upFrom(location.pathname)}" aria-label="Back">${ic('back')}</a><b class="u2-tb-t" id="u2-tb-t">${App.escapeHtml(titleOf())}</b>`;
     wrap.insertBefore(left, brand ? brand.nextSibling : wrap.firstChild);
+    // Home's streak on a phone, as in the approved mockup: only when there is one and the learner hasn't hidden it (the old header's rule).
+    const streak = user && !user.hide_stats ? Number(user.streak) || 0 : 0;
+    if (HOME && streak > 0 && !wrap.querySelector('.u2-streak')) {
+      const s = document.createElement('span');
+      s.className = 'u2-streak';
+      s.title = 'Day streak';
+      s.setAttribute('role', 'img');
+      s.setAttribute('aria-label', `${streak} day streak`);
+      s.innerHTML = `${ic('flame')}<b aria-hidden="true">${streak}</b>`;
+      wrap.insertBefore(s, wrap.querySelector('.header-actions'));
+    }
+    drawTabs(user);
     const backBtn = left.querySelector('#u2-back');
     if (backBtn) backBtn.addEventListener('click', goBack);
     App.ui2.user = user;
     if (App.ui2.onBar) App.ui2.onBar();
   }
 
-  // ── Start session in the top bar ─────────────────────────────────────────
+  // ── The bottom bar on a phone ────────────────────────────────────────────
+  const TABS = [
+    ['home', '/dashboard', 'home', 'Home', 'Home'],
+    ['upload', '/my-material', 'tray', 'Upload', 'Upload your own'],
+    ['stats', '/stats', 'bars', 'Stats', 'Leaderboard and stats'],
+    ['menu', '/dashboard#menu', 'menu', 'Menu', 'Menu'],
+  ];
+  function tabNow() {
+    if (HOME) return /^#(everything|menu)$/.test(location.hash) ? 'menu' : 'home';
+    if (/^\/my-material/.test(PATH)) return 'upload';
+    if (PATH === '/stats') return 'stats';
+    if (/^\/(profile|calendar|curriculum|help|boosters)$/.test(PATH)) return 'menu';
+    return 'home';
+  }
+  function markTab() {
+    const now = tabNow();
+    document.querySelectorAll('#u2-tabs a').forEach((a) => {
+      const on = a.dataset.tab === now;
+      a.classList.toggle('on', on);
+      if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+  }
+  function drawTabs(user) {
+    if (document.getElementById('u2-tabs') || FLOW.test(PATH)) return;
+    // No Upload where uploading is shut: the same consent states as services/ui-v2-material.js canUpload (a child without a parent's consent, a guest).
+    const shut = !!(user && user.consent && ['pending', 'active', 'revoked', 'guest'].includes(user.consent.state));
+    const nav = document.createElement('nav');
+    nav.id = 'u2-tabs';
+    nav.className = 'u2-tabs';
+    nav.setAttribute('aria-label', 'Main');
+    nav.innerHTML = TABS.filter(([key]) => !(shut && key === 'upload')).map(([key, href, icon, short, full]) => `<a href="${href}" id="u2-tab-${key}" data-tab="${key}"${short !== full ? ` aria-label="${full}" title="${full}"` : ''}><span class="u2-tab-ic">${ic(icon)}</span><span class="u2-tab-l"${short !== full ? ' aria-hidden="true"' : ''}>${short}</span></a>`).join('');
+    // On Home itself, Home and Menu change the view without a reload.
+    nav.addEventListener('click', (ev) => {
+      const a = ev.target.closest('a[data-tab]');
+      if (!a || !HOME) return;
+      if (a.dataset.tab === 'home') { ev.preventDefault(); if (location.hash) location.hash = ''; window.scrollTo(0, 0); }
+      if (a.dataset.tab === 'menu') { ev.preventDefault(); if (!/^#(everything|menu)$/.test(location.hash)) location.hash = 'menu'; }
+    });
+    document.body.appendChild(nav);
+    document.documentElement.classList.add('u2-tabbed');
+    markTab();
+    window.addEventListener('hashchange', markTab);
+  }
+
+  // ── Start session in the top bar (on a phone it stays under the bar, where only a running one shows) ──
   function placeStudy() {
     const strip = document.getElementById('study-strip');
     const wrap = document.querySelector('#header .wrap');
     if (!strip || !wrap) return;
     const idle = strip.classList.contains('study-strip-idle') && !!strip.querySelector('[data-study="start"]');
-    if (idle) {
+    document.documentElement.classList.toggle('u2-study-idle', idle);
+    if (idle && !PHONE.matches) {
       const before = wrap.querySelector('.tdock-g') || wrap.querySelector('.header-actions');
       if (strip.parentElement !== wrap || strip.nextElementSibling !== before) wrap.insertBefore(strip, before);
     } else if (strip.parentElement === wrap) {
@@ -284,6 +356,8 @@
   function tick() {
     queued = false;
     placeStudy();
+    // No bottom bar over a question or a lesson's player, wherever one opens.
+    document.documentElement.classList.toggle('u2-in-sitting', !!document.querySelector('.player, .session-player'));
     watchSheet();
     dressQuestion();
     document.querySelectorAll('.u2-guide .tutor').forEach((t) => {
@@ -295,7 +369,13 @@
   }
   function queue() { if (!queued) { queued = true; requestAnimationFrame(tick); } }
 
-  App.ui2 = { ic, gets, look: Look, home: HOME, user: null, onBar: null };
+  /** Presses js/study.js's own "Start session" (kept out of sight on a phone). False when there is none to press. */
+  function startStudy() {
+    const b = document.querySelector('#study-strip [data-study="start"]');
+    if (b) b.click();
+    return !!b;
+  }
+  App.ui2 = { ic, gets, look: Look, home: HOME, user: null, onBar: null, phone: PHONE, startStudy };
 
   const realHeader = App.header;
   App.header = function header(user, active) {
@@ -308,6 +388,7 @@
   function start() {
     if (window.MutationObserver) new MutationObserver(queue).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
     window.addEventListener('resize', queue);
+    if (PHONE.addEventListener) PHONE.addEventListener('change', queue);
     Look.watchTutor();
     queue();
   }
