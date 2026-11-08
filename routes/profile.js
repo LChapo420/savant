@@ -288,6 +288,7 @@ router.get('/mastery/:enrollmentId', requireAuth, (req, res) => {
  */
 const EXPORT_MORE = [
   'tutor_events',
+  'upload_studies',
   'onboarding_answers', 'learner_agreements',
   'essays', 'assist_chats', 'level_logs', 'learner_records', 'level_debriefs', 'subject_placements', 'remediations',
   'streaks', 'reports', 'ai_usage', 'chess_ratings', 'chess_puzzle_attempts', 'chess_rush_runs', 'chess_drill_cards',
