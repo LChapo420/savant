@@ -38,7 +38,7 @@
   // The server's TUTOR_VOICE_EOS (info.eos): the end of a turn is read from the words as well as the quiet. Early words are sent at EOS_SPECULATE_MS; when they come back
   // as a finished sentence the turn ends at EOS_MIN_MS of quiet; when they trail off ("and", "um", "of", a comma) it waits until EOS_LONG_MS; with no words back yet, the
   // usual END_OF_SPEECH_MS. Words that start again within MERGE_MS of the end, before the tutor talks, are joined to the turn (the clip is sent again, whole).
-  const EOS_SPECULATE_MS = 180;
+  const EOS_SPECULATE_MS = 120;
   const EOS_MIN_MS = 420;
   const EOS_LONG_MS = 1300;
   const MERGE_MS = 2500;
@@ -105,6 +105,13 @@
     let lastTurn = null; // { frames, detectedAt, token, asked }: the turn just ended, joined to the next words if they come soon enough
     const dropped = new Set(); // turns joined into the next one: never asked, or their streamed ask was dropped
     let asking = null;   // the AbortController of the streamed turn in flight
+    let warmedAt = 0;
+    /** TUTOR_VOICE_WARM (info.warm): the server opens its connections for the turn ahead of it. Nothing is sent but the call id. */
+    function warmUp() {
+      if (!info.warm || !callId || performance.now() - warmedAt < 1000) return;
+      warmedAt = performance.now();
+      try { fetch('/api/tutor/call/warm', { method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ call: callId }) }).catch(() => {}); } catch { /* only a head start */ }
+    }
     let state = 'idle';
     let callId = null;
     let listenWay = null;
@@ -241,6 +248,7 @@
         voicedRun = rms > startAt ? voicedRun + dt : 0;
         if (voicedRun >= (state === 'thinking' ? 200 : VOICE_START_MS)) {
           inSpeech = true;
+          warmUp();
           clip = preRoll.slice(-Math.ceil(350 / dt));
           clipMs = clip.length * dt;
           voicedMs = voicedRun;
@@ -300,6 +308,7 @@
       resetSpeech();
       quietSince = now;
       if (!enough) return;
+      warmUp();
       const p = takeTurn({ stopAt, detectedAt: now, hearing: early ? early.promise : hear(frames), interrupted });
       lastTurn = { frames, ms: turnMs, voicedMs: turnVoiced, detectedAt: now, token: turnToken };
       return p;
@@ -755,6 +764,7 @@
         recText = fin;
         recLive = live;
         recLastAt = performance.now();
+        warmUp();
         quietSince = recLastAt;
         warned = false;
         clearTimeout(recQuietTimer);

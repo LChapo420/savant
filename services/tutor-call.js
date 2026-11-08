@@ -30,6 +30,7 @@
  *                         "um" or comma waits longer, and words that start again before the tutor talks are joined to the turn instead of becoming a new one.
  *   TUTOR_VOICE_FAST=1    a short voice turn is written by a fast model, a hard one by the usual lineup (services/tutor-context.js hardVoiceTurn).
  *   TUTOR_CALL_ACK=1      a short soft sound while it thinks, made in the browser (no request, no cost).
+ *   TUTOR_VOICE_WARM=1    when the learner starts or stops talking, the services the turn will use get their connection opened ahead (warm() below).
  *   TUTOR_VOICE_PICKER=1  the learner picks the tutor's voice from the ElevenLabs voices services/spanish/voice.js allows; kept on the account (services/tutor-mode.js).
  */
 const crypto = require('crypto');
@@ -80,13 +81,13 @@ function info(user) {
   const lim = limits();
   const sw = switches();
   const picker = sw.picker && paid ? { voice: tutorMode.getVoice(user.id) || tutorMode.VOICE_DEFAULT, voices: tutorMode.voiceNames() } : {};
-  return { allowed, mic, why, speech: paid ? 'gateway' : 'browser', silence_warn_s: lim.silence_warn_s, silence_end_s: lim.silence_end_s, clip_s: lim.clip_s, notices: NOTICES, stream: sw.stream, eos: sw.eos, ack: sw.ack, ...picker };
+  return { allowed, mic, why, speech: paid ? 'gateway' : 'browser', silence_warn_s: lim.silence_warn_s, silence_end_s: lim.silence_end_s, clip_s: lim.clip_s, notices: NOTICES, stream: sw.stream, eos: sw.eos, ack: sw.ack, warm: sw.warm, ...picker };
 }
 
 const on1 = (name) => String(process.env[name] || '').trim() === '1';
 /** The quicker-turn switches (see the header). Read on every request, so the owner can flip them with a restart of nothing but the env. */
 function switches() {
-  return { stream: on1('TUTOR_VOICE_STREAM'), eos: on1('TUTOR_VOICE_EOS'), ack: on1('TUTOR_CALL_ACK'), picker: on1('TUTOR_VOICE_PICKER'), fast: on1('TUTOR_VOICE_FAST') };
+  return { stream: on1('TUTOR_VOICE_STREAM'), eos: on1('TUTOR_VOICE_EOS'), ack: on1('TUTOR_CALL_ACK'), picker: on1('TUTOR_VOICE_PICKER'), fast: on1('TUTOR_VOICE_FAST'), warm: on1('TUTOR_VOICE_WARM') };
 }
 
 /** A reply as sentences to speak, the same way js/tutor-call.js cuts them: short ones are joined to the next. Markdown emphasis is dropped, as the chat drops it. */
@@ -281,4 +282,28 @@ async function voiceFor(user, callId, line, lang) {
   return mp3;
 }
 
-module.exports = { info, start, end, hear, say, prepare, noteReply, maySay, usage, limits, wavSeconds, close, switches, sentences, rest, NOTICES, LIMITS, _open: open, _said: said };
+/**
+ * TUTOR_VOICE_WARM=1: the page says the learner started (or stopped) talking, and the services the turn is about to use get a connection opened now (a HEAD
+ * request, no key, no words, no cost), so the turn does not pay for a new secure connection to each of them (measured 8 Nov: the first speech-to-text call of
+ * a quiet spell 0.97 s, the next ones 0.35 to 0.46 s). At most once a second per learner; only during their own open call.
+ */
+const warmedAt = new Map();
+function warm(user, callId) {
+  live(user, callId);
+  const now = Date.now();
+  if (now - (warmedAt.get(user.id) || 0) < 1000) return { warmed: false };
+  warmedAt.set(user.id, now);
+  const hosts = new Set();
+  const add = (u) => { try { if (u) hosts.add(new URL(u).origin); } catch { /* not a URL */ } };
+  if (voice.gatewayFor(user.id)) add(process.env.LLMGATEWAY_BASE_URL || 'https://api.llmgateway.io/v1');
+  try { add(require('./providers/coral').baseUrl(process.env.CORAL_BASE_URL)); } catch { /* no Coral */ } // eslint-disable-line global-require
+  add(process.env.NVIDIA_BASE_URL || 'https://integrate.api.nvidia.com/v1');
+  for (const origin of hosts) {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 3000);
+    fetch(origin, { method: 'HEAD', signal: ctrl.signal }).catch(() => {}).finally(() => clearTimeout(t));
+  }
+  return { warmed: true, hosts: hosts.size };
+}
+
+module.exports = { info, start, end, hear, say, prepare, warm, noteReply, maySay, usage, limits, wavSeconds, close, switches, sentences, rest, NOTICES, LIMITS, _open: open, _said: said };
