@@ -33,6 +33,7 @@ const courses = require('./course-builder');
 const path = require('./material-path');
 const retentionGoal = require('./retention-goal');
 const expand = require('./material-review-expand');
+const modes = require('./learning-modes');
 const testFirst = require('./material-testfirst');
 const custom = require('./material-custom');
 const ownStudy = require('./upload-study');
@@ -148,9 +149,13 @@ function unlocked(course, r, skill) {
 const specOf = (userId) => { try { return require('./learning-spec').buildSpec(userId, {}); } catch { return null; } }; // eslint-disable-line global-require
 const isDue = (st, now) => st.status === 'mastered' && st.due && Date.parse(st.due) <= now;
 const dueAt = (now, days) => new Date(now + days * DAY).toISOString();
+/** The learner's chosen mode for this course (LEARNING_MODES, off by default): null when off or not chosen. */
+const modeOf = (r) => { if (!modes.on()) return null; const e = retentionGoal.forMaterial(r.user_id, r.material_id); return (e && e.mode) || null; };
+/** The half-life-based scheduling runs for a mode's plan as well as under UPLOAD_REVIEW_EXPAND. */
+const expandActive = (r) => expand.on() || !!modeOf(r);
 function scheduleReview(r, st, now) {
   delete st.recheck;
-  if (expand.on()) return scheduleExpanded(r, st, now);
+  if (expandActive(r)) return scheduleExpanded(r, st, now);
   let days = path.intervalDays(st.right, st.wrong_n, r.forget_m || 0, specOf(r.user_id));
   const cp = custom.forUser(r.user_id); // UPLOAD_CUSTOM: a learner who forgets fast is asked sooner, one who holds on, later
   if (cp && cp.knobs.reviewScale !== 1) days = Math.max(1, Math.round(days * cp.knobs.reviewScale));
@@ -168,7 +173,9 @@ function scheduleReview(r, st, now) {
 /** UPLOAD_REVIEW_EXPAND (services/material-review-expand.js): the same fields, from the skill's own half-life and the goal's end. */
 function scheduleExpanded(r, st, now, noGrow = false) {
   const eff = retentionGoal.forMaterial(r.user_id, r.material_id, now);
-  const out = expand.plan(st, { eff, m: r.forget_m || 0, now, finishedOn: r.finished_on || null, spec: specOf(r.user_id), fresh: path.freshAccuracy(r.fresh), noGrow });
+  const mp = eff && eff.mode ? modes.planFor(eff.mode) : null; // the chosen mode sets when reviews fall due and when they stop
+  const pmode = mp ? { ...expand.PARAMS, TARGET: mp.reviewTarget, FLOOR: mp.reviewFloorFor(eff.days || 3650), FLOOR_SHORT: mp.reviewFloorFor(eff.days || 3650) } : undefined;
+  const out = expand.plan(st, { eff, m: r.forget_m || 0, now, finishedOn: r.finished_on || null, spec: specOf(r.user_id), fresh: path.freshAccuracy(r.fresh), noGrow, ...(pmode ? { p: pmode } : {}) });
   if (out.done) { st.due = null; st.interval_days = expand.gapFor(expand.effective(st.h_days, r.forget_m || 0), expand.PARAMS.TARGET); st.goal_done = true; return st.interval_days; }
   delete st.goal_done;
   st.due = dueAt(now, out.days);
@@ -177,7 +184,7 @@ function scheduleExpanded(r, st, now, noGrow = false) {
 }
 /** The first time every skill is mastered, a horizon's end is known: note it and re-time each mastered skill from its last retrieval. Only with the switch on. */
 function noteFinished(course, r, now) {
-  if (!expand.on() || r.finished_on) return;
+  if (!expandActive(r) || r.finished_on) return;
   if (!course.skills.length || !course.skills.every((s) => (r.skills[s.id] || {}).status === 'mastered')) return;
   r.finished_on = new Date(now).toISOString();
   for (const s of course.skills) {
@@ -405,7 +412,8 @@ function lesson(userId, materialId, skillId, opts = {}) {
   if (st.status === 'new') st.status = 'learning';
   const remediating = !!st.remediate;
   const cp = custom.forUser(userId);
-  const n = Math.max(1, Math.min(4, path.practiceCount(st.tier, r.pace, remediating, specOf(userId)) + (cp ? cp.knobs.practiceDelta : 0)));
+  const modeP = modes.planFor(modeOf(r));
+  const n = modeP && modeP.questionsPerPart === 1 ? 1 : Math.max(1, Math.min(4, path.practiceCount(st.tier, r.pace, remediating, specOf(userId)) + (cp ? cp.knobs.practiceDelta : 0)));
   // Practice at the skill's tier and below, the ones missed before first.
   const practiceQs = path.pickForTier(skill, Math.max(1, st.tier - 1), n, st.wrong, [], rnd);
   st.read = true;
@@ -417,7 +425,7 @@ function lesson(userId, materialId, skillId, opts = {}) {
   require('./material-parts').maybeFollow(userId, materialId, [`lesson:${skill.id}`, ...practiceQs.map((q) => `q:${skill.id}:${q.id}`)]); // eslint-disable-line global-require
   return {
     skill: {
-      id: skill.id, title: skill.title, source: skill.source || 'material', tier: st.tier, lesson: skill.lesson, check_size: skill.quiz_size || QUIZ_SIZE,
+      id: skill.id, title: skill.title, source: skill.source || 'material', tier: st.tier, lesson: modes.lessonView(skill.lesson, skill.all_questions || skill.questions, modeOf(r), correctText), check_size: skill.quiz_size || QUIZ_SIZE,
       practice: practiceQs.map((q) => publicQ(q, skill.id)),
       remediation: remediating ? { misconceptions: st.misconceptions.slice(-3).map((m) => (typeof m === 'object' ? m.text : m)) } : null,
     },
@@ -444,7 +452,7 @@ function practice(userId, materialId, skillId, qid, answer) {
   r.steps.questions++;
   if (correct) st.misconceptions = (st.misconceptions || []).filter((m) => typeof m !== 'object' || m.q !== q.id);
   save(r);
-  return { correct, answer: correctText(q), explanation: q.explanation, quote: q.quote, misconception: misconceptionOf(q, answer), source: q.source || 'material' };
+  return { correct, answer: correctText(q), explanation: modeOf(r) === 'fastest' ? modes.oneLine(q.explanation) : q.explanation, explanation_full: q.explanation, quote: q.quote, misconception: misconceptionOf(q, answer), source: q.source || 'material' };
 }
 
 // ── checks and reviews ──────────────────────────────────────────────────────────
@@ -466,7 +474,7 @@ function pickQuestions(course, r, mode, skillId, now, rnd) {
   const due = course.skills.filter((s) => isDue(r.skills[s.id] || {}, now))
     .sort((a, b) => String(r.skills[a.id].due).localeCompare(String(r.skills[b.id].due)))
     .slice(0, Math.floor(REVIEW_SIZE / PER_SKILL_REVIEW));
-  const picked = due.flatMap((s) => path.pickForTier(s, Math.max(2, r.skills[s.id].tier || 2), PER_SKILL_REVIEW, r.skills[s.id].wrong, [], rnd).map((q) => ({ skill: s, q, role: 'main' })));
+  const picked = due.flatMap((s) => path.pickForTier(s, Math.max(2, r.skills[s.id].tier || 2), (modes.planFor(modeOf(r)) || {}).oneQuestionPerLook ? 1 : PER_SKILL_REVIEW, r.skills[s.id].wrong, [], rnd).map((q) => ({ skill: s, q, role: 'main' })));
   return shuffle(picked, rnd);
 }
 
@@ -573,7 +581,7 @@ function submit(userId, materialId, quizId, answers, opts = {}) {
       }
     } else if (quiz.mode === 'review') {
       const days = st.last_tested ? Math.max(0, (now - Date.parse(st.last_tested)) / DAY) : 1;
-      r.forget_m = expand.on() ? expand.updateM(r.forget_m, st, days, score, { fresh: path.freshAccuracy(r.fresh) }) : path.updateForgetting(r.forget_m, days, st.right, st.wrong_n, score, path.freshAccuracy(r.fresh));
+      r.forget_m = expandActive(r) ? expand.updateM(r.forget_m, st, days, score, { fresh: path.freshAccuracy(r.fresh) }) : path.updateForgetting(r.forget_m, days, st.right, st.wrong_n, score, path.freshAccuracy(r.fresh));
       st.right += t.right; st.wrong_n += t.total - t.right;
       st.last_tested = new Date(now).toISOString();
       if (t.right === t.total) {
@@ -583,13 +591,13 @@ function submit(userId, materialId, quizId, answers, opts = {}) {
       } else if (t.right > 0) {
         // Half the last interval (at least a day): one miss in two is a wobble, not a reset.
         entry.passed = false; entry.shaky = true;
-        if (expand.on()) expand.afterShaky(st, now);
+        if (expandActive(r)) expand.afterShaky(st, now);
         const half = Math.max(1, Math.floor((st.interval_days || 1) / 2));
         st.due = dueAt(now, half); st.interval_days = half;
         entry.next_in_days = half;
       } else {
         entry.passed = false;
-        if (expand.on()) expand.afterLapse(st, now);
+        if (expandActive(r)) expand.afterLapse(st, now);
         st.status = 'learning'; st.remediate = true; st.tier = Math.max(1, st.tier - 1); st.due = null;
       }
     }

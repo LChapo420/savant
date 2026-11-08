@@ -161,7 +161,7 @@ App.mount(async () => {
       ${s.source === 'general' ? `<p>${GENERAL}</p>` : ''}
       ${fix}
       <div class="card"><div id="lesson-text">${s.lesson.paragraphs.map((p) => `<p>${esc(p)}</p>`).join('')}</div><div id="lesson-change"></div>
-        <div id="lesson-aside">${asideHtml(s.lesson.aside)}</div>
+        ${s.lesson.core_note ? `<p class="small muted">${esc(s.lesson.core_note)}</p>` : ''}<div id="lesson-aside">${asideHtml(s.lesson.aside)}</div>
         <div id="lesson-keys">${keysHtml(s.lesson.key_points)}</div>
         ${s.lesson.origin === 'follow' ? '<p class="tiny muted" style="margin-top:8px">Reworded to fit how you have been learning. "Put back" returns the original.</p>' : ''}
         <div data-part="lesson:${esc(skillId)}" data-changed="${s.lesson.changed ? 1 : 0}"></div></div>

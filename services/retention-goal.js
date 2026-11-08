@@ -28,6 +28,7 @@
  *
  * Pure except the storage helpers at the bottom (which load the database on first use).
  */
+const modes = require('./learning-modes');
 const schedule = require('./retention-schedule');
 
 const HORIZONS = {
@@ -61,9 +62,12 @@ const isDate = (s) => typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s) && 
  */
 function normalize(input, today) {
   const b = input || {};
+  const modeOut = modes.on() && b.mode !== undefined ? b.mode : undefined;
+  if (modeOut !== undefined && modeOut !== null && !modes.normalize(modeOut)) return { error: 'Choose Fastest, Balanced or Highest.' };
   const horizon = String(b.horizon || '');
   if (!CHOICES.includes(horizon)) return { error: 'Choose a test date, a few months, a year, years or forever.' };
   const goal = { horizon, set_on: today };
+  if (modeOut) goal.mode = modeOut;
   if (horizon === 'date') {
     if (!isDate(b.test_date)) return { error: 'The test date must be a real date, like 2027-02-06.' };
     const ahead = schedule.dayIndex(today, b.test_date);
@@ -88,6 +92,11 @@ function normalizeAfter(choice) {
  * opts.testDate: an outside test date used when there is no goal (ACT's profile).
  */
 function effective(goal, today, opts = {}) {
+  const e = effectiveCore(goal, today, opts);
+  if (modes.on() && goal && goal.mode) e.mode = goal.mode;
+  return e;
+}
+function effectiveCore(goal, today, opts = {}) {
   let g = goal && CHOICES.includes(goal.horizon) ? goal : null;
   let derived = false;
   if (!g && opts.testDate && isDate(opts.testDate)) { g = { horizon: 'date', test_date: opts.testDate, set_on: opts.setOn || today, keep_after: null }; derived = true; }
@@ -377,6 +386,8 @@ function save(userId, kind, id, body, now = Date.now()) {
     const n = normalize(body, today);
     if (n.error) return { error: n.error, status: 400 };
     goal = n.goal;
+    const cur = row.retention_goal;
+    if (modes.on() && !goal.mode && cur && cur.mode && (body == null || body.mode === undefined)) goal.mode = cur.mode;
   }
   db.update(TABLES[kind], row.id, { retention_goal: goal });
   // A goal chosen is a footprint of planning (services/scorecard/footprints.js); a choice after a test is not. Never throws.
@@ -391,7 +402,7 @@ function listFor(userId, now = Date.now()) {
   const today = todayFor(userId, now);
   const view = (eff, base) => {
     const d = describe(eff, {});
-    return { ...base, goal: eff, summary: d.text, dropped: d.dropped, ask_after_test: eff.status === 'after_test' };
+    return { ...base, goal: eff, mode: eff.mode || null, summary: d.text, dropped: d.dropped, ask_after_test: eff.status === 'after_test' };
   };
   const enrollments = db.find('enrollments', (e) => e.user_id === userId).map((e) => {
     const track = curriculum.getTrack(e.track_id);
@@ -400,7 +411,8 @@ function listFor(userId, now = Date.now()) {
     return view(eff, { kind: 'enrollment', id: e.id, track_id: e.track_id, grade_id: e.grade_id, title: `${track ? track.name : e.track_id}${grade ? `: ${grade.name}` : ''}`, default_shown: DEFAULT_SHOWN.includes(e.track_id), stored: e.retention_goal || null });
   });
   const materials = db.find('materials', (m) => m.user_id === userId).map((m) => view(effective(m.retention_goal, today), { kind: 'material', id: m.id, title: m.title || `Material ${m.id}`, default_shown: true, stored: m.retention_goal || null }));
-  return { today, choices: CHOICES.map((id) => ({ id, label: HORIZONS[id].label })), max_ahead: MAX_AHEAD, enrollments, materials };
+  const modeChoices = modes.on() ? modes.LIST.map((id) => ({ id, label: modes.MODES[id].label, blurb: modes.MODES[id].blurb })) : null;
+  return { today, choices: CHOICES.map((id) => ({ id, label: HORIZONS[id].label })), max_ahead: MAX_AHEAD, enrollments, materials, modes: modeChoices };
 }
 
 /**

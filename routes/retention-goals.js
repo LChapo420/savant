@@ -39,7 +39,7 @@ router.get('/retention-goals/preview', requireAuth, (req, res) => {
 router.put('/retention-goals', requireAuth, limit('retention-goals', 120, 60 * 60 * 1000), (req, res) => {
   const b = req.body || {};
   if (!['enrollment', 'material'].includes(b.kind)) return res.status(400).json({ error: 'Choose a subject or a course.' });
-  const out = goals.save(req.user.id, b.kind, b.id, { horizon: b.horizon, test_date: b.test_date, keep_after: b.keep_after });
+  const out = goals.save(req.user.id, b.kind, b.id, { horizon: b.horizon, test_date: b.test_date, keep_after: b.keep_after, mode: b.mode });
   if (out.error) return res.status(out.status || 400).json({ error: out.error });
   const row = goals.listFor(req.user.id)[b.kind === 'enrollment' ? 'enrollments' : 'materials'].find((x) => x.id === out.row.id);
   res.json({ ok: true, item: row });

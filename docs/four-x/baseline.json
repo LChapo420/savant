@@ -1,0 +1,54 @@
+{
+  "_frozen": "2026-11-08, before any four-x result was run. Do not edit. Sources and reasoning: docs/four-x/BASELINE.md.",
+  "time": {
+    "readingWpm": {
+      "lazy": 238,
+      "understand_someNewConcepts": 180,
+      "understand_manyNewConcepts": 127
+    },
+    "manyNewConceptsAbovePointsPer1000Words": 7,
+    "profiles": {
+      "lazy":     { "pace": "lazy",       "noteOverhead": 1.0, "sameSittingRereads": 0, "laterRereads": [],  "evePass": 0.5, "selfTestPerPoint": 0, "selfTestDay": null },
+      "typical":  { "pace": "understand", "noteOverhead": 1.3, "sameSittingRereads": 1, "laterRereads": [],  "evePass": 1.0, "selfTestPerPoint": 0, "selfTestDay": null },
+      "diligent": { "pace": "understand", "noteOverhead": 1.5, "sameSittingRereads": 1, "laterRereads": [2], "evePass": 1.0, "selfTestPerPoint": 1, "selfTestDay": 2 }
+    },
+    "rereadCostShare": 0.8,
+    "selfTestSeconds": 30,
+    "evePassOnlyWhenTestDateKnown": true
+  },
+  "memory": {
+    "curve": "FSRS-6 forgetting curve, decay 0.1542 (real Anki logs, other material)",
+    "readFirstS": 0.08,
+    "readSecondSameSittingMultiplier": 1.5,
+    "readLaterGrowthExponent": 0.5,
+    "firstCorrectRecallS": 1.8,
+    "firstCorrectMcqS": 1.2,
+    "firstWrongS": 0.2,
+    "spacedCorrectGrowth": "FSRS-6 growth at difficulty 5",
+    "massedCorrectMultiplier": 1.3
+  },
+  "learning": {
+    "kGainByRead": [0.70, 0.30, 0.10, 0.03],
+    "kGainOnAnswer": 0.20,
+    "uGainFirstRead": 0.40,
+    "uGainReread": 0.10,
+    "uGainLaterRead": 0.03,
+    "uGainPlainRetrieval": 0.05,
+    "uGainExplainedRetrieval": 0.09,
+    "uGainTransferQuestion": 0.16,
+    "uGainWorkedExample": 0.12,
+    "transferExponentOnR": 0.7,
+    "priorS_median_days": 60,
+    "priorS_logSd": 0.8,
+    "priorAge_days_min": 30,
+    "priorAge_days_max": 365,
+    "guess": 0.25
+  },
+  "savantTimeCosts": { "questionFirstS": 30, "questionReviewS": 24, "rightFeedbackS": 3, "wrongFeedbackS": 25, "retryS": 38 },
+  "sensitivity": {
+    "memoryDecay": [0.1542, 0.5],
+    "firstCorrectMcqSMultipliers": [1.0, 0.7],
+    "questionSeconds": [30, 45],
+    "docDensity": ["measured", "textbook: words x3"]
+  }
+}

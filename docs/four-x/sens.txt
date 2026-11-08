@@ -1,0 +1,133 @@
+SIMULATED sensitivity, textbook density, held-out seed 20261151, 100 learners.
+
+=== base
+## 1 month
+fastest: 8.6 min (read 1.8, practice 6.4, review 0.4), reviews/part 0.05, skipped 0%, recall 61.5, transfer 45.5
+  vs typical: x2.6 (P10 x2.0, P90 x3.2); recall +3.4 pts (worst1 -2.2), transfer +0.6 (worst1 -4.9); reach 4x and both equal or higher: 0%
+  vs typical: x1.6 (P10 x1.3, P90 x2.0); recall +5.7 pts (worst1 -0.9), transfer +4.3 (worst1 -2.1); reach 2x and both higher: 7%
+  vs typical: x0.3 (P10 x0.3, P90 x0.4); recall +32.0 pts (worst1 9.2), transfer +31.4 (worst1 10.7); reach any time, both higher: 100%
+## 1 year
+fastest: 8.7 min (read 1.8, practice 6.4, review 0.5), reviews/part 0.06, skipped 0%, recall 48.2, transfer 38.4
+  vs typical: x2.5 (P10 x2.0, P90 x3.2); recall +1.4 pts (worst1 -3.7), transfer -0.0 (worst1 -5.1); reach 4x and both equal or higher: 0%
+  vs typical: x1.0 (P10 x0.8, P90 x1.6); recall +14.5 pts (worst1 0.8), transfer +11.4 (worst1 0.6); reach 2x and both higher: 1%
+  vs typical: x0.3 (P10 x0.2, P90 x0.4); recall +43.5 pts (worst1 22.3), transfer +40.6 (worst1 20.9); reach any time, both higher: 100%
+
+=== decay 0.5 (faster forgetting curve)
+## 1 month
+fastest: 9.1 min (read 1.8, practice 6.4, review 0.9), reviews/part 0.11, skipped 0%, recall 54.8, transfer 41.9
+  vs typical: x2.5 (P10 x1.8, P90 x3.1); recall +8.8 pts (worst1 -1.4), transfer +5.3 (worst1 -2.9); reach 4x and both equal or higher: 0%
+  vs typical: x1.5 (P10 x1.2, P90 x2.0); recall +12.6 pts (worst1 0.5), transfer +9.6 (worst1 -0.4); reach 2x and both higher: 9%
+  vs typical: x0.3 (P10 x0.3, P90 x0.4); recall +44.6 pts (worst1 14.3), transfer +40.2 (worst1 16.4); reach any time, both higher: 100%
+## 1 year
+fastest: 9.3 min (read 1.8, practice 6.4, review 1.2), reviews/part 0.14, skipped 0%, recall 36.8, transfer 30.9
+  vs typical: x2.5 (P10 x1.7, P90 x3.1); recall +1.4 pts (worst1 -5.4), transfer +1.6 (worst1 -4.8); reach 4x and both equal or higher: 0%
+  vs typical: x0.8 (P10 x0.6, P90 x1.4); recall +30.1 pts (worst1 2.8), transfer +24.1 (worst1 4.9); reach 2x and both higher: 0%
+  vs typical: x0.3 (P10 x0.2, P90 x0.4); recall +55.3 pts (worst1 27.3), transfer +50.1 (worst1 26.3); reach any time, both higher: 100%
+
+=== MCQ strength x0.7
+## 1 month
+fastest: 8.6 min (read 1.8, practice 6.4, review 0.5), reviews/part 0.05, skipped 0%, recall 60.3, transfer 44.9
+  vs typical: x2.6 (P10 x2.0, P90 x3.2); recall +2.2 pts (worst1 -2.6), transfer +0.0 (worst1 -5.1); reach 4x and both equal or higher: 0%
+  vs typical: x1.2 (P10 x1.0, P90 x1.6); recall +16.1 pts (worst1 1.8), transfer +11.0 (worst1 1.4); reach 2x and both higher: 3%
+  vs typical: x0.3 (P10 x0.3, P90 x0.4); recall +31.9 pts (worst1 9.7), transfer +31.6 (worst1 10.9); reach any time, both higher: 100%
+## 1 year
+fastest: 14.3 min (read 1.8, practice 6.4, review 6.1), reviews/part 0.80, skipped 0%, recall 56.3, transfer 44.5
+  vs typical: x1.5 (P10 x1.2, P90 x2.4); recall +9.6 pts (worst1 -1.3), transfer +6.2 (worst1 -2.5); reach 4x and both equal or higher: 0%
+  vs typical: x1.0 (P10 x0.8, P90 x1.6); recall +13.1 pts (worst1 0.4), transfer +10.6 (worst1 0.3); reach 2x and both higher: 1%
+  vs typical: x0.3 (P10 x0.2, P90 x0.3); recall +43.4 pts (worst1 21.1), transfer +40.7 (worst1 20.7); reach any time, both higher: 100%
+
+=== questions 45 s
+## 1 month
+fastest: 11.0 min (read 1.8, practice 8.6, review 0.6), reviews/part 0.05, skipped 0%, recall 61.5, transfer 45.5
+  vs typical: x2.0 (P10 x1.6, P90 x2.5); recall +3.4 pts (worst1 -2.2), transfer +0.6 (worst1 -4.9); reach 4x and both equal or higher: 0%
+  vs typical: x1.3 (P10 x1.0, P90 x1.6); recall +5.7 pts (worst1 -0.9), transfer +4.3 (worst1 -2.1); reach 2x and both higher: 0%
+  vs typical: x0.3 (P10 x0.2, P90 x0.3); recall +32.0 pts (worst1 9.2), transfer +31.4 (worst1 10.7); reach any time, both higher: 100%
+## 1 year
+fastest: 11.1 min (read 1.8, practice 8.6, review 0.7), reviews/part 0.06, skipped 0%, recall 48.2, transfer 38.4
+  vs typical: x2.0 (P10 x1.6, P90 x2.4); recall +1.4 pts (worst1 -3.7), transfer -0.0 (worst1 -5.1); reach 4x and both equal or higher: 0%
+  vs typical: x0.8 (P10 x0.6, P90 x1.2); recall +14.5 pts (worst1 0.8), transfer +11.4 (worst1 0.6); reach 2x and both higher: 0%
+  vs typical: x0.2 (P10 x0.2, P90 x0.3); recall +43.5 pts (worst1 22.3), transfer +40.6 (worst1 20.9); reach any time, both higher: 100%
+
+=== key-point page teaches 0.7
+## 1 month
+fastest: 9.1 min (read 1.8, practice 6.7, review 0.6), reviews/part 0.07, skipped 0%, recall 58.2, transfer 41.7
+  vs typical: x2.4 (P10 x1.9, P90 x3.0); recall +0.1 pts (worst1 -5.7), transfer -3.2 (worst1 -10.2); reach 4x and both equal or higher: 0%
+  vs typical: x1.5 (P10 x1.2, P90 x1.9); recall +2.8 pts (worst1 -3.9), transfer +0.7 (worst1 -7.2); reach 2x and both higher: 1%
+  vs typical: x0.3 (P10 x0.3, P90 x0.4); recall +32.0 pts (worst1 9.2), transfer +31.4 (worst1 10.7); reach any time, both higher: 100%
+## 1 year
+fastest: 9.3 min (read 1.8, practice 6.7, review 0.8), reviews/part 0.09, skipped 0%, recall 45.7, transfer 35.2
+  vs typical: x2.4 (P10 x1.9, P90 x3.0); recall -1.1 pts (worst1 -6.5), transfer -3.2 (worst1 -10.0); reach 4x and both equal or higher: 0%
+  vs typical: x1.0 (P10 x0.8, P90 x1.5); recall +12.1 pts (worst1 -1.6), transfer +8.2 (worst1 -3.9); reach 2x and both higher: 1%
+  vs typical: x0.3 (P10 x0.2, P90 x0.4); recall +43.5 pts (worst1 22.3), transfer +40.6 (worst1 20.9); reach any time, both higher: 100%
+
+=== retrieval builds half the understanding
+## 1 month
+fastest: 8.6 min (read 1.8, practice 6.4, review 0.4), reviews/part 0.05, skipped 0%, recall 61.5, transfer 43.3
+  vs typical: x2.6 (P10 x2.0, P90 x3.2); recall +3.4 pts (worst1 -2.2), transfer -1.6 (worst1 -6.4); reach 4x and both equal or higher: 0%
+  vs typical: x1.6 (P10 x1.3, P90 x2.0); recall +5.7 pts (worst1 -0.9), transfer +0.5 (worst1 -4.8); reach 2x and both higher: 3%
+  vs typical: x0.3 (P10 x0.3, P90 x0.4); recall +32.0 pts (worst1 9.2), transfer +21.5 (worst1 4.4); reach any time, both higher: 100%
+## 1 year
+fastest: 8.7 min (read 1.8, practice 6.4, review 0.5), reviews/part 0.06, skipped 0%, recall 48.2, transfer 36.5
+  vs typical: x2.5 (P10 x2.0, P90 x3.2); recall +1.4 pts (worst1 -3.7), transfer -1.8 (worst1 -6.4); reach 4x and both equal or higher: 0%
+  vs typical: x1.0 (P10 x0.8, P90 x1.6); recall +14.5 pts (worst1 0.8), transfer +6.6 (worst1 -2.2); reach 2x and both higher: 1%
+  vs typical: x0.3 (P10 x0.2, P90 x0.4); recall +43.5 pts (worst1 22.3), transfer +30.2 (worst1 14.8); reach any time, both higher: 100%
+
+=== one-line why not faster (25 s)
+## 1 month
+fastest: 9.1 min (read 1.8, practice 6.8, review 0.5), reviews/part 0.05, skipped 0%, recall 61.5, transfer 45.5
+  vs typical: x2.5 (P10 x1.9, P90 x3.1); recall +3.4 pts (worst1 -2.2), transfer +0.6 (worst1 -4.9); reach 4x and both equal or higher: 0%
+  vs typical: x1.6 (P10 x1.3, P90 x2.0); recall +5.7 pts (worst1 -0.9), transfer +4.3 (worst1 -2.1); reach 2x and both higher: 7%
+  vs typical: x0.3 (P10 x0.3, P90 x0.4); recall +32.0 pts (worst1 9.2), transfer +31.4 (worst1 10.7); reach any time, both higher: 100%
+## 1 year
+fastest: 9.2 min (read 1.8, practice 6.8, review 0.6), reviews/part 0.06, skipped 0%, recall 48.2, transfer 38.4
+  vs typical: x2.5 (P10 x1.9, P90 x3.1); recall +1.4 pts (worst1 -3.7), transfer -0.0 (worst1 -5.1); reach 4x and both equal or higher: 0%
+  vs typical: x1.0 (P10 x0.8, P90 x1.6); recall +14.5 pts (worst1 0.8), transfer +11.4 (worst1 0.6); reach 2x and both higher: 1%
+  vs typical: x0.3 (P10 x0.2, P90 x0.4); recall +43.5 pts (worst1 22.3), transfer +40.6 (worst1 20.9); reach any time, both higher: 100%
+
+=== key-point page 60 words
+## 1 month
+fastest: 9.1 min (read 2.3, practice 6.4, review 0.4), reviews/part 0.05, skipped 0%, recall 61.5, transfer 45.5
+  vs typical: x2.5 (P10 x2.0, P90 x2.9); recall +3.4 pts (worst1 -2.2), transfer +0.6 (worst1 -4.9); reach 4x and both equal or higher: 0%
+  vs typical: x1.5 (P10 x1.3, P90 x1.9); recall +5.7 pts (worst1 -0.9), transfer +4.3 (worst1 -2.1); reach 2x and both higher: 4%
+  vs typical: x0.3 (P10 x0.3, P90 x0.4); recall +32.0 pts (worst1 9.2), transfer +31.4 (worst1 10.7); reach any time, both higher: 100%
+## 1 year
+fastest: 9.2 min (read 2.3, practice 6.4, review 0.6), reviews/part 0.06, skipped 0%, recall 48.2, transfer 38.4
+  vs typical: x2.5 (P10 x2.0, P90 x2.9); recall +1.4 pts (worst1 -3.7), transfer -0.0 (worst1 -5.1); reach 4x and both equal or higher: 0%
+  vs typical: x1.0 (P10 x0.8, P90 x1.5); recall +14.5 pts (worst1 0.8), transfer +11.4 (worst1 0.6); reach 2x and both higher: 0%
+  vs typical: x0.3 (P10 x0.2, P90 x0.4); recall +43.5 pts (worst1 22.3), transfer +40.6 (worst1 20.9); reach any time, both higher: 100%
+
+=== WHAT-IF questions 15 s, feedback 8 s (not built, no source)
+## 1 month
+fastest: 6.2 min (read 1.8, practice 4.0, review 0.3), reviews/part 0.05, skipped 0%, recall 61.5, transfer 45.5
+  vs typical: x3.7 (P10 x2.8, P90 x4.5); recall +3.4 pts (worst1 -2.2), transfer +0.6 (worst1 -4.9); reach 4x and both equal or higher: 15%
+  vs typical: x2.1 (P10 x1.7, P90 x2.8); recall +5.7 pts (worst1 -0.9), transfer +4.3 (worst1 -2.1); reach 2x and both higher: 59%
+  vs typical: x0.5 (P10 x0.4, P90 x0.6); recall +32.0 pts (worst1 9.2), transfer +31.4 (worst1 10.7); reach any time, both higher: 100%
+## 1 year
+fastest: 6.3 min (read 1.8, practice 4.0, review 0.4), reviews/part 0.06, skipped 0%, recall 48.2, transfer 38.4
+  vs typical: x3.6 (P10 x2.8, P90 x4.5); recall +1.4 pts (worst1 -3.7), transfer -0.0 (worst1 -5.1); reach 4x and both equal or higher: 12%
+  vs typical: x1.4 (P10 x1.0, P90 x2.1); recall +14.5 pts (worst1 0.8), transfer +11.4 (worst1 0.6); reach 2x and both higher: 10%
+  vs typical: x0.4 (P10 x0.3, P90 x0.5); recall +43.5 pts (worst1 22.3), transfer +40.6 (worst1 20.9); reach any time, both higher: 100%
+
+=== WHAT-IF material 5x words per point
+## 1 month
+fastest: 8.5 min (read 1.7, practice 6.4, review 0.4), reviews/part 0.05, skipped 0%, recall 61.5, transfer 45.5
+  vs typical: x4.1 (P10 x3.3, P90 x5.2); recall +3.4 pts (worst1 -2.2), transfer +0.6 (worst1 -4.9); reach 4x and both equal or higher: 25%
+  vs typical: x2.6 (P10 x2.0, P90 x3.2); recall +5.7 pts (worst1 -0.9), transfer +4.3 (worst1 -2.1); reach 2x and both higher: 80%
+  vs typical: x0.5 (P10 x0.4, P90 x0.7); recall +32.0 pts (worst1 9.2), transfer +31.4 (worst1 10.7); reach any time, both higher: 100%
+## 1 year
+fastest: 8.6 min (read 1.7, practice 6.4, review 0.5), reviews/part 0.06, skipped 0%, recall 48.2, transfer 38.4
+  vs typical: x4.1 (P10 x3.2, P90 x5.2); recall +1.4 pts (worst1 -3.7), transfer -0.0 (worst1 -5.1); reach 4x and both equal or higher: 21%
+  vs typical: x1.7 (P10 x1.3, P90 x2.5); recall +14.5 pts (worst1 0.8), transfer +11.4 (worst1 0.6); reach 2x and both higher: 28%
+  vs typical: x0.5 (P10 x0.4, P90 x0.6); recall +43.5 pts (worst1 22.3), transfer +40.6 (worst1 20.9); reach any time, both higher: 100%
+
+=== WHAT-IF material 8x words per point
+## 1 month
+fastest: 8.5 min (read 1.7, practice 6.4, review 0.4), reviews/part 0.05, skipped 0%, recall 61.5, transfer 45.5
+  vs typical: x6.6 (P10 x5.3, P90 x8.4); recall +3.4 pts (worst1 -2.2), transfer +0.6 (worst1 -4.9); reach 4x and both equal or higher: 52%
+  vs typical: x4.2 (P10 x3.2, P90 x5.2); recall +5.7 pts (worst1 -0.9), transfer +4.3 (worst1 -2.1); reach 2x and both higher: 91%
+  vs typical: x0.9 (P10 x0.7, P90 x1.1); recall +32.0 pts (worst1 9.2), transfer +31.4 (worst1 10.7); reach any time, both higher: 100%
+## 1 year
+fastest: 8.6 min (read 1.7, practice 6.4, review 0.5), reviews/part 0.06, skipped 0%, recall 48.2, transfer 38.4
+  vs typical: x6.6 (P10 x5.1, P90 x8.4); recall +1.4 pts (worst1 -3.7), transfer -0.0 (worst1 -5.1); reach 4x and both equal or higher: 41%
+  vs typical: x2.7 (P10 x2.0, P90 x4.0); recall +14.5 pts (worst1 0.8), transfer +11.4 (worst1 0.6); reach 2x and both higher: 90%
+  vs typical: x0.8 (P10 x0.6, P90 x0.9); recall +43.5 pts (worst1 22.3), transfer +40.6 (worst1 20.9); reach any time, both higher: 100%
