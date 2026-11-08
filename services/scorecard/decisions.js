@@ -80,4 +80,74 @@ function decisionScore(pairs, edges = EDGES.hard) {
   return { n: pairs.length, accuracy: 100 * right / n, wrongWay: 100 * wrongWay / n, clear, caught: clear ? 100 * caught / clear : null, leans, leanPrecision: leans ? 100 * leanRight / leans : null, leanSafe: leans ? 100 * leanSafe / leans : null };
 }
 
-module.exports = { EDGES, POP_SD, enabled, decide, drivers, pWrong, expectedGain, decisionImportance, decisionScore, cdf };
+// ── score-month (docs/SCORE-MONTH.md part 4): the new stats, wired to the content knob each one moves. New exports only; nothing above changed. ──
+/** stat -> what it modifies and the rule. A table for the profile screen, the docs and the tests; modificationPlan below is the code that applies it. */
+const MODIFIERS = {
+  reading_wpm: { moves: 'passage length and chunk size', rule: "words per chunk = about 75 seconds of reading at the learner's speed, 80-400 words; fast readers get no re-read prompts" },
+  prior_knowledge: { moves: 'which objectives are taught in full', rule: 'known: one check item and skip; shaky: a short refresher; new/unsure: full lesson, unsure ones pre-checked first' },
+  decay_rate: { moves: 'review interval', rule: 'interval multiplier = 2^m (m = learner half-life multiplier in doublings), clamped 0.5-2.5' },
+  horizon: { moves: 'target retention and review depth', rule: 'a horizon of 3 days or fewer: compress to the horizon; 14 or fewer: stop reviewing after it; longer: full spacing' },
+  time_of_day: { moves: 'when to nudge, not what to teach', rule: 'suggest the confident best part of day; no change when the gap is under 4 points' },
+  session_dropoff: { moves: 'session length and break prompts', rule: 'cap a sitting at the minutes before accuracy fell 8+ points; a break prompt at 80% of that' },
+  error_types: { moves: 'remediation kind', rule: 'misconception share 40%+: refutation with a contrasting case; slip share 40%+: a check-before-submit habit, not a re-teach' },
+  confidence_calibration: { moves: 'confidence prompts', rule: 'overconfident (bias +0.12): predict-then-check on hard items; underconfident (-0.12): show the evidence of past successes' },
+  device: { moves: 'item format', rule: 'phone or tablet main: tap items over typed ones, shorter prompts' },
+  schedule: { moves: 'coverage priority', rule: 'a test in 3 days or fewer (cram): cover what the test needs, then retrieval only; 4-14 days: build with weekly review; else steady' },
+  span_and_speed: { moves: 'step size and pacing', rule: 'low working memory (below 40): one new idea at a time; low processing speed (below 35): no timed items' },
+  confirmed_prefs: { moves: 'tone, framing, humour', rule: "the learner's stated side wins over inference; benefit decisions still go to the outcome-tested bandit" },
+  bandit: { moves: 'explanation style, example type, worked-vs-problem, spacing gap, chunk size, modality', rule: "the option the learner's own results favour (confident), else the next test assignment" },
+};
+
+const clampN = (x, lo, hi) => Math.max(lo, Math.min(hi, x));
+/**
+ * The content plan from a learner's stats (all optional; each missing stat leaves its knob at the default). stats: { readingWpm, spanPoints, speedPoints, prior: { objective: 'known'|'shaky'|'new'|'unsure' },
+ * decayM, horizonDays, timeOfDay, dropoff, errors, calibration: { bias }, device, schedule, confirmed: { measureId: points }, bandit: { decisionId: { option, confident } }, assignment }.
+ * Returns { passage, session, objectives, review, remediation, confidence, nudge, input, tone, choices, notes } with one reason line per change in notes. Pure.
+ */
+function modificationPlan(stats = {}) {
+  const st = stats; const notes = []; const plan = { passage: {}, session: {}, objectives: {}, review: {}, remediation: null, confidence: null, nudge: null, input: {}, tone: {}, choices: {}, notes };
+  if (Number.isFinite(st.readingWpm)) {
+    const w = clampN(Math.round((st.readingWpm * 1.25) / 10) * 10, 80, 400); plan.passage = { wordsPerChunk: w, maxPassageWords: w * 4, rereadPrompts: st.readingWpm < 260 };
+    notes.push(`reading ${Math.round(st.readingWpm)} wpm: chunks of about ${w} words`);
+  }
+  if (st.prior) {
+    const o = { skip: [], refresh: [], full: [], pretest: [] };
+    for (const [k, v] of Object.entries(st.prior)) { if (v === 'known') o.skip.push(k); else if (v === 'shaky') o.refresh.push(k); else { o.full.push(k); if (v === 'unsure') o.pretest.push(k); } }
+    plan.objectives = o; notes.push(`objectives: ${o.skip.length} known, ${o.refresh.length} shaky, ${o.full.length} full`);
+  }
+  const mult = Number.isFinite(st.decayM) ? clampN(2 ** st.decayM, 0.5, 2.5) : 1; plan.review.intervalMultiplier = mult;
+  if (Number.isFinite(st.decayM)) notes.push(`forgetting: intervals x${mult.toFixed(2)}`);
+  if (Number.isFinite(st.horizonDays)) { plan.review.horizonDays = st.horizonDays; plan.review.compress = st.horizonDays <= 3; plan.review.stopAfterHorizon = st.horizonDays <= 14; notes.push(`horizon ${st.horizonDays} days`); }
+  if (st.dropoff && st.dropoff.minutes) { plan.session = { maxMinutes: st.dropoff.minutes, breakPromptAtMin: Math.round(st.dropoff.minutes * 0.8) }; notes.push(`attention holds about ${st.dropoff.minutes} min`); }
+  if (st.errors && st.errors.confident) {
+    plan.remediation = st.errors.misconceptionShare >= 0.4 ? 'refutation_contrast' : st.errors.slipShare >= 0.4 ? 'check_before_submit' : 'standard';
+    notes.push(`errors: ${Math.round(100 * st.errors.misconceptionShare)}% misconception, ${Math.round(100 * st.errors.slipShare)}% slip`);
+  }
+  if (st.calibration && Number.isFinite(st.calibration.bias)) { plan.confidence = st.calibration.bias >= 0.12 ? 'predict_then_check' : st.calibration.bias <= -0.12 ? 'show_past_successes' : 'none'; if (plan.confidence !== 'none') notes.push(`confidence bias ${st.calibration.bias.toFixed(2)}`); }
+  if (st.timeOfDay && st.timeOfDay.confident) { plan.nudge = st.timeOfDay.best; notes.push(`best part of day: ${st.timeOfDay.best}`); }
+  if (st.device && st.device.mobileMain) plan.input = { preferTap: true, shortPrompts: true };
+  if (st.schedule) { plan.review.mode = st.schedule.mode; if (st.schedule.mode === 'cram') plan.review.coverageFirst = true; }
+  if (Number.isFinite(st.spanPoints) && st.spanPoints < 40) { plan.passage.oneIdeaPerStep = true; notes.push('low working-memory span: one new idea per step'); }
+  if (Number.isFinite(st.speedPoints) && st.speedPoints < 35) { plan.input.noTimedItems = true; notes.push('low processing speed: no timed items'); }
+  if (st.confirmed) for (const [id, v] of Object.entries(st.confirmed)) { if (v <= EDGES.hard.lo) plan.tone[id] = -1; else if (v >= EDGES.hard.hi) plan.tone[id] = 1; }
+  if (st.bandit) for (const [id, b] of Object.entries(st.bandit)) if (b && b.confident) plan.choices[id] = b.option;
+  if (st.assignment) for (const [id, o] of Object.entries(st.assignment)) if (!(id in plan.choices)) plan.choices[id] = o;
+  return plan;
+}
+/** The plan as lines for a writer prompt (short; nothing for a default plan). */
+function planLines(plan) {
+  const L = []; const p = plan || {};
+  if (p.passage && p.passage.wordsPerChunk) L.push(`Passages: about ${p.passage.wordsPerChunk} words per chunk${p.passage.oneIdeaPerStep ? ', one new idea per step' : ''}.`);
+  if (p.objectives && p.objectives.skip && p.objectives.skip.length) L.push(`Already known (one check item, then skip): ${p.objectives.skip.slice(0, 6).join(', ')}.`);
+  if (p.objectives && p.objectives.refresh && p.objectives.refresh.length) L.push(`Short refresher only: ${p.objectives.refresh.slice(0, 6).join(', ')}.`);
+  if (p.session && p.session.maxMinutes) L.push(`Plan sittings of at most ${p.session.maxMinutes} minutes.`);
+  if (p.remediation === 'refutation_contrast') L.push('When they err, state the wrong idea and refute it with a contrasting case.');
+  if (p.remediation === 'check_before_submit') L.push('Their errors are mostly slips: prompt a quick check before they answer, do not re-teach.');
+  if (p.confidence === 'predict_then_check') L.push('They run overconfident: ask for a confidence guess before hard items, then show the result.');
+  if (p.confidence === 'show_past_successes') L.push('They run underconfident: point to evidence of what they got right.');
+  if (p.input && p.input.noTimedItems) L.push('No timed items.');
+  if (p.choices) for (const [id, o] of Object.entries(p.choices)) L.push(`${id.replace(/_/g, ' ')}: ${String(o).replace(/_/g, ' ')}.`);
+  return L;
+}
+
+module.exports = { EDGES, POP_SD, enabled, decide, drivers, pWrong, expectedGain, decisionImportance, decisionScore, cdf, MODIFIERS, modificationPlan, planLines };
