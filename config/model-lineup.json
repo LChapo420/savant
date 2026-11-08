@@ -820,9 +820,14 @@
       },
       "dock_help": {
         "allow": [
-          "coral:deepseek-v4.1-flash"
+          "coral:deepseek-v4.1-flash",
+          "coral:deepseek-v4.1-flash-fast"
         ],
-        "basis": "owner walk 4 Nov: with every free NVIDIA slot set aside the dock answered 'no slot available' after 38 s and fell back to canned text; a cleared learner (req.coral) may use Coral Standard as the last resort behind the free slots; short chat turns, a few cents"
+        "basis": "owner walk 4 Nov: with every free NVIDIA slot set aside the dock answered 'no slot available' after 38 s and fell back to canned text; a cleared learner (req.coral) may use Coral Standard as the last resort behind the free slots; short chat turns, a few cents",
+        "voice_note": "8 Nov voice-fast (TUTOR_VOICE_FAST): a short voice turn asks for Coral Fast first, Standard next, the free slots behind (req.firstPick). Coral Fast serves dock_help only when a request names it first (first_pick_only), so typed turns and their backups are exactly as before. Coral Fast is the same DeepSeek V4.1 Flash on the fast tier: time to first token about 0.2 s against 0.2 to 3.8 s on Standard that day (n=6 each).",
+        "first_pick_only": [
+          "coral:deepseek-v4.1-flash-fast"
+        ]
       },
       "block_fill": {
         "allow": [

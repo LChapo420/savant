@@ -257,7 +257,7 @@ async function withProviders(userId, attempt, role = 'fast', task = null, req = 
   if (req && typeof req.onDraft === 'function') { try { req.onDraft(result.text); } catch { /* its checks run later instead */ } }
   // A chat that a check finds wrong gets one more try on the pool, with what the checker found.
   const rerun = req && req.kind === 'chat' && poolOn(role)
-    ? (note) => callProviders(userId, attempt, role, task, { ...req, system: `${req.system || ''}\n\n${note}`, timeoutMs: Math.min(req.timeoutMs || 15000, 10000) })
+    ? (note) => callProviders(userId, attempt, role, task, { ...req, onDelta: undefined, system: `${req.system || ''}\n\n${note}`, timeoutMs: Math.min(req.timeoutMs || 15000, 10000) })
     : null;
   return factGuard.pass({ task, userId, req, result, rerun });
 }
@@ -316,10 +316,10 @@ async function structured({ role = 'fast', task = null, system, user, schema, sc
  *
  * @returns {Promise<{data: object, usage: object|null, model: string}|null>}
  */
-async function structuredDetail({ role = 'fast', task = null, system, user, schema, schemaName, maxTokens, effort, userId, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, freeOnly, storedContent, factTask, factSource, factMode, factBudgetMs, onText, temperature }) {
+async function structuredDetail({ role = 'fast', task = null, system, user, schema, schemaName, maxTokens, effort, userId, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, freeOnly, storedContent, factTask, factSource, factMode, factBudgetMs, onText, temperature, firstPick }) {
   const result = await withProviders(userId, (p) =>
     p.structured({ role, task, system, user, schema, schemaName, maxTokens, effort, lane, think }), role, task,
-  { kind: 'structured', system, user, schema, schemaName, maxTokens, effort, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, freeOnly, storedContent, factTask, factSource, factMode, factBudgetMs, ...(onText ? { onText } : {}), ...(temperature != null ? { temperature } : {}) });
+  { kind: 'structured', system, user, schema, schemaName, maxTokens, effort, lane, think, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, excludeFamilies, freeOnly, storedContent, factTask, factSource, factMode, factBudgetMs, ...(onText ? { onText } : {}), ...(temperature != null ? { temperature } : {}), ...(Array.isArray(firstPick) && firstPick.length ? { firstPick } : {}) });
   return result ? { data: result.data, usage: result.usage || null, model: result.model || null, costUsd: result.pool ? result.pool.costUsd : undefined, ...(result.stopped ? { stopped: true } : {}) } : null;
 }
 
@@ -347,10 +347,10 @@ async function talk(args) {
  *
  * @returns {Promise<{text: string, model: string}|null>}
  */
-async function talkDetail({ role = 'fast', task = null, system, messages, maxTokens, effort, userId, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature, factTask, factSource, factMode, factBudgetMs, onDraft }) {
+async function talkDetail({ role = 'fast', task = null, system, messages, maxTokens, effort, userId, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature, factTask, factSource, factMode, factBudgetMs, onDraft, onDelta, firstPick, checkFirstPick }) {
   const result = await withProviders(userId, (p) => p.chat({
     role, task, system, messages, maxTokens, effort, lane, temperature,
-  }), role, task, { kind: 'chat', system, messages, maxTokens, effort, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature, factTask, factSource, factMode, factBudgetMs, onDraft });
+  }), role, task, { kind: 'chat', system, messages, maxTokens, effort, lane, dataClass, timeoutMs, hedgeAfterMs, pipelineVariant, temperature, factTask, factSource, factMode, factBudgetMs, onDraft, ...(typeof onDelta === 'function' ? { onDelta } : {}), ...(Array.isArray(firstPick) && firstPick.length ? { firstPick } : {}), ...(Array.isArray(checkFirstPick) && checkFirstPick.length ? { checkFirstPick } : {}) });
   return result ? { text: result.text, model: result.model, held: result.held || null } : null;
 }
 

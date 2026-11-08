@@ -10,6 +10,10 @@
  * A refusal or a used-up limit on the paid route drops to the browser's way for the rest of the call when there is one; otherwise the call ends and says why.
  *
  * Replies come only from ask(), which is POST /api/tutor/dock: same safety rules, same fact check, same memory as a typed message, finished before a word is spoken.
+ * With the server's TUTOR_VOICE_STREAM (info.stream) a turn asks askStream() instead (POST /api/tutor/dock/stream): the first sentences are spoken as soon as they pass
+ * the same checks on their own, the rest once the whole reply has passed; if the whole reply does not pass, what is playing stops and the replacement is said, as the
+ * chat shows it. With the paid voice the audio comes in that same response (speakQueue below). TUTOR_VOICE_EOS (info.eos): the end of a turn is read from the words too
+ * (looksUnfinished), and words that start again before the tutor talks are joined to the turn. TUTOR_CALL_ACK (info.ack): a soft sound while it thinks (scheduleAck).
  *
  * It must not hear itself:
  *   1. the microphone is asked for with the browser's echo cancellation
@@ -31,8 +35,24 @@
   const ECHO_MEASURE_MS = 450;  // the start of each reply: how loud does the tutor sound in the mic?
   const AFTER_TALK_DEAF_MS = 220; // the tail of the tutor's voice in the room
   const QUIET_RESTART_MS = 800; // browser recognizer: no new words for this long and the turn is over
+  // The server's TUTOR_VOICE_EOS (info.eos): the end of a turn is read from the words as well as the quiet. Early words are sent at EOS_SPECULATE_MS; when they come back
+  // as a finished sentence the turn ends at EOS_MIN_MS of quiet; when they trail off ("and", "um", "of", a comma) it waits until EOS_LONG_MS; with no words back yet, the
+  // usual END_OF_SPEECH_MS. Words that start again within MERGE_MS of the end, before the tutor talks, are joined to the turn (the clip is sent again, whole).
+  const EOS_SPECULATE_MS = 120;
+  const EOS_MIN_MS = 420;
+  const EOS_LONG_MS = 1300;
+  const MERGE_MS = 2500;
+  const ACK_AFTER_MS = 350;     // TUTOR_CALL_ACK: the soft sound plays this long into a turn's thinking, if the tutor has not started talking
   const TARGET_RATE = 16000;
   const WORD = { listening: 'Listening', thinking: 'Thinking', talking: 'Talking' };
+  // A turn that trails off: the next words are still coming.
+  const TRAILING = /(?:^|\s)(and|or|but|so|because|cause|um+|uh+|er+|erm|hmm+|like|the|a|an|to|of|with|for|in|on|at|from|about|into|is|are|was|were|if|then|that|which|who|whose|my|your|his|her|their|our|its|i|i'm|im|it's|what's|than|as|also|plus|and then|you know|kind of|sort of)\s*$/i;
+  function looksUnfinished(text) {
+    const s = String(text || '').trim();
+    if (!s) return true;
+    if (/(,|;|:|-|–|—|\.\.\.|…)\s*$/.test(s)) return true;
+    return TRAILING.test(s.replace(/[.!?"')\]]+\s*$/, ''));
+  }
   const isAndroid = /Android/i.test(navigator.userAgent || '');
 
   const Recog = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -77,8 +97,21 @@
     return new Blob([buf], { type: 'audio/wav' });
   }
 
-  function create({ info, lang, giraffe, line, ask, onEnded, onRefused }) {
+  function create({ info, lang, giraffe, line, ask, askStream, onEnded, onRefused }) {
     const shortLang = String(lang || 'en').slice(0, 2);
+    const eosOn = !!info.eos;
+    const streamOn = () => !!info.stream && typeof askStream === 'function';
+    const speculateMs = eosOn ? EOS_SPECULATE_MS : SPECULATE_MS;
+    let lastTurn = null; // { frames, detectedAt, token, asked }: the turn just ended, joined to the next words if they come soon enough
+    const dropped = new Set(); // turns joined into the next one: never asked, or their streamed ask was dropped
+    let asking = null;   // the AbortController of the streamed turn in flight
+    let warmedAt = 0;
+    /** TUTOR_VOICE_WARM (info.warm): the server opens its connections for the turn ahead of it. Nothing is sent but the call id. */
+    function warmUp() {
+      if (!info.warm || !callId || performance.now() - warmedAt < 1000) return;
+      warmedAt = performance.now();
+      try { fetch('/api/tutor/call/warm', { method: 'POST', credentials: 'same-origin', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ call: callId }) }).catch(() => {}); } catch { /* only a head start */ }
+    }
     let state = 'idle';
     let callId = null;
     let listenWay = null;
@@ -215,6 +248,7 @@
         voicedRun = rms > startAt ? voicedRun + dt : 0;
         if (voicedRun >= (state === 'thinking' ? 200 : VOICE_START_MS)) {
           inSpeech = true;
+          warmUp();
           clip = preRoll.slice(-Math.ceil(350 / dt));
           clipMs = clip.length * dt;
           voicedMs = voicedRun;
@@ -222,7 +256,23 @@
           quietSince = now;
           warned = false;
           // They kept talking after we took the pause as the end: the reply on its way is not spoken (it stays in the chat), and this joins the conversation next.
-          if (state === 'thinking') { turnToken += 1; setState('listening'); }
+          if (state === 'thinking') {
+            // TUTOR_VOICE_EOS with a streamed turn: the turn is dropped (it leaves the chat and is not remembered) and what they said before joins these words, so the
+            // tutor hears the whole thought once. The quiet in between is kept short in the clip.
+            // (A plain turn already sent cannot be taken back, so it is not joined: it stays in the chat, as before.)
+            if (eosOn && lastTurn && lastTurn.token === turnToken && now - lastTurn.detectedAt < MERGE_MS && (asking || !lastTurn.asked)) {
+              const gap = Math.ceil(300 / dt);
+              clip = lastTurn.frames.concat(new Array(gap).fill(new Float32Array(Math.round((dt / 1000) * ac.sampleRate))), clip);
+              clipMs += lastTurn.ms + gap * dt;
+              voicedMs += lastTurn.voicedMs;
+              dropped.add(lastTurn.token);
+              if (asking) { try { asking.abort(); } catch { /* finished */ } asking = null; }
+            }
+            lastTurn = null;
+            turnToken += 1;
+            stopTalking(); // a streamed reply whose first words are about to play is not said either
+            setState('listening');
+          }
         }
         return;
       }
@@ -234,11 +284,15 @@
         spec = null; // they went on: what was sent early is not the whole thing
       } else {
         const quiet = now - lastVoiceAt;
-        if (quiet >= SPECULATE_MS && !spec && voicedMs >= MIN_SPEECH_MS) {
-          spec = { promise: hear(clip.slice()), at: now };
-          spec.promise.catch(() => {}); // it may never be needed
+        if (quiet >= speculateMs && !spec && voicedMs >= MIN_SPEECH_MS) {
+          const s = { promise: hear(clip.slice()), at: now, text: null };
+          s.promise.then((t) => { s.text = t; }, () => {}); // it may never be needed
+          spec = s;
         }
-        if (quiet >= END_OF_SPEECH_MS) endOfSpeech(now);
+        // With TUTOR_VOICE_EOS the words decide how long the quiet must be: a finished sentence ends sooner, a trailing one waits (see looksUnfinished).
+        let need = END_OF_SPEECH_MS;
+        if (eosOn && spec && spec.text != null) need = looksUnfinished(spec.text) ? EOS_LONG_MS : EOS_MIN_MS;
+        if (quiet >= need) endOfSpeech(now);
       }
       if (clipMs >= (Number(info.clip_s) || 45) * 1000 - 1000) endOfSpeech(now); // the longest clip the server takes
     }
@@ -249,10 +303,15 @@
       const stopAt = lastVoiceAt;
       const early = spec;
       const interrupted = fromInterrupt;
+      const turnMs = clipMs;
+      const turnVoiced = voicedMs;
       resetSpeech();
       quietSince = now;
       if (!enough) return;
-      takeTurn({ stopAt, detectedAt: now, hearing: early ? early.promise : hear(frames), interrupted });
+      warmUp();
+      const p = takeTurn({ stopAt, detectedAt: now, hearing: early ? early.promise : hear(frames), interrupted });
+      lastTurn = { frames, ms: turnMs, voicedMs: turnVoiced, detectedAt: now, token: turnToken };
+      return p;
     }
 
     // ── A turn ─────────────────────────────────────────────────────────────
@@ -277,21 +336,50 @@
       const me = ++turnToken;
       const t = { detect_ms: detectedAt - stopAt };
       setState('thinking');
+      if (info.ack) scheduleAck(me);
       let text = '';
       try {
         text = await hearing;
       } catch (err) {
-        if (stopped()) return;
+        if (stopped() || dropped.has(me)) return;
         await hearingFailed(err);
         return;
       }
-      if (stopped()) return;
+      if (stopped() || dropped.has(me)) return;
       t.stt_ms = performance.now() - detectedAt;
       if (!text || looksLikeEcho(text, interrupted)) { if (me === turnToken) { setState('listening'); quietSince = performance.now(); } return; }
+      // TUTOR_VOICE_EOS: words that trail off wait for more, up to EOS_LONG_MS of quiet in all; if they talk again meanwhile the two are joined (onFrame).
+      if (eosOn && looksUnfinished(text)) {
+        const wait = stopAt + EOS_LONG_MS - performance.now();
+        if (wait > 0) { t.hold_ms = wait; await new Promise((r) => setTimeout(r, wait)); }
+        if (stopped() || dropped.has(me) || me !== turnToken) return;
+      }
       await reply(text, me, t, stopAt);
     }
 
+    /** TUTOR_CALL_ACK: a short soft two-note sound, made here (no request, no cost), when the tutor has not started talking a moment into its thinking. */
+    function scheduleAck(me) {
+      setTimeout(() => {
+        if (stopped() || me !== turnToken || state !== 'thinking' || !ac) return;
+        try {
+          const at = ac.currentTime;
+          const g = ac.createGain();
+          g.gain.setValueAtTime(0.0001, at);
+          g.gain.exponentialRampToValueAtTime(0.05, at + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.0001, at + 0.24);
+          g.connect(ac.destination);
+          [523, 784].forEach((f, k) => { const o = ac.createOscillator(); o.type = 'sine'; o.frequency.value = f; o.connect(g); o.start(at + k * 0.08); o.stop(at + 0.25); });
+          deafUntil = Math.max(deafUntil, performance.now() + 400); // the sound in the room is not the learner
+        } catch { /* no sound this time */ }
+      }, ACK_AFTER_MS);
+    }
+
     async function reply(text, me, t, stopAt) {
+      if (streamOn()) {
+        const how = await replyStream(text, me, t, stopAt);
+        if (how !== 'plain') return;
+      }
+      if (lastTurn && lastTurn.token === me) lastTurn.asked = true;
       const before = pendingAsk;
       const asking = (async () => { await before.catch(() => {}); return ask(text); })();
       pendingAsk = asking;
@@ -304,6 +392,179 @@
       const words2 = out || info.notices.no_reply;
       await speak(words2, { onFirst: () => { t.audio_ms = performance.now() - t0 - t.reply_ms; t.total_ms = performance.now() - stopAt; turns.push(cleanTurn(t)); publish(); } });
       if (!stopped() && me === turnToken) backToListening();
+    }
+
+    /**
+     * A streamed turn (TUTOR_VOICE_STREAM): the first checked sentences are spoken while the rest is written; with the paid voice their audio comes in the same
+     * response. Returns 'plain' when the stream route said no before a word (the plain route then answers this turn), else 'done' or 'gone'.
+     */
+    async function replyStream(text, me, t, stopAt) {
+      const before = pendingAsk;
+      const ctl = typeof AbortController === 'function' ? new AbortController() : null;
+      const t0 = performance.now();
+      const serverVoice = speakWay === 'gateway';
+      let q = null;
+      let firstAt = 0;
+      let gotDone = false;
+      const noteFirst = () => { if (!firstAt) { firstAt = performance.now(); t.reply_ms = firstAt - t0; } };
+      const queue = () => {
+        if (!q && me === turnToken && !stopped() && !dropped.has(me)) {
+          q = speakQueue({ serverVoice, onFirst: () => { t.audio_ms = performance.now() - firstAt; t.total_ms = performance.now() - stopAt; turns.push(cleanTurn(t)); publish(); } });
+        }
+        return q;
+      };
+      const run = (async () => {
+        await before.catch(() => {});
+        if (me !== turnToken || dropped.has(me) || stopped()) return 'gone';
+        asking = ctl;
+        await askStream(text, {
+          call: serverVoice ? callId : null,
+          signal: ctl ? ctl.signal : undefined,
+          on: {
+            sentence: (i, s) => { noteFirst(); if (queue()) q.push(i, s); },
+            audio: (i, b64, err) => { if (q) q.audio(i, b64, err); },
+            done: (out) => {
+              noteFirst();
+              gotDone = true;
+              if (!queue()) return;
+              const parts = out.speak || [];
+              if (out.replace) q.replace(parts.length ? parts[0].i : 1);
+              parts.forEach((p) => q.push(p.i, p.text));
+              q.end(parts.length ? parts[parts.length - 1].i + 1 : (q.count() ? 1 : 0));
+            },
+          },
+        });
+        return 'asked';
+      })();
+      pendingAsk = run.catch(() => null);
+      let how;
+      try {
+        how = await run;
+      } catch (err) {
+        if (asking === ctl) asking = null;
+        if (stopped() || dropped.has(me) || (err && err.name === 'AbortError')) return 'gone';
+        if (err && err.status === 404) info.stream = false; // the switch is off on the server: the plain route from now on
+        return q ? 'gone' : 'plain';
+      }
+      if (asking === ctl) asking = null;
+      if (how === 'gone' || stopped()) return 'gone';
+      if (!q) {
+        if (me !== turnToken) return 'gone'; // they spoke again meanwhile: this reply is in the chat, not said
+        t.reply_ms = t.reply_ms || performance.now() - t0;
+        await speak(info.notices.no_reply, { onFirst: () => { t.audio_ms = performance.now() - t0 - t.reply_ms; t.total_ms = performance.now() - stopAt; turns.push(cleanTurn(t)); publish(); } });
+        if (!stopped() && me === turnToken) backToListening();
+        return 'done';
+      }
+      if (!gotDone) q.end(q.count());
+      await q.done;
+      if (!stopped() && me === turnToken) backToListening();
+      return 'done';
+    }
+
+    /**
+     * Speaking parts as they arrive, in order: push(i, text) when part i may be said, audio(i, mp3Base64, error) when its voice came in the stream, replace(from) when the
+     * whole reply did not pass (what is playing stops; parts before `from` are skipped), end(n) when there are n parts in all. `done` resolves when it has all been said or cut off.
+     */
+    function speakQueue({ serverVoice, onFirst } = {}) {
+      const token = ++speakToken;
+      const parts = [];
+      let total = null;
+      let wake = null;
+      let first = true;
+      let at = -1;
+      const started = (ctx) => {
+        if (token !== speakToken) return;
+        if (first) {
+          first = false;
+          talkStart = performance.now();
+          echoPeak = 0;
+          interruptRun = 0;
+          setState('talking');
+          if (onFirst) onFirst();
+        }
+        giraffe.speaking(true, ctx);
+      };
+      const slot = (i) => {
+        if (!parts[i]) {
+          let res; let rej;
+          const buf = new Promise((a, b) => { res = a; rej = b; });
+          buf.catch(() => {});
+          parts[i] = { text: null, buf, res, rej, skip: false };
+        }
+        return parts[i];
+      };
+      const kick = () => { if (wake) { const w = wake; wake = null; w(); } };
+      const q = {
+        count: () => parts.filter((p) => p && p.text != null).length,
+        push(i, text) {
+          const s = slot(i);
+          if (s.text != null || !text) return;
+          s.text = text;
+          lastSpoken = `${lastSpoken} ${text}`.trim();
+          // The paid voice without the stream's audio (no call id reached the server): one request per part, as speak() does.
+          if (speakWay === 'gateway' && !serverVoice) say(text).then(s.res, s.rej);
+          kick();
+        },
+        audio(i, b64, err) {
+          const s = slot(i);
+          if (err || !b64 || !ac) { s.rej(Object.assign(new Error('say'), { status: err || 0 })); return; }
+          try {
+            const bin = atob(b64);
+            const bytes = new Uint8Array(bin.length);
+            for (let k = 0; k < bin.length; k++) bytes[k] = bin.charCodeAt(k);
+            ac.decodeAudioData(bytes.buffer).then(s.res, s.rej);
+          } catch (e) { s.rej(e); }
+        },
+        replace(from) {
+          for (let j = 0; j < from; j++) slot(j).skip = true;
+          if (at >= 0 && at < from && playing) {
+            if (playing.source) { try { playing.source.stop(); } catch { /* ended */ } }
+            if (playing.synth && synthOk()) { try { window.speechSynthesis.cancel(); } catch { /* none */ } }
+          }
+          kick();
+        },
+        end(n) { total = n; kick(); },
+      };
+      lastSpoken = '';
+      q.done = (async () => {
+        // Browser ears, then: the mic is only held to catch an interruption, and only when it can't get in the recognizer's way.
+        if (listenWay === 'browser' && !isAndroid && !stream) { try { await openMic(); } catch { /* no interruptions this reply */ } if (token !== speakToken) return; }
+        for (let i = 0; ; i += 1) {
+          while ((!parts[i] || parts[i].text == null) && (total == null || i < total)) {
+            if (token !== speakToken || stopped()) return;
+            await new Promise((r) => { wake = r; setTimeout(r, 250); });
+          }
+          if (token !== speakToken || stopped()) return;
+          if (total != null && i >= total) return;
+          const p = parts[i];
+          if (p.skip) continue;
+          at = i;
+          if (speakWay === 'gateway') {
+            let buf;
+            try {
+              buf = await p.buf;
+            } catch (err) {
+              if (token !== speakToken) return;
+              if (!synthOk()) {
+                line('tdock-note', 'I can\'t speak right now, so my answer is in the chat.');
+                finish('The tutor\'s voice is not available, so the call ended. You can keep going here.', 'say_failed', true);
+                return;
+              }
+              speakWay = 'browser';
+              noteSwitch();
+            }
+            if (token !== speakToken) return;
+            if (p.skip) continue;
+            if (buf) await playBuffer(buf, p.text, token, started);
+            else await speakBrowser([p.text], token, started);
+          } else {
+            await speakBrowser([p.text], token, started);
+          }
+          if (token !== speakToken) return;
+          giraffe.speaking(false);
+        }
+      })();
+      return q;
     }
 
     const cleanTurn = (t) => Object.fromEntries(Object.entries(t).map(([k, v]) => [k, Math.round(v)]));
@@ -503,6 +764,7 @@
         recText = fin;
         recLive = live;
         recLastAt = performance.now();
+        warmUp();
         quietSince = recLastAt;
         warned = false;
         clearTimeout(recQuietTimer);
@@ -658,5 +920,5 @@
     };
   }
 
-  window.TutorCall = { create, sentences, last: null };
+  window.TutorCall = { create, sentences, looksUnfinished, last: null };
 }());

@@ -258,7 +258,7 @@ const NOT_SURE = "I'm not sure I have that exactly right, and I'd rather not gue
  * A checker that cannot run lets a lesson reply through (graded pages have their own fail-closed rule).
  * @returns {Promise<boolean>} true when the reply should be replaced
  */
-async function factCheck({ ai, user, message, text, notes, question }) {
+async function factCheck({ ai, user, message, text, notes, question, hedgeAfterMs = 2500 }) {
   if (!text || text.length < 40) return false;
   let verdict = '';
   try {
@@ -273,7 +273,7 @@ Learner said: ${clip(message, 300)}
 Tutor reply: ${clip(text, 900)}
 
 OK or WRONG?` }],
-      maxTokens: 6, userId: user.id, hedgeAfterMs: 2500, timeoutMs: 5000,
+      maxTokens: 6, userId: user.id, hedgeAfterMs, timeoutMs: 5000, // a voice turn starts the backup reader sooner (services/tutor-context.js VOICE_CHECK_HEDGE_MS)
     }), 6000);
   } catch { verdict = ''; }
   return /^\W*wrong/i.test(verdict || '');

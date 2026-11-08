@@ -294,7 +294,7 @@ const tutorSpent = new Map(); // `${day}:${userId}` -> characters
  * account is not on the gateway list or the gateway is cooling down, 429 past the learner's daily
  * characters, 402 past the $5 ledger) and the page speaks with the browser's own voice instead.
  */
-async function tutorSpeak(text, { userId, lang = 'en', callCapped = false } = {}) {
+async function tutorSpeak(text, { userId, lang = 'en', callCapped = false, voice: chosen = null } = {}) {
   const line = String(text || '').trim().slice(0, 600);
   if (!line) throw Object.assign(new Error('nothing to say'), { status: 400 });
   if (!gatewayFor(userId)) throw Object.assign(new Error('gateway voice is not on for this account'), { status: 503 });
@@ -306,7 +306,9 @@ async function tutorSpeak(text, { userId, lang = 'en', callCapped = false } = {}
   if (!callCapped && used + line.length > TUTOR_DAILY_CHARS()) throw Object.assign(new Error('daily tutor voice used'), { status: 429 });
   if (!callCapped) tutorSpent.set(key, used + line.length);
   try {
-    return await gatewaySpeak(lang === 'es' ? ((VOICES.narrator || {}).eleven || 'Aria') : 'Aria', line, lang === 'es' ? 'es' : 'en', userId, TUTOR_TTS_MODEL());
+    // The learner's own pick (services/tutor-mode.js voice, from ELEVEN_VOICES only); otherwise the voice it always had.
+    const picked = chosen && ELEVEN_VOICES.has(chosen) ? chosen : null;
+    return await gatewaySpeak(picked || (lang === 'es' ? ((VOICES.narrator || {}).eleven || 'Aria') : 'Aria'), line, lang === 'es' ? 'es' : 'en', userId, TUTOR_TTS_MODEL());
   } catch (err) {
     if (!callCapped) tutorSpent.set(key, used);
     noteGatewayFailure(err);
@@ -353,4 +355,4 @@ async function tutorTranscribe(buf, { userId, lang = 'en', seconds = null, callC
   }
 }
 
-module.exports = { tutorTtsModel: TUTOR_TTS_MODEL, tutorSttModel: GATEWAY_STT_MODEL, tutorTranscribe, audioKind, tutorSpeak, tts, asr, isEnabled, ttsEnabled, asrEnabled, gatewayFor, VOICES, MEDIA_DIR };
+module.exports = { ELEVEN_VOICES: [...ELEVEN_VOICES], tutorTtsModel: TUTOR_TTS_MODEL, tutorSttModel: GATEWAY_STT_MODEL, tutorTranscribe, audioKind, tutorSpeak, tts, asr, isEnabled, ttsEnabled, asrEnabled, gatewayFor, VOICES, MEDIA_DIR };

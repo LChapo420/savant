@@ -366,7 +366,7 @@ function effortHint(effort) {
 
 function chainArgs(req, kind, ctx, extra = {}) {
   const base = kind === 'chat'
-    ? { role: req.role, task: req.task, system: req.system, messages: req.messages, maxTokens: req.maxTokens, effort: req.effort, lane: req.lane, ...(req.temperature != null ? { temperature: req.temperature } : {}) }
+    ? { role: req.role, task: req.task, system: req.system, messages: req.messages, maxTokens: req.maxTokens, effort: req.effort, lane: req.lane, ...(req.temperature != null ? { temperature: req.temperature } : {}), ...(typeof req.onDelta === 'function' ? { onDelta: req.onDelta } : {}) }
     : { role: req.role, task: req.task, system: req.system, user: req.user, schema: req.schema, schemaName: req.schemaName, maxTokens: req.maxTokens, effort: req.effort, lane: req.lane, think: req.think, ...(req.onText ? { onText: req.onText } : {}), ...(req.temperature != null ? { temperature: req.temperature } : {}) };
   return { ...base, timeoutMs: ctx.timeoutMs, signal: ctx.signal, ...extra };
 }
@@ -598,6 +598,8 @@ function refusal(slot, req, kind) {
   if (req.excludeFamilies && slot.family && req.excludeFamilies.includes(slot.family)) return 'independence: family excluded for this request';
   if (req.freeOnly && slot.paid) return 'budget: this request may use free slots only (the fact guard is at its spend cap)';
   if (matchesAny(slot.id, t.deny)) return 'quality: denied for this task';
+  // A slot a task allows only as a caller's first pick (dock_help's Coral Fast, for the voice call's fast route): never a backup or a default.
+  if (Array.isArray(t.first_pick_only) && matchesAny(slot.id, t.first_pick_only) && !(Array.isArray(req.firstPick) && req.firstPick.includes(slot.id))) return 'speed: only when the caller picks it first';
   if (Array.isArray(t.only) && !matchesAny(slot.id, t.only)) return 'quality: not in this task\'s only-list';
   if (slot.extra && !matchesAny(slot.id, t.allow) && !matchesAny(slot.id, poolConfig().default_allow)) return 'quality: not listed as good enough for this task';
   return null;
@@ -654,6 +656,11 @@ function candidatesFor(req, opts = {}) {
     seen.add(s.id);
     return !refusal(s, req, kind);
   });
+  // A caller's first pick (req.firstPick: the voice call's fast route) goes in front; it is only ever a slot that passed every gate above.
+  if (Array.isArray(req.firstPick) && req.firstPick.length) {
+    const picked = req.firstPick.map((id) => ok.find((s) => s.id === id)).filter(Boolean);
+    if (picked.length) return [...picked, ...candidatesFor({ ...req, firstPick: null }, opts).filter((s) => !picked.includes(s))];
+  }
   const first = ok.filter((s) => s.preferred);
   const free = ok.filter((s) => !s.paid && !s.preferred);
   // Cheapest output first; a waiting learner's request puts a fast slot (Coral Fast) ahead of the other paid ones.
@@ -804,7 +811,8 @@ function budgetOk(slot, req, opts, spentRef) {
 async function callHedged(req, opts = {}) {
   const t0 = now();
   const kind = reqKind(req);
-  const cands = opts.slots ? opts.slots.filter((s) => !refusal(s, req, kind)) : candidatesFor(req, opts);
+  const cands0 = opts.slots ? opts.slots.filter((s) => !refusal(s, req, kind)) : candidatesFor(req, opts);
+  const cands = Array.isArray(req.firstPick) && req.firstPick.length ? [...cands0.filter((s) => req.firstPick.includes(s.id)), ...cands0.filter((s) => !req.firstPick.includes(s.id))] : cands0;
   const timeout = (slot) => timeoutFor(slot, req, opts);
   const maxTimeout = Math.max(...cands.map(timeout), opts.timeoutMs || DEFAULT_TIMEOUT_MS());
   const waitingCall = isWaitingStore(lane.getStore()) && req.coral === true;
@@ -826,6 +834,11 @@ async function callHedged(req, opts = {}) {
   let n = 0;
   let settled = false;
   let costUsd = 0;
+  // A streamed chat (req.onDelta, the voice call's sentence streaming): the first attempt to send text owns the stream, so a hedge's words are never mixed into it.
+  // When the owner fails, the caller is told with onDelta(null) and the next attempt may take the stream over.
+  let streamOwner = null;
+  // req.firstPick (the voice call's fast route, services/tutor-context.js): slots, already allowed for this task and this learner, that start first even when paid.
+  const isFirstPick = (s) => Array.isArray(req.firstPick) && req.firstPick.includes(s.id);
 
   return new Promise((resolve) => {
     const timers = new Set();
@@ -868,7 +881,7 @@ async function callHedged(req, opts = {}) {
           const fgLate = !isBg() && now() - t0 >= fgHedgeMs();
           // COLD_FIRST_BLOCK: the fast lane's paid order (candidatesFor) holds, instead of every free slot being tried first: a free NVIDIA call in front cost a waiting learner 2 to 64 s.
           const coldPaidFirst = String(process.env.COLD_FIRST_BLOCK || '').toLowerCase() === 'on' && !!(laneNow && laneNow.fast && laneNow.background === false && req.coral === true);
-          if (s.preferred) { if (asHedge && !s.hedgeable) continue; } else if (asHedge) { if (!s.hedgeable || isBg()) continue; } else if (!fgLate && !coldPaidFirst && !(req.task === 'fact_live' && !isBg()) && (anyFreeRunning() || untriedFree())) continue; /* a waiting learner's check starts on the paid readers it lists first: it has seconds */ // last resort: only when every free one has failed
+          if (s.preferred || isFirstPick(s)) { if (asHedge && !s.hedgeable) continue; } else if (asHedge) { if (!s.hedgeable || isBg()) continue; } else if (!fgLate && !coldPaidFirst && !(req.task === 'fact_live' && !isBg()) && (anyFreeRunning() || untriedFree())) continue; /* a waiting learner's check starts on the paid readers it lists first: it has seconds */ // last resort: only when every free one has failed
           if (!budgetOk(s, req, opts, spent)) continue;
         }
         const b = blocked(s, req, isBg(), isSpec());
@@ -906,7 +919,10 @@ async function callHedged(req, opts = {}) {
       running.set(no, { slot, ctrl, t0: now() });
       if (why === 'hedge') slot.stats.hedged++;
       // The pipeline variant (learner data stripped by the caller) is what a pipeline slot sees.
-      const rq = slot.dataClass === 'pipeline' && req.pipelineVariant ? { ...req, ...req.pipelineVariant } : req;
+      const rq0 = slot.dataClass === 'pipeline' && req.pipelineVariant ? { ...req, ...req.pipelineVariant } : req;
+      const rq = typeof rq0.onDelta === 'function'
+        ? { ...rq0, onDelta: (frag, full) => { if (settled && streamOwner !== no) return; if (streamOwner == null) streamOwner = no; if (streamOwner === no) { try { rq0.onDelta(frag, full, { model: slot.model, slot: slot.id }); } catch { /* the stream is the caller's business */ } } } }
+        : rq0;
       const est = slot.paid ? (slot.estimateUsd ? slot.estimateUsd(rq) : 0) : 0;
       spent.reserved += est;
       attempt(slot, rq, { validate, timeoutMs: Math.min(timeout(slot), Math.max(1000, totalMs - (now() - t0))), signal: ctrl.signal, deadline: (waitingCall || (req.task === 'fact_verify' && isSpec())) && timeout(slot) <= waitingDeadlineMs() }).then((o) => {
@@ -915,6 +931,7 @@ async function callHedged(req, opts = {}) {
         spent.usd += o.usd || 0;
         costUsd += o.usd || 0;
         trace.attempts.push({ slot: slot.id, why, ok: o.ok, kind: o.kind || 'ok', ms: o.ms, error: o.err ? String(o.err.message).slice(0, 160) : null });
+        if (!o.ok && streamOwner === no) { streamOwner = null; if (!settled) { try { req.onDelta(null, ''); } catch { /* ignore */ } } }
         if (settled) return;
         if (o.ok) {
           slot.stats.wins++;

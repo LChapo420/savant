@@ -154,7 +154,7 @@ function batches(pieces) {
  * One real check. `pieces` are strings; returns { ran, wrong: [{ index, why, quote }], ms, model }. ran=false when any call could not answer: that is never a
  * pass. Goes through services/ai.js (task fact_live), so the learner's consent and the provider clearances decide who may read it.
  */
-async function check({ pieces, source = '', learnerSaid = '', mode = 'general', userId = null, writerModel = null, budgetMs = 8000, dataClass = null, waiting = false, llm = null, storedContent = false }) {
+async function check({ pieces, source = '', learnerSaid = '', mode = 'general', userId = null, writerModel = null, budgetMs = 8000, dataClass = null, waiting = false, llm = null, storedContent = false, firstPick = null }) {
   const t0 = Date.now();
   const list = pieces.map((p) => String(p || '').trim()).filter(Boolean);
   if (!list.length) return { ran: true, wrong: [], ms: 0, model: null };
@@ -178,6 +178,8 @@ async function check({ pieces, source = '', learnerSaid = '', mode = 'general', 
       role: 'fast', task: 'fact_live', system: SYSTEMS[mode] || SYSTEMS.general, user: checkUser({ pieces: batch.map((b) => b.text), source, learnerSaid, mode }),
       schema: SCHEMA, schemaName: 'submit_check', maxTokens: 700 + batch.length * 90, effort: 'off', userId,
       ...(dataClass && !userId ? { dataClass } : {}), hedgeAfterMs: waiting ? 1800 : undefined, ...(capped ? { freeOnly: true } : {}), ...(storedContent ? { storedContent: true } : {}),
+      // A voice turn (services/tutor-context.js, TUTOR_VOICE_FAST) asks for the fast tier of the same checker first; every gate still applies in the pool.
+      ...(Array.isArray(firstPick) && firstPick.length ? { firstPick } : {}),
     };
     const go = llm || ((a) => ai.structuredDetail(a));
     const ask = async (args) => {
@@ -250,7 +252,7 @@ async function pass({ task, factTask = null, userId = null, req = null, result, 
   const r = (req && req.factSource) || '';
   const budgetMs = (req && req.factBudgetMs) || entry.budgetMs || 60000;
   const dataClass = req && req.dataClass;
-  const opts = { source: r, learnerSaid: lastLearnerLine(req), mode: (req && req.factMode) || entry.mode || 'general', userId, budgetMs, dataClass, waiting: !!entry.live };
+  const opts = { source: r, learnerSaid: lastLearnerLine(req), mode: (req && req.factMode) || entry.mode || 'general', userId, budgetMs, dataClass, waiting: !!entry.live, firstPick: (req && req.checkFirstPick) || null };
   const { list, drops, copy, atLeast } = piecesOf(entry, result);
   if (!list.length) return result;
   const t0 = Date.now();
@@ -282,6 +284,20 @@ async function pass({ task, factTask = null, userId = null, req = null, result, 
 }
 
 /**
+ * The same inline check as `pass`, on the first sentences of a chat reply that is still being written (the voice call's sentence streaming, services/tutor-context.js):
+ * the task's own row, source, conversation, mode and budget, as `pass` would use for the whole reply. true: those words may be spoken now. Fails closed, and the whole
+ * reply still goes through `pass` afterwards. A row that is not inline, or the switch off, answers as `pass` would: nothing to check here.
+ */
+async function passesChunk({ task, factTask = null, userId = null, req = null, text, writerModel = null, firstPick = null }) {
+  if (!on() || !String(text || '').trim()) return true;
+  const entry = lazy('./fact-registry').lookup(factTask || (req && req.factTask) || task);
+  if (!entry) return false;
+  if (entry.kind !== 'inline') return true;
+  const v = await check({ pieces: [String(text)], source: (req && req.factSource) || '', learnerSaid: lastLearnerLine(req), mode: (req && req.factMode) || entry.mode || 'general', userId, budgetMs: (req && req.factBudgetMs) || entry.budgetMs || 60000, dataClass: req && req.dataClass, waiting: !!entry.live, writerModel, firstPick });
+  return v.ran && !v.wrong.length;
+}
+
+/**
  * A check for model text that does not come through `withProviders` (the grading judges call their providers directly). true: it may be shown. Fails closed.
  */
 async function passesText({ task, text, source = '', mode = 'general', userId = null, budgetMs = 8000, waiting = false, learnerSaid = '' }) {
@@ -301,4 +317,4 @@ function stats(day = today()) {
 /** Is this reply one of the fixed sentences? A held reply is never stored as if it were written for the moment (a primed opener, say). */
 const isHeld = (text) => text === HELD.wrong || text === HELD.cant || text === HELD.cap;
 
-module.exports = { on, DEFAULT_ON, capReached, addSpend, lastLearnerLine, pass, check, passesText, checkUser, batches, piecesOf, stats, stripHtml, isHeld, SYSTEMS, SCHEMA, HELD };
+module.exports = { on, DEFAULT_ON, capReached, addSpend, lastLearnerLine, pass, check, passesText, passesChunk, checkUser, batches, piecesOf, stats, stripHtml, isHeld, SYSTEMS, SCHEMA, HELD };

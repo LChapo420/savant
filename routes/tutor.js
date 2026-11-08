@@ -87,6 +87,83 @@ router.post('/tutor/dock', requireAuth, limit('tutor', 150, 60 * 60 * 1000), asy
   }
 });
 
+// The voice call's turn, streamed (TUTOR_VOICE_STREAM; services/tutor-call.js header, services/tutor-context.js onSentence). One JSON object a line:
+//   {"type":"sentence","i":0,"text"}     the first sentences, spoken now: they passed the same checks as a whole reply
+//   {"type":"done","reply",...,"speak":[{"i","text"}],"replace"}  the whole reply, checked as always. `speak` is what is left to say; `replace` means the whole reply did not
+//                                       begin with what was spoken (it was held or replaced), so the page stops and says `speak`, which is then the whole reply
+//   {"type":"audio","i","mp3"|"error"}  with `call` (a live call on the paid voice): the voice for part i, made here through services/tutor-call.js say() and its limits
+// Everything else is the dock route's: the same mode rule, the same reply, the same fallbacks. A page that hangs up early (the learner talked again) gets nothing more,
+// and its turn is not remembered (`aborted`).
+router.post('/tutor/dock/stream', requireAuth, limit('tutor', 150, 60 * 60 * 1000), async (req, res) => {
+  const body = req.body || {};
+  if (!call.switches().stream) return res.status(404).json({ error: 'Not on.' });
+  if (dock.modeFor(body.page && body.page.path) === 'off') return res.status(403).json({ error: 'The tutor is off on this page.' });
+  let closed = false;
+  res.on('close', () => { if (!res.writableFinished) closed = true; });
+  res.status(200).set({ 'Content-Type': 'application/x-ndjson; charset=utf-8', 'Cache-Control': 'private, no-store', 'X-Accel-Buffering': 'no' });
+  if (res.flushHeaders) res.flushHeaders();
+  const send = (o) => { if (!closed) { try { res.write(`${JSON.stringify(o)}\n`); } catch { closed = true; } } };
+  const callId = String(body.call || '');
+  const lang = body.lang === 'es' ? 'es' : 'en';
+  const voices = [];
+  const voiceEvent = (i, text) => (!callId || closed ? Promise.resolve() : call.say(req.user, callId, text, { lang })
+    .then((mp3) => send({ type: 'audio', i, mp3: Buffer.from(mp3).toString('base64') }))
+    .catch((err) => send({ type: 'audio', i, error: err.status || 503 })));
+  const speak = (i, text) => { voices.push(voiceEvent(i, text)); };
+  let first = null;
+  let head = null; // { text, audio }: the voice for the draft's first sentences, made while their checks run, sent only if they pass
+  const finishWith = (out) => {
+    call.noteReply(req.user.id, out.reply);
+    // Nothing was spoken early, but the whole reply (now checked) begins with the draft words whose voice was made ahead: they are part 0, with that voice.
+    const useHead = !first && head && head.chunk && call.rest(out.reply, head.chunk).replace === false && String(out.reply || '').trim().length > head.chunk.length;
+    const r = call.rest(out.reply, first || (useHead ? head.chunk : null));
+    const at = first || useHead ? 1 : 0;
+    const parts = [...(useHead ? [{ i: 0, text: head.text }] : []), ...r.parts.map((text, k) => ({ i: at + k, text }))];
+    send({ type: 'done', ...out, speak: parts, replace: r.replace });
+    parts.forEach((p) => { if (useHead && p.i === 0) voices.push(head.audio.then((mp3) => send({ type: 'audio', i: 0, mp3: Buffer.from(mp3).toString('base64') })).catch(() => voiceEvent(0, head.text))); else speak(p.i, p.text); });
+  };
+  try {
+    const out = await dock.reply({
+      user: req.user, messages: body.messages, page: body.page, inputMode: body.input_mode || 'voice', image: body.image,
+      onChunk: (draft) => {
+        if (!callId || closed || head) return;
+        const text = call.sentences(draft).join(' ');
+        head = { chunk: draft, text, audio: call.prepare(req.user, callId, text, { lang }) };
+        head.audio.catch(() => {}); // dropped unheard if the words do not pass
+      },
+      onSentence: (text) => {
+        if (closed || first) return;
+        first = text;
+        call.noteReply(req.user.id, text); // checked on its own: the call may speak it
+        send({ type: 'sentence', i: 0, text });
+        const said = call.sentences(text).join(' ');
+        if (head && head.text === said) {
+          voices.push(head.audio.then((mp3) => send({ type: 'audio', i: 0, mp3: Buffer.from(mp3).toString('base64') })).catch(() => voiceEvent(0, said)));
+        } else speak(0, said);
+      },
+      aborted: () => closed,
+    });
+    finishWith(out);
+  } catch (err) {
+    console.warn(`tutor dock stream: ${err.message}`);
+    const mode = dock.modeFor(body.page && body.page.path);
+    if (full.on(req.user)) {
+      const last = [...tutor.cleanHistory(body.messages)].reverse().find((m) => m.role === 'user');
+      finishWith({ ...full.fallback({ user: req.user, page: body.page, message: last ? last.content : '', mode, name: dock.firstName(req.user) }), source: 'fallback', mode });
+    } else finishWith({ reply: tutor.offlineReply(req.user.id), source: 'fallback', mode });
+  }
+  for (let k = 0; k < voices.length; k++) await voices[k]; // eslint-disable-line no-await-in-loop
+  if (!closed) res.end();
+});
+
+// The tutor's voice in a call (TUTOR_VOICE_PICKER): one of the ElevenLabs voices the call may use, kept on the account.
+router.put('/tutor/dock/voice', requireAuth, (req, res) => {
+  if (!call.switches().picker) return res.status(404).json({ error: 'Not on.' });
+  const v = tutorMode.validVoice(req.body && req.body.voice);
+  if (!v) return res.status(400).json({ error: 'That voice is not one of the choices.' });
+  res.json({ voice: tutorMode.setVoice(req.user.id, v) });
+});
+
 // The learner closed the dock or left the page: read the turns that are waiting (services/tutor-facts.js), if the models are free.
 router.post('/tutor/dock/closed', requireAuth, limit('tutor-closed', 60, 60 * 60 * 1000), (req, res) => {
   require('../services/tutor-facts').flush(req.user.id).catch(() => {}); // eslint-disable-line global-require
@@ -129,6 +206,11 @@ router.post('/tutor/call/say', requireAuth, limit('tutor-call-say', 300, 60 * 60
     const mp3 = await call.say(req.user, String(body.call || ''), body.text, { lang: body.lang === 'es' ? 'es' : 'en' });
     res.set('Content-Type', 'audio/mpeg').set('Cache-Control', 'private, no-store').send(mp3);
   } catch (err) { callError(res, err); }
+});
+// TUTOR_VOICE_WARM: the learner started or stopped talking; open the connections the turn will use (services/tutor-call.js warm). Nothing is sent but a HEAD.
+router.post('/tutor/call/warm', requireAuth, limit('tutor-call-warm', 1200, 60 * 60 * 1000), (req, res) => {
+  if (!call.switches().warm) return res.status(404).json({ error: 'Not on.' });
+  try { call.warm(req.user, String((req.body && req.body.call) || '')); res.status(204).end(); } catch (err) { callError(res, err); }
 });
 router.post('/tutor/call/end', requireAuth, (req, res) => {
   const body = req.body || {};

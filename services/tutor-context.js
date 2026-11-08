@@ -252,7 +252,59 @@ function firstName(user) {
   return first;
 }
 
-async function reply({ user, messages, page, inputMode, image }) {
+// ── The voice call, made quicker (owner, 8 Nov 2026: "a perfect response but as fast as possible so it feels like a real conversation") ──────────────
+// TUTOR_VOICE_FAST=1: a short voice turn is written first by a fast model (TUTOR_VOICE_FAST_SLOT, default Coral DeepSeek V4.1 Flash, the slot dock_help already allows
+//   behind the free ones; the pool still applies every gate: consent, learner clearance, the ledger). A hard turn keeps the dock's usual lineup. The rule is hardVoiceTurn
+//   below: cheap, no model call. The free slots stay behind it, and every check after the draft is the same either way.
+// Sentence streaming (onSentence, routes/tutor.js POST /tutor/dock/stream, switch TUTOR_VOICE_STREAM): the draft is streamed; its first sentences (at least CHUNK_MIN
+//   characters, so the dock's own fact check reads them too) go through the same checks as a whole reply (the fact guard's inline check for dock_help and the dock's
+//   fact check, side by side, then the same scrub) and are handed to onSentence to be spoken while the rest is written. The whole reply is then checked exactly as
+//   before; when it does not pass, the caller gets the replacement as usual and stops speaking the rest. Not on a page with a question on screen or in a method-only
+//   mode: those wait for the whole reply and its leak checks.
+const on1 = (name) => String(process.env[name] || '').trim() === '1';
+const voiceFastOn = () => on1('TUTOR_VOICE_FAST');
+// Coral Fast first (time to first token about 0.2 s, measured 8 Nov), Coral Standard next (the same model; 0.2 to 3.8 s that day), then the free slots.
+const fastSlots = () => String(process.env.TUTOR_VOICE_FAST_SLOT || 'coral:deepseek-v4.1-flash-fast,coral:deepseek-v4.1-flash').split(',').map((x) => x.trim()).filter(Boolean);
+// A voice turn's fact guard reads on the fast tier of the same checker model first (TUTOR_VOICE_FAST); the dock's own check keeps its reader and backs up sooner.
+const CHECK_FIRST = ['coral:deepseek-v4.1-flash-fast'];
+const CHUNK_MIN = 40;
+// A voice turn's own checks start their backup reader sooner than a typed one (2.5 s): the learner hears silence meanwhile. Same check, same rule.
+const VOICE_CHECK_HEDGE_MS = 700;
+const HARD_ASK = /\b(prove|derive|step[- ]by[- ]step|walk me through|show (me )?(how|the steps|your working|the working)|work (it|this|that) out|solve|calculate|in (more )?detail|go deeper|more detail|explain (it|this|that) (again|differently|another way))\b/i;
+/** Why a voice turn should go to the usual (stronger) writer, or null when the fast one may write it. */
+function hardVoiceTurn({ message, page, mode, plan, image }) {
+  const m = String(message || '');
+  if (mode !== 'full' || (page && page.question) || image) return 'integrity';
+  if (plan && plan.rung >= 4) return 'worked example';
+  if (m.split(/\s+/).filter(Boolean).length > 25) return 'long';
+  if (HARD_ASK.test(m)) return 'asks for depth';
+  if ((m.match(/\d+(?:\.\d+)?/g) || []).length >= 2 || /\d\s*[-+*/^=×÷]\s*\d/.test(m) || /\b(plus|minus|times|divided by|squared|cubed|percent of|square root)\b/i.test(m)) return 'maths';
+  return null;
+}
+/** Answer text only: a reasoning block still open shows nothing. */
+function visibleText(full) {
+  const t = String(full || '');
+  const close = t.lastIndexOf('</think>');
+  if (close >= 0) return t.slice(close + 8);
+  return t.includes('<think>') ? '' : t;
+}
+/** The first whole sentences of a growing reply, once they reach CHUNK_MIN characters and the next one has begun; else null. */
+function firstChunk(text) {
+  const t = String(text || '').replace(/^\s+/, '');
+  const re = /[.!?]+["')\]]*\s+/g;
+  let m = re.exec(t);
+  while (m) {
+    const end = m.index + m[0].length;
+    if (t.slice(0, end).trim().length >= CHUNK_MIN) return t.slice(0, end).trim();
+    m = re.exec(t);
+  }
+  return null;
+}
+
+async function reply({ user, messages, page, inputMode, image, onSentence, onChunk, aborted }) {
+  // TUTOR_VOICE_TRACE=1: where a reply's time goes, as numbers in the server log (no words).
+  const trace = on1('TUTOR_VOICE_TRACE') ? { t0: Date.now(), marks: [] } : null;
+  const mark = (k) => { if (trace) trace.marks.push(`${k}=${Date.now() - trace.t0}`); };
   const mode = modeFor(page && page.path, { full: full.on(user) });
   if (mode === 'off') return { reply: '', source: 'off', mode };
   const history = tutor.cleanHistory(messages);
@@ -296,14 +348,52 @@ async function reply({ user, messages, page, inputMode, image }) {
   const checkNotes = () => `${ctx.text}
 ${howto.sheet()} What each feature does: ${howto.FEATURES.map((f) => `${f.title}: ${f.steps}`).join(' ')}
 ${howto.stuckLines(page && page.path, cleanStuck(page && page.stuck)).join(' ')} (a count of wrong tries or quiet seconds that the page reports is true)`;
-  const runFactCheck = (draft) => full.factCheck({ ai, user, message: last ? last.content : '', text: draft, notes: checkNotes(), question: page && page.question });
+  const runFactCheck = (draft) => full.factCheck({ ai, user, message: last ? last.content : '', text: draft, notes: checkNotes(), question: page && page.question, ...(heard === 'voice' ? { hedgeAfterMs: VOICE_CHECK_HEDGE_MS } : {}) });
   const runLeakCheck = (draft, q) => full.leakCheck({ ai, user, question: q, message: last ? last.content : '', text: draft });
   const earlyQuestion = () => (page && page.question ? page.question : (page ? clip([page.question, page.heading, ((page.snapshot && page.snapshot.blocks) || []).join(' '), page.text].filter(Boolean).join(' | '), 600) : ''));
   const drafted = {};
   const onDraft = fullOn ? (draft) => {
+    mark('draft');
     drafted.text = draft;
     if (mode === 'method' || (page && page.question)) { const t0 = Date.now(); drafted.leak = runLeakCheck(draft, earlyQuestion()).then((v) => { drafted.leakMs = Date.now() - t0; return v; }); }
     if (mode === 'full') drafted.fact = runFactCheck(draft);
+  } : undefined;
+  const talkMessages = history.length ? (history[0].role === 'assistant' ? [{ role: 'user', content: 'Hi.' }, ...history] : history) : [{ role: 'user', content: 'Hi.' }];
+  const factSource = page ? clip([page.question, page.heading, ((page.snapshot && page.snapshot.blocks) || []).join(' '), page.text].filter(Boolean).join(' | '), 2500) : '';
+  const factMode = page && /^\/my-material/.test(cleanPath(page.path)) ? 'material' : undefined;
+  // The fast writer for a short voice turn (TUTOR_VOICE_FAST); null `hardWhy` means it may write this one.
+  const hardWhy = heard === 'voice' && voiceFastOn() && !methodFixed ? hardVoiceTurn({ message: last && last.content, page, mode, plan: helpPlan, image }) : 'off';
+  const firstPick = hardWhy === null && fastSlots().length ? fastSlots() : undefined;
+  const checkFirstPick = heard === 'voice' && voiceFastOn() ? CHECK_FIRST : undefined;
+  // Sentence streaming: the first sentences, checked on their own, spoken while the rest is written (see the note above hardVoiceTurn).
+  const streamIt = typeof onSentence === 'function' && fullOn && mode === 'full' && !methodFixed && !(page && page.question);
+  const early = { gen: 0, chunk: null, spoken: null, ms: null };
+  let finished = false;
+  const guard = require('./fact-guard'); // eslint-disable-line global-require
+  const onDelta = streamIt ? (frag, full, meta) => {
+    if (frag === null) { mark('restart'); if (!early.spoken) { early.gen += 1; early.chunk = null; } return; } // the stream's writer failed: the next one starts over
+    if (trace && !trace.delta) { trace.delta = 1; mark(`delta(${meta && meta.slot})`); }
+    if (early.chunk || early.spoken) return;
+    const c = firstChunk(visibleText(full));
+    if (!c) return;
+    early.chunk = c;
+    const gen = early.gen;
+    mark('chunk');
+    // Unchecked: only so the route can start making its voice while the checks run. Nothing of it is said or shown unless onSentence below hands it out.
+    if (typeof onChunk === 'function') { try { onChunk(c); } catch { /* no head start */ } }
+    const t0 = Date.now();
+    Promise.all([
+      guard.passesChunk({ task: 'dock_help', userId: user.id, req: { messages: talkMessages, factSource, factMode }, text: c, writerModel: meta && meta.model, firstPick: checkFirstPick }),
+      runFactCheck(c),
+    ]).then(([guardOk, factWrong]) => {
+      early.ms = Date.now() - t0;
+      mark(`checked(${guardOk ? 'g' : 'G'}${factWrong ? 'F' : 'f'})`);
+      if (!guardOk || factWrong || finished || gen !== early.gen || (aborted && aborted())) return;
+      const said = safety.scrub(c, { ownEmail: user.email, hasMaterial: hasMaterial(user.id) });
+      if (!said) return;
+      early.spoken = said;
+      try { onSentence(said); } catch { /* the whole reply still comes */ }
+    }).catch(() => {});
   } : undefined;
   try {
     // A graded check with the switch on: the reply is fixed method coaching that contains nothing from the question (services/tutor-full.js methodReply); no model writes about it.
@@ -317,20 +407,24 @@ ${howto.stuckLines(page && page.path, cleanStuck(page && page.stuck)).join(' ')}
       // The dock's own task ("dock_help"): its lineup entry (config/model-lineup.json) is Ultra with
       // reasoning off and nothing weaker behind it, without changing the other assist_help callers.
       role: 'fast', task: 'dock_help', system,
-      messages: history.length ? (history[0].role === 'assistant' ? [{ role: 'user', content: 'Hi.' }, ...history] : history)
-        : [{ role: 'user', content: 'Hi.' }],
+      messages: talkMessages,
       // No effort here: a caller's effort can only raise the lineup's.
       // A chat must feel live: start the backup model after 4 s instead of the pool's 20 s floor,
       // and give up on a hung attempt after 15 s instead of the pool's 120 s.
       // temperature 0.7: a friend does not say the same sentence twice (the integrity checks do not depend on it).
       maxTokens: 400, userId: user.id, hedgeAfterMs: 4000, timeoutMs: 15000, ...(heard === 'voice' ? { hedgeAfterMs: 2000 } : {}), temperature: 0.7,
       // What the fact check (services/fact-guard.js) reads beside the reply. On the learner's own material their text decides.
-      factSource: page ? clip([page.question, page.heading, ((page.snapshot && page.snapshot.blocks) || []).join(' '), page.text].filter(Boolean).join(' | '), 2500) : '',
-      factMode: page && /^\/my-material/.test(cleanPath(page.path)) ? 'material' : undefined,
+      factSource,
+      factMode,
       onDraft,
+      ...(onDelta ? { onDelta } : {}),
+      ...(firstPick ? { firstPick, hedgeAfterMs: 1200 } : {}),
+      ...(checkFirstPick ? { checkFirstPick } : {}),
     }));
     // With the switch on the reply path never waits past the deadline: a slow model gets an honest answer from the notes instead.
+    mark('ctx');
     text = fullOn ? await full.withDeadline(talking) : await talking;
+    mark('text');
     if (fullOn && !text) slow = Date.now() - talkStart >= full.DEADLINE_MS - 100;
     }
   } catch { text = null; }
@@ -377,6 +471,9 @@ Does the reply state the answer (to the question on the page, or to a question f
   }
   // Round 2: a fast fact check before a reply is shown (services/tutor-full.js factCheck).
   if (fullOn && text && !held && mode === 'full' && await (drafted.fact && drafted.text === text ? drafted.fact : runFactCheck(text))) { text = full.NOT_SURE; held = true; }
+  mark(held ? 'held' : 'final');
+  if (trace) console.log(`voice trace: ${trace.marks.join(' ')} writer=${hardWhy === null ? 'fast' : hardWhy} spoke_early=${!!early.spoken}`);
+  finished = true; // from here the whole reply decides: no early sentence is handed out after this
   facts.dockEnded(user.id);
   let out = text || tutor.offlineReply(user.id);
   let feature;
@@ -385,9 +482,12 @@ Does the reply state the answer (to the question on the page, or to a question f
     else { const fb = full.fallback({ user, page, message: last ? last.content : '', mode, name, why: slow ? 'slow' : (outsideOk(user) ? 'busy' : 'local') }); out = fb.reply; feature = fb.feature; }
   }
   // What this message shows about them, as scorecard evidence (services/tutor-evidence.js; the scorecard owner's hook).
-  if (last) require('./tutor-evidence').fromMessage(user.id, last.content, { skillId, where: 'dock', priorReplies: history.filter((m) => m.role === 'assistant').length }); // eslint-disable-line global-require
-  tutor.note(user.id, { where: 'dock', learnerSaid: last ? last.content : '', tutorSaid: out });
-  return { reply: out, source: text ? 'ai' : 'fallback', feature, check_ms: checkMs, mode, input_mode: heard, saw_picture: !!picture, held, plan: helpPlan ? { rung: helpPlan.rung, style: helpPlan.style, avoid: helpPlan.avoid } : null, recalled: recalled.snippets ? recalled.snippets.length : 0 };
+  // A voice turn the learner talked over (the call dropped it and joins their words into the next turn) is not remembered or read as evidence: it never reached them.
+  const dropped = !!(aborted && aborted());
+  if (last && !dropped) require('./tutor-evidence').fromMessage(user.id, last.content, { skillId, where: 'dock', priorReplies: history.filter((m) => m.role === 'assistant').length }); // eslint-disable-line global-require
+  if (!dropped) tutor.note(user.id, { where: 'dock', learnerSaid: last ? last.content : '', tutorSaid: out });
+  return { reply: out, source: text ? 'ai' : 'fallback', feature, check_ms: checkMs, mode, input_mode: heard, saw_picture: !!picture, held, plan: helpPlan ? { rung: helpPlan.rung, style: helpPlan.style, avoid: helpPlan.avoid } : null, recalled: recalled.snippets ? recalled.snippets.length : 0,
+    ...(hardWhy !== 'off' ? { writer: hardWhy === null ? 'fast' : 'usual', hard_why: hardWhy } : {}), ...(streamIt ? { spoken_first: early.spoken, early_ms: early.ms } : {}) };
 }
 
-module.exports = { PAGE_MAX, DOCK_MAX, modeFor, cleanPath, pageLine, build, reply, MODE_NOTE, DOCK_SYSTEM, firstName, SEALED, METHOD_ONLY };
+module.exports = { PAGE_MAX, DOCK_MAX, modeFor, cleanPath, pageLine, build, reply, MODE_NOTE, DOCK_SYSTEM, firstName, SEALED, METHOD_ONLY, hardVoiceTurn, firstChunk, visibleText, voiceFastOn, CHUNK_MIN };

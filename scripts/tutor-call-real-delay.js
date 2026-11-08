@@ -29,7 +29,7 @@ async function main() {
   const ledgers = Object.fromEntries(['ANTHROPIC', 'CORAL', 'GLADIA', 'GONKA', 'GROKIFIED', 'JEV', 'LLMGATEWAY', 'LYCEUM', 'MUNITO', 'STANDARD_COMPUTE', 'ZEROGPU'].map((p) => [`${p}_LEDGER_FILE`, path.join(LIVE, `${p.toLowerCase().replace('_', '-')}-ledger.json`)]));
   const before = JSON.parse(fs.readFileSync(ledgers.LLMGATEWAY_LEDGER_FILE, 'utf8'));
   const server = spawn(process.execPath, ['server.js'], { cwd: ROOT, env: { ...process.env, ...ledgers, PORT: String(PORT), NODE_ENV: 'development', DB_FILE: path.join(tmp, 'db.json'), HOLDOUT_DIR: tmp, SPANISH_MEDIA_DIR: path.join(tmp, 'm'), SESSION_SECRET: 'browser-test-secret-browser-test-secret', OWNER_EMAIL: 'owner-test@example.com', SIGNIN_ONLY: '0', SPANISH_GATEWAY_USERS: '1', RUN_CAP_USD: '0.5',
-    MODELFLARE_API_KEY: '', MODELFLARE_HAIKU_API_KEY: '', MODELFLARE_LUNA_API_KEY: '', OPENROUTER_API_KEY: '', OPENROUTER_DEEPSEEK_API_KEY: '', OPENROUTER_GLM_API_KEY: '', OPENROUTER_GPT_SOL_API_KEY: '', ANTHROPIC_API_KEY: '', FACT_CHECK_ANTHROPIC_KEY: '', STANDARD_COMPUTE_API_KEY: '', GROKIFIED_API_KEY: '', UNOROUTER_API_KEY: '', AIHUBMIX_API_KEY: '', XKIRO_API_KEY: '' }, stdio: 'ignore' });
+    MODELFLARE_API_KEY: '', MODELFLARE_HAIKU_API_KEY: '', MODELFLARE_LUNA_API_KEY: '', OPENROUTER_API_KEY: '', OPENROUTER_DEEPSEEK_API_KEY: '', OPENROUTER_GLM_API_KEY: '', OPENROUTER_GPT_SOL_API_KEY: '', ANTHROPIC_API_KEY: '', FACT_CHECK_ANTHROPIC_KEY: '', STANDARD_COMPUTE_API_KEY: '', GROKIFIED_API_KEY: '', UNOROUTER_API_KEY: '', AIHUBMIX_API_KEY: '', XKIRO_API_KEY: '' }, stdio: arg('server-log', null) ? ['ignore', fs.openSync(arg('server-log'), 'w'), fs.openSync(arg('server-log') + '.err', 'w')] : 'ignore' });
   for (let i = 0; i < 200; i++) { await delay(250); try { if ((await fetch(`${BASE}/api/health`)).ok) break; } catch { /* up soon */ } }
   const browser = await chromium.launch({ args: ['--use-fake-ui-for-media-stream', '--use-fake-device-for-media-stream', `--use-file-for-fake-audio-capture=${WAV}%noloop`, '--autoplay-policy=no-user-gesture-required'] });
   try {
@@ -38,6 +38,9 @@ async function main() {
     const reg = await call('POST', '/api/auth/register', { email: 'real@example.com', password: 'test-password-123', display_name: 'Gia', birth_year: 1990, birth_month: 5, country: 'US', agreed: true });
     if (reg.json.user.id !== 1) throw new Error('expected id 1');
     const page = await ctx.newPage();
+    const problems = [];
+    page.on('response', (r) => { if (r.status() >= 400) problems.push(`HTTP ${r.status()} ${r.url().replace(BASE, '').split('?')[0]}`); });
+    page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') problems.push(`console ${m.type()}: ${m.text().slice(0, 160)}`); });
     await page.goto(`${BASE}/dashboard`);
     await page.waitForSelector('.tdock-g-btn');
     await delay(800);
@@ -45,7 +48,7 @@ async function main() {
     const t0 = Date.now();
     let turns = [];
     const seen = [];
-    while (Date.now() - t0 < 180000) {
+    while (Date.now() - t0 < Number(arg('max-s', 180)) * 1000) {
       await delay(400);
       const s = await page.evaluate(() => ({ voice: document.querySelector('.tdock-g').dataset.voice, last: window.TutorCall && window.TutorCall.last }));
       if (seen[seen.length - 1] !== s.voice) seen.push(s.voice);
@@ -61,9 +64,11 @@ async function main() {
     const spent = Number(after.settled_usd) - Number(before.settled_usd);
     const chars = log.filter((l) => l.startsWith('bot')).reduce((n, l) => n + l.length - 5, 0);
     console.log('log:'); log.forEach((l) => console.log(`  ${l.slice(0, 200)}`));
+    console.log('problems:', problems.length ? problems.join(' | ') : 'none');
     console.log('states seen:', seen.join(' > '));
     console.log('turns:', JSON.stringify(turns));
-    for (const k of ['detect_ms', 'stt_ms', 'reply_ms', 'audio_ms', 'total_ms']) console.log(`  ${k}: median ${median(turns.map((t) => t[k]))}, min ${Math.min(...turns.map((t) => t[k]))}, max ${Math.max(...turns.map((t) => t[k]))}`);
+    for (const k of ['detect_ms', 'stt_ms', 'reply_ms', 'audio_ms', 'total_ms']) { const v = turns.map((t) => t[k]).filter((x) => Number.isFinite(x)); console.log(`  ${k}: n ${v.length}, median ${median(v)}, min ${Math.min(...v)}, max ${Math.max(...v)}`); }
+    if (arg('out', null)) fs.writeFileSync(arg('out'), JSON.stringify({ turns, log, seen }, null, 1));
     console.log(`gateway ledger: +$${spent.toFixed(4)} (now $${Number(after.settled_usd).toFixed(4)} of $${after.cap_usd}), tts ${after.by_task.tts.calls - before.by_task.tts.calls} calls, stt ${after.by_task.stt.calls - before.by_task.stt.calls} calls, ${chars} characters shown as replies, ${elapsedMin.toFixed(2)} min of call, $${(spent / elapsedMin).toFixed(4)} per minute of call`);
   } finally {
     await browser.close();
