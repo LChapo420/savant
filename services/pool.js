@@ -598,6 +598,8 @@ function refusal(slot, req, kind) {
   if (req.excludeFamilies && slot.family && req.excludeFamilies.includes(slot.family)) return 'independence: family excluded for this request';
   if (req.freeOnly && slot.paid) return 'budget: this request may use free slots only (the fact guard is at its spend cap)';
   if (matchesAny(slot.id, t.deny)) return 'quality: denied for this task';
+  // A slot a task allows only as a caller's first pick (dock_help's Coral Fast, for the voice call's fast route): never a backup or a default.
+  if (Array.isArray(t.first_pick_only) && matchesAny(slot.id, t.first_pick_only) && !(Array.isArray(req.firstPick) && req.firstPick.includes(slot.id))) return 'speed: only when the caller picks it first';
   if (Array.isArray(t.only) && !matchesAny(slot.id, t.only)) return 'quality: not in this task\'s only-list';
   if (slot.extra && !matchesAny(slot.id, t.allow) && !matchesAny(slot.id, poolConfig().default_allow)) return 'quality: not listed as good enough for this task';
   return null;

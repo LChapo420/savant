@@ -61,7 +61,9 @@ JSON: {"a":{"false":[],"correct":0,"helpful":0,"spoken":0,"friendly":0},"b":{"fa
   const dock = require(path.join(ROOT, 'services/tutor-context'));
   const pool = require(path.join(ROOT, 'services/pool'));
   const { grokified } = require(path.join(ROOT, 'services/providers/grokified'));
-  const users = LEARNERS.map((l, k) => db.insert('users', { email: `vfq${k}@example.test`, display_name: l.name, birth_year: l.birth_year, age_check: { needs_parent: false, age: 2026 - l.birth_year, birth_year: l.birth_year } }));
+  // Two identical sets of learners, one per writer, so neither reply sees the other in the tutor's memory of the conversation.
+  const mk = (tag) => LEARNERS.map((l, k) => db.insert('users', { email: `vfq-${tag}${k}@example.test`, display_name: l.name, birth_year: l.birth_year, age_check: { needs_parent: false, age: 2026 - l.birth_year, birth_year: l.birth_year } }));
+  const users = { usual: mk('u'), fast: mk('f') };
   const page = { path: '/dashboard', title: 'Home', heading: 'Today', text: 'Your plan for today' };
   let lastSlot = null;
   const ch = pool.callHedged;
@@ -69,16 +71,18 @@ JSON: {"a":{"false":[],"correct":0,"helpful":0,"spoken":0,"friendly":0},"b":{"fa
   const rows = [];
   for (let k = 0; k < QUESTIONS.length; k++) {
     const q = QUESTIONS[k];
-    const user = users[k % users.length];
+    const user = users.usual[k % LEARNERS.length];
     const one = async (fast) => {
+      const who = (fast ? users.fast : users.usual)[k % LEARNERS.length];
       process.env.TUTOR_VOICE_FAST = fast ? '1' : '0';
       lastSlot = null;
       const t0 = Date.now();
-      const r = await dock.reply({ user, messages: [{ role: 'user', content: q }], page, inputMode: 'voice' });
+      const r = await dock.reply({ user: who, messages: [{ role: 'user', content: q }], page, inputMode: 'voice' });
       return { reply: r.reply, source: r.source, held: !!r.held || /could you ask that another way|rather not guess|can't double-check/i.test(r.reply), writer: r.writer || 'usual', why: r.hard_why || null, slot: lastSlot, ms: Date.now() - t0 };
     };
-    const usual = await one(false);
-    const fast = await one(true);
+    // Alternate which goes first, so a warm or busy model does not always favour one side.
+    let usual; let fast;
+    if (k % 2) { fast = await one(true); usual = await one(false); } else { usual = await one(false); fast = await one(true); }
     const flip = Math.random() < 0.5;
     let verdict = null;
     try { verdict = await judge(grokified, arg('judge', 'grok-4.3'), q, `${user.display_name}, born ${user.birth_year}`, flip ? fast.reply : usual.reply, flip ? usual.reply : fast.reply); } catch (e) { verdict = { error: String(e.message).slice(0, 120) }; }
@@ -98,6 +102,7 @@ JSON: {"a":{"false":[],"correct":0,"helpful":0,"spoken":0,"friendly":0},"b":{"fa
     better: { fast: elig.filter((r) => r.verdict.better === 'fast').length, usual: elig.filter((r) => r.verdict.better === 'usual').length, tie: elig.filter((r) => r.verdict.better === 'tie').length },
     false_statements: { fast: elig.reduce((n, r) => n + (r.verdict.fast.false || []).length, 0), usual: elig.reduce((n, r) => n + (r.verdict.usual.false || []).length, 0) },
     held: { fast: elig.filter((r) => r.fast.held).length, usual: elig.filter((r) => r.usual.held).length },
+    usual_written_by: Object.entries(elig.reduce((m, r) => { m[r.usual.slot] = (m[r.usual.slot] || 0) + 1; return m; }, {})),
     mean: Object.fromEntries(['correct', 'helpful', 'spoken', 'friendly'].map((k) => [k, { fast: avg(elig, 'fast', k), usual: avg(elig, 'usual', k) }])),
     worst_fast: elig.map((r) => ({ q: r.q, s: ['correct', 'helpful', 'spoken', 'friendly'].reduce((n, k) => n + Number(r.verdict.fast[k] || 0), 0) - ['correct', 'helpful', 'spoken', 'friendly'].reduce((n, k) => n + Number(r.verdict.usual[k] || 0), 0) })).sort((a, b) => a.s - b.s).slice(0, 3),
     ms_median: { usual: median(rows.map((r) => r.usual.ms)), fast: median(rows.map((r) => r.fast.ms)) },
