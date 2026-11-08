@@ -666,3 +666,7 @@ The ledgers are the conservative figure: they count a call cut by a deadline at 
 **Still open.** Whether a real person follows these readings. A blind read rated all arms low on an earlier version (G, 1 to 5, n 10: today 1.6, full 2.0, lean 2.1, core 2.0) and was not repeated on the final code. Some facts still land under a skill that does not name them. `docs/UPLOADS-ANY-FORMAT.md` section 17's server checks are now a script (`node scripts/uploads-server-check.js`) and **have not been run on the server**. No browser click-through with real models: the phone-width walk (`scripts/material-parts-browser.js`, 28 of 28) used a scripted model.
 
 Tests: 41 of 41 test files touching this work pass, run on the last commit. Full `npm test` not run, by instruction.
+
+## 19. The 4x goal, measured per learner (7 Nov 2026; SIMULATED; `docs/UPLOAD-4X.md`)
+
+4x is not shown: 0 of 320 held-out learners reach it against careful study or a rereader at any goal. `UPLOAD_REVIEW_EXPAND` (off) cuts 38% to 43% of the time on a test 6 to 12 months away and 29% with no test day. Its gate failed on short goals and hard variants, so it stays off. The "27 reviews a year" of section 18 held the learner's multiplier at 0; run through the real code it is about 13.

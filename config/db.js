@@ -90,6 +90,7 @@ const COLLECTIONS = [
   'spanish_study_tests',     // pre/post scores on the sealed external tests
   'material_courses',        // courses built from a learner's material (services/course-builder.js), private to them
   'material_progress',       // study progress on a built course: skill status, spaced-review due times, open quiz (services/material-study.js)
+  'upload_studies',          // the own-control study: matched halves, time per half, the test at the learner's horizon (services/upload-study.js, UPLOAD_STUDY)
   'material_packs',          // study packs built from a learner's material: summary, flashcards, quiz, practice test (services/material-pack.js), private to them
   'material_notes',          // whole-material sectioned notes with a source quote per bullet (services/material-notes.js), private to them
   'material_podcasts',       // two-voice podcast scripts built from a learner's material, overview or weak spots (services/material-podcast.js), private to them

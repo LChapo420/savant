@@ -129,7 +129,7 @@ function placementCap(n) { return Math.max(4, Math.min(n + 2, 40)); }
  * askable(skillId) -> the question to ask on that skill, or null. answers: [{skill, correct, guess, stage}].
  * Returns { skill, stage, gain?, question } | null.
  */
-function nextPlacement(course, answers, askable, seed = 1) {
+function nextPlacement(course, answers, askable, seed = 1, need = 1) {
   const list = answers || [];
   const b = belief(course, list, seed);
   const tally = {};
@@ -168,7 +168,7 @@ function nextPlacement(course, answers, askable, seed = 1) {
   // The quick check of what the walk would skip, in path order.
   for (const id of b.ids) {
     const t = tally[id] || { asked: 0, right: 0, wrong: 0 };
-    if (t.right || t.wrong >= 2) continue;
+    if (t.right >= need || t.wrong >= 2) continue;
     const skipping = b.p[id] >= KNOWN_AT;
     const secondChance = t.wrong === 1 && b.p[id] >= 0.5 - 1e-9 && list.some((a) => a.skill === id && a.stage === 'check');
     if (!skipping && !secondChance) continue;

@@ -23,9 +23,41 @@ App.mount(async () => {
       lesson: [n.remediation ? `Fix: ${n.title || ''}` : `Next: ${n.title || ''}`, n.remediation ? 'Go over what tripped you up, then try the check again.' : 'Read the lesson and try a few questions.', n.remediation ? 'Go over it again' : 'Start the lesson'],
       quiz: [`Check: ${n.title || ''}`, 'Score 75% or more to master it.', 'Take the check'],
       done: [s.course.status === 'building' ? 'Every skill so far mastered' : 'Every skill mastered', s.next_due ? `Next review: ${String(s.next_due).slice(0, 10)}.` : 'Nice work.', ''],
+      normal: [`Your way: ${n.title || ''}`, 'Study this part the way you normally would, then tell us when you are done.', 'Open the text'],
       wait: ['Nothing open right now', 'Come back when a review is due.', ''],
     }[n.kind] || ['', '', ''];
     return `<div class="card" id="next-card"><h2>${esc(label[0])}</h2><p class="small">${esc(label[1])}</p>${label[2] ? `<button class="btn btn-primary" id="go" type="button">${esc(label[2])}</button>` : ''}</div>`;
+  }
+
+  // The own-control study (UPLOAD_STUDY, off by default): an offer with plain wording, the original text of the learner's normal half, and the short test at their horizon.
+  function ownCard(s) {
+    const o = s.own_control; if (!o) return '';
+    if (o.phase === 'test_due') return '<div class="card" style="margin-top:12px"><h2>Your short test</h2><p class="small">This is the check you agreed to. It takes a few minutes.</p><button class="btn btn-primary" id="own-test" type="button">Start the test</button></div>';
+    if (o.phase === 'waiting') return `<div class="card" style="margin-top:12px"><h2>Study in progress</h2><p class="small">Your short test opens on ${esc(String(o.test_at).slice(0, 10))}.</p></div>`;
+    if (!o.in_study && o.offer && o.offer.available) return `<div class="card" style="margin-top:12px"><h2>Help us test how much faster this is</h2><p class="small">${esc(o.offer.text)}</p><button class="btn" id="own-yes" type="button">Yes, I want to take part</button></div>`;
+    return '';
+  }
+  async function ownStart(s) {
+    try { await App.api.post(`${base}/own-control`, { agree: true }); App.toast('Thank you. Your parts are split.', 'success'); map(); } catch (err) { App.toast(err.message, 'error'); }
+  }
+  async function ownPart(skillId) {
+    let out;
+    try { out = await App.api.get(`${base}/own-control/part/${encodeURIComponent(skillId)}`); } catch (err) { return App.toast(err.message, 'error'); }
+    root.innerHTML = `<p class="small"><a href="#" id="back">&larr; Back</a></p><h1>${esc(out.skill.title)}</h1><p class="small muted">Study this the way you normally would. Press done when you are finished.</p><div class="card" style="white-space:pre-wrap">${esc(out.text)}</div><p style="margin-top:12px"><button class="btn btn-primary" id="done" type="button">I am done with this part</button></p>`;
+    document.getElementById('back').addEventListener('click', (e) => { e.preventDefault(); map(); });
+    document.getElementById('done').addEventListener('click', async () => { try { await App.api.post(`${base}/own-control/part/${encodeURIComponent(skillId)}/done`, {}); map(); } catch (err) { App.toast(err.message, 'error'); } });
+    return null;
+  }
+  async function ownTest() {
+    let out;
+    try { out = await App.api.get(`${base}/own-control/test`); } catch (err) { return App.toast(err.message, 'error'); }
+    root.innerHTML = `<h1>Short test</h1><p class="small muted">No feedback here. If you do not know, leave it blank.</p>${out.questions.map((q, i) => qHtml(q, i, 'ow')).join('')}<p style="margin-top:12px"><button class="btn btn-primary" id="send" type="button">Finish</button></p>`;
+    document.getElementById('send').addEventListener('click', async () => {
+      const answers = {};
+      out.questions.forEach((q, i) => { const a = readAnswer(root.querySelector(`[data-q="${q.id}"]`), q, i, 'ow'); if (a !== null && a !== '') answers[q.id] = a; });
+      try { await App.api.post(`${base}/own-control/test`, { answers }); App.toast('Thank you. That is all.', 'success'); map(); } catch (err) { App.toast(err.message, 'error'); }
+    });
+    return null;
   }
 
   async function map() {
@@ -49,6 +81,7 @@ App.mount(async () => {
       ${s.reading ? `<p class="small muted">${esc(s.reading.label)}: about ${s.reading.minutes} minutes for the first pass, with ${s.reading.checks} checks (an estimate).${s.reading.aside ? ` ${s.reading.aside} words are set aside, one tap away on each lesson.` : ''}</p>` : ''}
       ${s.course.status === 'building' ? `<div class="notice" role="status" style="margin-bottom:12px">The rest of this course is still being written${s.course.planned ? `: ${s.total} of ${s.course.planned} skills are ready` : ''}. Reload this page to see new ones.</div>` : ''}
       ${nextCard(s)}
+      ${ownCard(s)}
       <p class="small" style="margin-top:12px"><a href="/my-material-test?id=${encodeURIComponent(id)}">Take a practice test</a> on the skills you pick, timed or not.</p>${units}`;
     root.querySelectorAll('[data-skill]').forEach((b) => b.addEventListener('click', () => lesson(b.dataset.skill)));
     const go = document.getElementById('go');
@@ -59,9 +92,12 @@ App.mount(async () => {
         if (n.kind === 'review') return quiz('review');
         if (n.kind === 'lesson') return lesson(n.skill);
         if (n.kind === 'quiz') return quiz('mastery', n.skill);
+        if (n.kind === 'normal') return ownPart(n.skill);
         return null;
       });
     }
+    const oc = document.getElementById('own-yes'); if (oc) oc.addEventListener('click', () => ownStart(s));
+    const ot = document.getElementById('own-test'); if (ot) ot.addEventListener('click', ownTest);
     return null;
   }
 
@@ -92,15 +128,23 @@ App.mount(async () => {
     const q = out.question;
     root.innerHTML = `<h1>Starting check</h1><p class="small muted">Question ${out.asked + 1}. No feedback here: this only decides where you start. If you do not know, say so.</p>
       ${qHtml(q, 0, 'pl')}
-      <p style="margin-top:12px"><button class="btn btn-primary" id="next" type="button">Next</button> <button class="btn" id="idk" type="button">I don't know</button></p>`;
-    const send = async (answer) => {
-      try { placement(await App.api.post(`${base}/placement`, { question: q.id, answer })); } catch (err) { App.toast(err.message, 'error'); }
+      <p style="margin-top:12px"><button class="btn btn-primary" id="next" type="button">${out.confidence ? 'Next, I am sure' : 'Next'}</button> ${out.confidence ? '<button class="btn" id="unsure" type="button">Next, not sure</button> ' : ''}<button class="btn" id="idk" type="button">I don't know</button></p>`;
+    const send = async (answer, confidence) => {
+      try { placement(await App.api.post(`${base}/placement`, { question: q.id, answer, ...(confidence ? { confidence } : {}) })); } catch (err) { App.toast(err.message, 'error'); }
     };
     document.getElementById('next').addEventListener('click', () => {
       const a = readAnswer(root.querySelector(`[data-q="${q.id}"]`), q, 0, 'pl');
       if (a === null || a === '') return App.toast('Pick an answer, or press "I don\'t know".', 'error');
-      return send(a);
+      return send(a, out.confidence ? 'sure' : null);
     });
+    const unsure = document.getElementById('unsure');
+    if (unsure) {
+      unsure.addEventListener('click', () => {
+        const a = readAnswer(root.querySelector(`[data-q="${q.id}"]`), q, 0, 'pl');
+        if (a === null || a === '') return App.toast('Pick an answer, or press "I do not know".', 'error');
+        return send(a, 'think');
+      });
+    }
     document.getElementById('idk').addEventListener('click', () => send(null));
     return null;
   }
